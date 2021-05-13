@@ -42,6 +42,7 @@ public class ImportExcelController {
             importRequest.setInputStream(inputStream);
             List<Triple<Integer, Integer, Object>> data = getExcelDataService.getExcelData(importRequest);
 
+            // TODO insert data into DB
             responseHeader.setResultCode(ResultCode.SUCCESS);
             responseHeader.setResponseTime(new Date());
             ImportExcelResponseBody responseBody = ImportExcelResponseBody.builder()
