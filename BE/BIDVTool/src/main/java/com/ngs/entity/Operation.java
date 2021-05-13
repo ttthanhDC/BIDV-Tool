@@ -17,6 +17,7 @@ public class Operation {
 
     @Id
     @Column(name = "operation_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
@@ -30,10 +31,18 @@ public class Operation {
     private String operationName;
 
     @Column(name = "interact_with_core")
-    private Integer applicationId;
+    private Boolean interactWithCore;
 
-    @Column(name = "application_id")
-    private Integer applicationId;
+    @Column(name = "status")
+    private String status;
 
+    @Column(name = "ssd_soa")
+    private String ssdSOA;
+
+    @Column(name = "ssd_legacy")
+    private String ssdLegacy;
+
+    @Column(name = "is_workshop")
+    private String isWorkshop;
 
 }

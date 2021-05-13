@@ -18,6 +18,7 @@ public class OpenIssue {
 
     @Id
     @Column(name = "issue_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "description")

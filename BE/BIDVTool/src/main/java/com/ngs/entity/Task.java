@@ -17,7 +17,7 @@ import java.util.Date;
 public class Task {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "task_id")
     private Integer id;
 
@@ -49,4 +49,5 @@ public class Task {
 
     @Column(name = "status")
     private String status;
+
 }
