@@ -1,5 +1,7 @@
 package com.ngs.service;
 
+import com.ngs.request.ImportExcelRequest;
+
 public interface ImportExcelService {
-    void importExcel();
+    ImportExcelRequest getImportRequest();
 }

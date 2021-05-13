@@ -1,15 +1,18 @@
 package com.ngs.response;
 
-
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-@Data
 @Builder
+@Data
 @NoArgsConstructor
-public class BaseResponse<T> {
-    private ResponseHeader responseHeader;
-    private T responseBody;
+@AllArgsConstructor
+public class ImportExcelResponseBody {
+
+    private String status;
+    private int totalRecord;
+
 }
