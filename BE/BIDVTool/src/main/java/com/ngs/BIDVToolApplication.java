@@ -2,13 +2,12 @@ package com.ngs;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
-@SpringBootApplication(exclude = {SecurityAutoConfiguration.class, org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration.class, org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration.class})
+@SpringBootApplication
 public class BIDVToolApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(BIDVToolApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(BIDVToolApplication.class, args);
+	}
 
 }
