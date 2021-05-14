@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class CreateUserResponseBody {
-
     private String userName;
     private String fullName;
     private String email;

@@ -12,5 +12,4 @@ import lombok.NoArgsConstructor;
 public class ImportExcelResponseBody {
     private String status;
     private int totalRecord;
-
 }
