@@ -3,9 +3,7 @@ package com.ngs.service;
 import com.ngs.entity.Operation;
 
 public interface OperationService {
-    void insertOperation(Operation operation);
+    void save(Operation operation);
 
-    void updateOperation(Integer operationId, Operation updatedOperation);
-
-
+    void delete(Integer id);
 }

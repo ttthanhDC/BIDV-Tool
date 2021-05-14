@@ -6,11 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-public class CreateUserResponseBody {
-    private String userName;
-    private String fullName;
-    private String email;
+public class ImportExcelResponse {
+    private String status;
+    private int totalRecord;
 }

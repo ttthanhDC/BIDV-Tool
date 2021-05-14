@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class CreatApplicationResponseBody {
+public class CreateApplicationResponse {
     private String bidvAppCode;
     private String integrationAppCode;
     private String applicationName;

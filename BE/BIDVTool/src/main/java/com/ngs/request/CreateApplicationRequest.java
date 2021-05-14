@@ -3,7 +3,7 @@ package com.ngs.request;
 import lombok.Data;
 
 @Data
-public class CreatApplicationRequestBody {
+public class CreateApplicationRequest {
     private String bidvAppCode;
     private String integrationAppCode;
     private String applicationName;
