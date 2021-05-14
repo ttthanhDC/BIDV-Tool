@@ -2,7 +2,7 @@ package com.ngs.controller;
 
 import com.ngs.constant.ResultCode;
 import com.ngs.entity.User;
-import com.ngs.request.CreateUserRequest;
+import com.ngs.request.BaseRequest;
 import com.ngs.request.CreateUserRequestBody;
 import com.ngs.response.BaseResponse;
 import com.ngs.response.CreateUserResponseBody;
@@ -11,20 +11,18 @@ import com.ngs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin("*")
 public class UserController {
 
     @Autowired
     UserService userService;
 
     @PostMapping
-    public ResponseEntity<BaseResponse<CreateUserResponseBody>> insert(@RequestBody CreateUserRequest request) {
+    public ResponseEntity<BaseResponse<CreateUserResponseBody>> insert(@RequestBody BaseRequest<CreateUserRequestBody> request) {
         ResponseHeader responseHeader = ResponseHeader.builder().resultCode(ResultCode.COMMON_ERROR).build();
         BaseResponse<CreateUserResponseBody> response = new BaseResponse<>();
         response.setResponseHeader(responseHeader);
@@ -50,4 +48,5 @@ public class UserController {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 }

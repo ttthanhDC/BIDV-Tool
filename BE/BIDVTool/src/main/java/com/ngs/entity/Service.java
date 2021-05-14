@@ -23,9 +23,6 @@ public class Service {
     @Column(name = "service_name")
     private String serviceName;
 
-    @Column(name = "integration_app_code")
-    private String integrationAppCode;
-
     @Column(name = "status")
     private String status;
 
