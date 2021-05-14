@@ -44,6 +44,7 @@ public class UserController {
                     .build();
             response.setResponseBody(responseBody);
             responseHeader.setResultCode(ResultCode.SUCCESS);
+            responseHeader.setResultDesc("success");
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);

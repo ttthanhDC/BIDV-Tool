@@ -9,4 +9,6 @@ public class StringUtil {
     public static String nvl(String str, String valueIfNull) {
         return str != null ? str : valueIfNull;
     }
+
+
 }
