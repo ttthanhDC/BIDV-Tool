@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "operation")
@@ -44,5 +45,11 @@ public class Operation {
 
     @Column(name = "is_workshop")
     private String isWorkshop;
+
+    @OneToMany(mappedBy = "operation")
+    private List<Task> tasks;
+
+    @OneToMany(mappedBy = "operation")
+    private List<OpenIssue> issues;
 
 }

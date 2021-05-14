@@ -29,10 +29,10 @@ public class Service {
     @Column(name = "status")
     private String status;
 
-    @OneToMany(mappedBy = "service", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "service")
     private List<Operation> operations;
 
-    @OneToMany(mappedBy = "serviceMapped", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "service")
     private List<ApplicationServiceMap> applicationServiceMaps;
 
 }
