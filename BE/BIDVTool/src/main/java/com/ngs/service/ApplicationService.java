@@ -4,7 +4,16 @@ import com.ngs.entity.Application;
 import com.ngs.repository.ApplicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public interface ApplicationService {
-    void creatApplication(Application application);
+import java.util.List;
 
+public interface ApplicationService {
+    List<Application> getAll();
+
+    Application getById(Integer id);
+    
+    void save(Application application);
+
+    void delete(Application application);
+
+    
 }

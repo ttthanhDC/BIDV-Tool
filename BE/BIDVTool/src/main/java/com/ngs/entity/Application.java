@@ -1,11 +1,13 @@
 package com.ngs.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -14,7 +16,8 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Builder
-public class Application {
+public class Application implements Serializable {
+    private static final long serialVersionUID = 5216821564242825076L;
 
     @Id
     @Column(name = "application_id")
@@ -33,7 +36,11 @@ public class Application {
     @Column(name = "abbreviation")
     private String abbreviation;
 
+    @Column(name = "in_scope")
+    private Boolean inScope;
+
     @OneToMany(mappedBy = "application")
+    @JsonIgnore
     private List<ApplicationServiceMap> applicationServiceMaps;
 
 }
