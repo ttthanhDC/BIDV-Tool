@@ -1,0 +1,25 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-5">
+            <form (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label>User Name</label>
+                    <input type="text" name="name" class="form-control" [(ngModel)]="user.userName" />
+                </div>
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" name="fullName" class="form-control" [(ngModel)]="user.fullName" />
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <input type="text" name="status" class="form-control" [(ngModel)]="user.status" />
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="text" name="email" class="form-control" [(ngModel)]="user.email" />
+                </div>
+                <button class="btn btn-primary" type="submit">Thêm</button>
+            </form>
+        </div>
+    </div>
+</div>
