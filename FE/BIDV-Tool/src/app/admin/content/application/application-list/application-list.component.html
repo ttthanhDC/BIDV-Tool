@@ -1,0 +1,71 @@
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Application</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">List Applications</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Application Code</th>
+                            <th>Bidv Application Code</th>
+                            <th>Application Name</th>
+                            <th>Application Abbreviation</th>
+                            <th>In Scope</th>
+                            <th colspan="2">Action <div style="float: right; margin-right: 35px;"><a
+                                        routerLink="/admin/application-add"><i class="far fa-plus-square"
+                                            style="font-size: 30px;"></i></a></div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let a of app | slice: (page-1) * pageSize : page * pageSize; index as i">
+                            <td>{{i + 1}}</td>
+                            <td>{{a.bidvAppCode}}</td>
+                            <td>{{a.integrationAppCode}}</td>
+                            <td>{{a.applicationName}}</td>
+                            <td>{{a.abbreviation}}</td>
+                            <td>{{a.inScope}}</td>
+                            <td><a routerLink='/admin/application-edit/{{a.id}}'><i class="fas fa-edit"
+                                        style="font-size: 20px;"></i></a></td>
+                            <td><a><i (click)='delete(a.id)' data-toggle="modal" data-target="#exampleModal"
+                                        class="fas fa-minus-circle" style="font-size: 20px;"></i></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="app.length"></ngb-pagination>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div *ngIf="isShowModal" class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Delete Application</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                    (click)="checkDelete()">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
