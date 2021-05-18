@@ -23,7 +23,7 @@ public class Operation {
 
     @ManyToOne
     @JoinColumn(name = "service_id")
-    private Service service;
+    private Services service;
 
     @Column(name = "application_id")
     private Integer applicationId;

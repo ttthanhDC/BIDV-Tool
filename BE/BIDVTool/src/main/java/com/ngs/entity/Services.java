@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Builder
-public class Service {
+public class Services {
     @Id
     @Column(name = "service_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
