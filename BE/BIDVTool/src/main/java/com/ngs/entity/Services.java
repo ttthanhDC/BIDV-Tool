@@ -6,7 +6,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "service")
@@ -14,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Builder
-public class Services {
+public class Services implements Serializable {
     @Id
     @Column(name = "service_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,10 +28,10 @@ public class Services {
     @Column(name = "status")
     private String status;
 
-    @OneToMany(mappedBy = "service")
-    private List<Operation> operations;
+    @OneToMany(mappedBy = "service", fetch = FetchType.EAGER)
+    private Set<Operation> operations;
 
-    @OneToMany(mappedBy = "service")
-    private List<ApplicationServiceMap> applicationServiceMaps;
+    @OneToMany(mappedBy = "service" , fetch = FetchType.EAGER)
+    private Set<ApplicationServiceMap> applicationServiceMaps;
 
 }

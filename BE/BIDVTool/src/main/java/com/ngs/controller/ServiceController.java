@@ -37,7 +37,7 @@ public class ServiceController {
         try {
             String requestId = httpRequest.getHeader("requestId");
             String clientTime = httpRequest.getHeader("clientTime");
-            log.info("[findAll] requestId = " + requestId + ", clientTime = " + clientTime);
+//            log.info("[findAll] requestId = " + requestId + ", clientTime = " + clientTime);
             List<Services> listServices = service.getAll();
             response.setList(listServices);
             HttpHeaders responseHeader = new HttpHeaders();
@@ -50,7 +50,7 @@ public class ServiceController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         } finally {
-            log.info("[findAll] response: " + StringUtil.toJsonString(response));
+//            log.info("[findAll] response: " + StringUtil.toJsonString(response));
         }
     }
 
@@ -71,7 +71,9 @@ public class ServiceController {
 
     @PostMapping
     public ResponseEntity<CreatServiceResponse> insert(HttpServletRequest httpRequest, @RequestBody CreatServicesRequest request) {
+        log.info("start insert");
         try {
+
             String requestId = httpRequest.getHeader("requestId");
             String clientTime = httpRequest.getHeader("clientTime");
             log.info("[getById] requestId = " + requestId + ", clientTime = " + clientTime);
@@ -96,30 +98,29 @@ public class ServiceController {
         }
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<UpdateServiceResponse> update(HttpServletRequest httpRequest, @RequestBody UpdateServicesRequest request, @PathVariable Integer id) {
         UpdateServiceResponse response = UpdateServiceResponse.builder().build();
         try {
             String requestId = httpRequest.getHeader("requestId");
             String clientTime = httpRequest.getHeader("clientTime");
             log.info("[update] requestId = " + requestId + ", clientTime = " + clientTime);
-
+            log.info("client!!!");
             Services services = service.getById(id);
-            Services previousSer = service.getById(id);
-            if (services != null) {
+            Services previousSer = SerializationUtils.clone(services);
+            if (services == null) {
                 return ResponseEntity.badRequest().body(null);
             }
-
             services.setServiceName(request.getServiceName());
             services.setStatus(request.getStatus());
             service.save(services);
-            response.setPreviousService(previousSer);
             response.setUpdateService(services);
+            response.setPreviousService(previousSer);
             HttpHeaders responseHeader = new HttpHeaders();
             responseHeader.add("resultCode", "0");
             responseHeader.add("resultDesc", "success");
             responseHeader.add("responseTime", LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
-            log.info("[update] response: " + StringUtil.toJsonString(response));
+         //   log.info("[update] response: " + StringUtil.toJsonString(response));
             return ResponseEntity.ok().headers(responseHeader).body(response);
 
         } catch (Exception e) {
@@ -127,12 +128,14 @@ public class ServiceController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Integer id) {
         try {
             Services services = service.getById(id);
             if (services != null) {
                 service.delete(services);
+                return ResponseEntity.ok().body("ok");
             }
             return ResponseEntity.ok().body(null);
         } catch (Exception e) {
