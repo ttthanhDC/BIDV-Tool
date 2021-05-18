@@ -18,18 +18,18 @@ import java.lang.reflect.Method;
 @Component
 public class Logging {
 
-    @Pointcut("execution(* com.ngs.controller.*.*(..))")
-    private void callControllerMethod(){
-    }
-
-    @Around("callControllerMethod() && args(..,request)")
-    public void logAroundFunction(ProceedingJoinPoint joinPoint, Object request) throws Exception{
-        Object[] args = joinPoint.getArgs();
-        Object aThis = joinPoint.getThis();
-        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-        Method method = methodSignature.getMethod();
-        Class<?> aClass = request.getClass();
-        RequestBody annotation = method.getAnnotation(RequestBody.class);
-        log.info(args.toString());
-    }
+//    @Pointcut("execution(* com.ngs.controller.*.*(..))")
+//    private void callControllerMethod(){
+//    }
+//
+//    @Around("callControllerMethod() && args(..,request)")
+//    public void logAroundFunction(ProceedingJoinPoint joinPoint, Object request) throws Exception{
+//        Object[] args = joinPoint.getArgs();
+//        Object aThis = joinPoint.getThis();
+//        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+//        Method method = methodSignature.getMethod();
+//        Class<?> aClass = request.getClass();
+//        RequestBody annotation = method.getAnnotation(RequestBody.class);
+//        log.info(args.toString());
+//    }
 }
