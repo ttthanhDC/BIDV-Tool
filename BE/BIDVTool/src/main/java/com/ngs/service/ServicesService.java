@@ -1,6 +1,8 @@
 package com.ngs.service;
 
 import com.ngs.entity.Service;
+import com.ngs.request.UpdateOperationRequest;
+import com.ngs.response.UpdateOperationResponse;
 
 import java.util.List;
 
