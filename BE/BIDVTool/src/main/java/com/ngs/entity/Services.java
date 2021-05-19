@@ -1,5 +1,6 @@
 package com.ngs.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,9 +29,11 @@ public class Services implements Serializable {
     @Column(name = "status")
     private String status;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "service", fetch = FetchType.EAGER)
     private Set<Operation> operations;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "service" , fetch = FetchType.EAGER)
     private Set<ApplicationServiceMap> applicationServiceMaps;
 

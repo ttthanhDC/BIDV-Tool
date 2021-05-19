@@ -46,7 +46,7 @@ public class ServiceController {
         }
     }
 
-    @PostMapping
+    @PostMapping(params = "action=findByAppId")
     ResponseEntity<GetListServiceResponse> getListServiceByAppId(@RequestParam Integer applicationId) {
         try {
             GetListServiceResponse response = GetListServiceResponse
