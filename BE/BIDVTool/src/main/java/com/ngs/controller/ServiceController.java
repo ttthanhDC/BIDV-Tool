@@ -46,6 +46,12 @@ public class ServiceController {
         }
     }
 
+    @PostMapping
+    ResponseEntity<GetListServiceResponse> getListServiceByAppId(@RequestParam String applicationId){
+
+        return null;
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Services> getById(@PathVariable Integer id) {
         try {
