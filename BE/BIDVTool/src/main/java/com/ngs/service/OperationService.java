@@ -1,6 +1,7 @@
 package com.ngs.service;
 
 import com.ngs.entity.Operation;
+import com.ngs.request.CreateOperationRequest;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ public interface OperationService {
 
     Operation findById(Integer id);
 
-    void save(Operation operation);
+    Operation save(CreateOperationRequest createOperationRequest);
 
     void delete(Integer id);
 }

@@ -1,51 +1,50 @@
 package com.ngs.service.impl;
 
-import com.ngs.entity.ApplicationServiceMap;
 import com.ngs.repository.ApplicationServiceMapRepository;
 import com.ngs.repository.ServiceRepository;
 
 import com.ngs.service.ServicesService;
 import org.apache.commons.collections4.IterableUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import com.ngs.entity.Services;
+import com.ngs.entity.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@org.springframework.stereotype.Service
 public class ServiceImp implements ServicesService {
     @Autowired
     ServiceRepository servicesRepository;
     @Autowired
     ApplicationServiceMapRepository mapRepository;
+
     @Override
-    public List<Services> getAll(){
-        Iterable<Services> services = servicesRepository.findAll();
+    public List<Service> getAll(){
+        Iterable<Service> services = servicesRepository.findAll();
         if(services!=null){
-            List<Services> list = IterableUtils.toList(services);
+            List<Service> list = IterableUtils.toList(services);
             return  list;
         }
         return null;
     }
     @Override
-    public  Services getById(Integer id){
-        Optional<Services> services = servicesRepository.findById(id);
+    public Service getById(Integer id){
+        Optional<Service> services = servicesRepository.findById(id);
         if(services.isPresent()){
             return services.get();
         }
         return null;
     }
     @Override
-    public void save( Services services){
+    public void save( Service services){
         servicesRepository.save(services);
     }
     @Override
-    public void delete(Services services){
+    public void delete(Service services){
         servicesRepository.delete(services);
     }
     @Override
-    public List<Services> getListServiceByAppId(Integer appId){
+    public List<Service> getListServiceByAppId(Integer appId){
         return mapRepository.listMap(appId);
     }
 }

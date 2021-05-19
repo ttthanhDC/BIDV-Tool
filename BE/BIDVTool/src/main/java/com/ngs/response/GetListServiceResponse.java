@@ -1,6 +1,6 @@
 package com.ngs.response;
 
-import com.ngs.entity.Services;
+import com.ngs.entity.Service;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,5 +13,5 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class GetListServiceResponse {
-    List<Services> list;
+    List<Service> services;
 }

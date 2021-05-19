@@ -1,5 +1,6 @@
 package com.ngs.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,9 +22,9 @@ public class Operation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "service_id")
-    private Services service;
+    private Service service;
 
     @Column(name = "application_id")
     private Integer applicationId;
@@ -44,12 +45,14 @@ public class Operation {
     private String ssdLegacy;
 
     @Column(name = "is_workshop")
-    private String isWorkshop;
+    private Boolean isWorkshop;
 
-    @OneToMany(mappedBy = "operation")
+    @JsonIgnore
+    @OneToMany(mappedBy = "operation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Task> tasks;
 
-    @OneToMany(mappedBy = "operation")
+    @JsonIgnore
+    @OneToMany(mappedBy = "operation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OpenIssue> issues;
 
 }

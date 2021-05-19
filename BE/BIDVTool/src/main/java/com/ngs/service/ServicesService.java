@@ -1,19 +1,17 @@
 package com.ngs.service;
 
-import com.ngs.entity.Services;
-import com.ngs.repository.ServiceRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ngs.entity.Service;
 
 import java.util.List;
 
 public interface ServicesService {
-    List<Services> getAll();
+    List<Service> getAll();
 
-    Services getById(Integer id);
+    Service getById(Integer id);
 
-    void save(Services services);
+    void save(Service services);
 
-    void delete(Services services);
+    void delete(Service services);
 
-    List<Services> getListServiceByAppId(Integer appId);
+    List<Service> getListServiceByAppId(Integer appId);
 }

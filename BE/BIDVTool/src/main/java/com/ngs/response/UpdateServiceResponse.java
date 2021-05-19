@@ -1,6 +1,6 @@
 package com.ngs.response;
 
-import com.ngs.entity.Services;
+import com.ngs.entity.Service;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class UpdateServiceResponse {
-    Services previousService;
-    Services updateService;
+    Service previousService;
+    Service updateService;
 }

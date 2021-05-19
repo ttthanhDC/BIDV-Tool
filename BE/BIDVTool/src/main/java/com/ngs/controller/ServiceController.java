@@ -1,7 +1,7 @@
 package com.ngs.controller;
 
-import com.ngs.entity.Services;
-import com.ngs.request.CreatServicesRequest;
+import com.ngs.entity.Service;
+import com.ngs.request.CreateServicesRequest;
 import com.ngs.request.UpdateServicesRequest;
 import com.ngs.response.CreatServiceResponse;
 import com.ngs.response.GetListServiceResponse;
@@ -26,14 +26,14 @@ import java.util.List;
 @CrossOrigin("*")
 public class ServiceController {
     @Autowired
-    ServicesService service;
+    ServicesService servicesService;
 
     @GetMapping
     public ResponseEntity<GetListServiceResponse> getAll() {
         GetListServiceResponse response = new GetListServiceResponse();
         try {
-            List<Services> listServices = service.getAll();
-            response.setList(listServices);
+            List<Service> listServices = servicesService.getAll();
+            response.setServices(listServices);
             HttpHeaders responseHeader = new HttpHeaders();
             responseHeader.add("resultCode", "0");
             responseHeader.add("resultDesc", "success");
@@ -46,12 +46,12 @@ public class ServiceController {
         }
     }
 
-    @PostMapping(params = "action=findByAppId")
-    ResponseEntity<GetListServiceResponse> getListServiceByAppId(@RequestParam Integer applicationId) {
+    @GetMapping("/app")
+    ResponseEntity<GetListServiceResponse> getListServiceByAppId(@RequestParam Integer appId) {
         try {
             GetListServiceResponse response = GetListServiceResponse
                     .builder()
-                    .list(service.getListServiceByAppId(applicationId))
+                    .services(servicesService.getListServiceByAppId(appId))
                     .build();
             if (response == null) {
                 return ResponseEntity.badRequest().body(null);
@@ -65,12 +65,12 @@ public class ServiceController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Services> getById(@PathVariable Integer id) {
+    public ResponseEntity<Service> getById(@PathVariable Integer id) {
         try {
-            Services services = service.getById(id);
-            if (services != null) {
-                log.info(String.format("[%s] response: %s", "findById", StringUtil.toJsonString(services)));
-                return ResponseEntity.ok().body(services);
+            Service service = servicesService.getById(id);
+            if (service != null) {
+                log.info(String.format("[%s] response: %s", "findById", StringUtil.toJsonString(service)));
+                return ResponseEntity.ok().body(service);
             }
             return ResponseEntity.badRequest().body(null);
         } catch (Exception e) {
@@ -80,14 +80,14 @@ public class ServiceController {
     }
 
     @PostMapping
-    public ResponseEntity<CreatServiceResponse> insert(@RequestBody CreatServicesRequest request) {
+    public ResponseEntity<CreatServiceResponse> insert(@RequestBody CreateServicesRequest request) {
         log.info("start insert");
         try {
-            Services services = Services.builder()
+            Service services = Service.builder()
                     .serviceName(request.getServiceName())
                     .status(request.getStatus())
                     .build();
-            service.save(services);
+            servicesService.save(services);
             CreatServiceResponse response = CreatServiceResponse.builder()
                     .ServiceName(request.getServiceName())
                     .status(request.getStatus())
@@ -107,14 +107,12 @@ public class ServiceController {
     public ResponseEntity<UpdateServiceResponse> update(@RequestBody UpdateServicesRequest request, @PathVariable Integer id) {
         UpdateServiceResponse response = UpdateServiceResponse.builder().build();
         try {
-            Services services = service.getById(id);
-            Services previousSer = SerializationUtils.clone(services);
+            Service services = servicesService.getById(id);
+            Service previousSer = SerializationUtils.clone(services);
             if (services == null) {
                 return ResponseEntity.badRequest().body(null);
             }
-            services.setServiceName(request.getServiceName());
-            services.setStatus(request.getStatus());
-            service.save(services);
+            servicesService.save(services);
             response.setUpdateService(services);
             response.setPreviousService(previousSer);
             HttpHeaders responseHeader = new HttpHeaders();
@@ -132,9 +130,9 @@ public class ServiceController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Integer id) {
         try {
-            Services services = service.getById(id);
+            Service services = servicesService.getById(id);
             if (services != null) {
-                service.delete(services);
+                servicesService.delete(services);
                 return ResponseEntity.ok().body("ok");
             }
             return ResponseEntity.ok().body(null);
