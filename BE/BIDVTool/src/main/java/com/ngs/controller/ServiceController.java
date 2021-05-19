@@ -47,9 +47,21 @@ public class ServiceController {
     }
 
     @PostMapping
-    ResponseEntity<GetListServiceResponse> getListServiceByAppId(@RequestParam String applicationId){
+    ResponseEntity<GetListServiceResponse> getListServiceByAppId(@RequestParam Integer applicationId) {
+        try {
+            GetListServiceResponse response = GetListServiceResponse
+                    .builder()
+                    .list(service.getListServiceByAppId(applicationId))
+                    .build();
+            if (response == null) {
+                return ResponseEntity.badRequest().body(null);
+            }
+            return ResponseEntity.ok().body(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
 
-        return null;
     }
 
     @GetMapping("/{id}")

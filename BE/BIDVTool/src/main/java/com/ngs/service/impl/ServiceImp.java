@@ -1,5 +1,7 @@
 package com.ngs.service.impl;
 
+import com.ngs.entity.ApplicationServiceMap;
+import com.ngs.repository.ApplicationServiceMapRepository;
 import com.ngs.repository.ServiceRepository;
 
 import com.ngs.service.ServicesService;
@@ -15,6 +17,8 @@ import java.util.Optional;
 public class ServiceImp implements ServicesService {
     @Autowired
     ServiceRepository servicesRepository;
+    @Autowired
+    ApplicationServiceMapRepository mapRepository;
     @Override
     public List<Services> getAll(){
         Iterable<Services> services = servicesRepository.findAll();
@@ -40,5 +44,8 @@ public class ServiceImp implements ServicesService {
     public void delete(Services services){
         servicesRepository.delete(services);
     }
-
+    @Override
+    public List<Services> getListServiceByAppId(Integer appId){
+        return mapRepository.listMap(appId);
+    }
 }
