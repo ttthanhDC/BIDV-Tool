@@ -1,35 +1,59 @@
 package com.ngs.aop;
 
-import com.ngs.request.UpdateApplicationRequest;
+import com.ngs.util.StringUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.ArrayUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Method;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 @Aspect
 @Slf4j
 @Component
 public class Logging {
 
-//    @Pointcut("execution(* com.ngs.controller.*.*(..))")
-//    private void callControllerMethod(){
-//    }
-//
-//    @Around("callControllerMethod() && args(..,request)")
-//    public void logAroundFunction(ProceedingJoinPoint joinPoint, Object request) throws Exception{
-//        Object[] args = joinPoint.getArgs();
-//        Object aThis = joinPoint.getThis();
-//        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-//        Method method = methodSignature.getMethod();
-//        Class<?> aClass = request.getClass();
-//        RequestBody annotation = method.getAnnotation(RequestBody.class);
-//        log.info(args.toString());
-//    }
+    @Autowired
+    HttpServletRequest httpRequest;
+
+    @Pointcut("execution(* com.ngs.controller.*.*(..))")
+    private void callControllerMethod() {
+    }
+
+    @Around("callControllerMethod()")
+    public Object logAroundFunction(ProceedingJoinPoint joinPoint) {
+        try {
+            Object[] args = joinPoint.getArgs();
+            StringBuilder logBuilder = new StringBuilder();
+            String[] argNames = ((MethodSignature) joinPoint.getSignature()).getParameterNames(); // parameter name
+            Map<String, Object> paramMap = new HashMap<>();
+            paramMap.put("requestId", httpRequest.getHeader("requestId"));
+            paramMap.put("clientTime", httpRequest.getHeader("clientTime"));
+            if (ArrayUtils.isNotEmpty(args)) {
+                for (int i = 0; i < args.length; i++) {
+                    Object param = args[i];
+                    if (!(param instanceof HttpServletRequest)) {
+                        paramMap.put(argNames[i], param);
+                    }
+                }
+            }
+            logBuilder.append(httpRequest.getRequestURL() + " request: \n");
+            logBuilder.append(StringUtil.toJsonString(paramMap) + "\n");
+            logBuilder.append(" response: \n");
+            Object result = joinPoint.proceed(args);
+            logBuilder.append(StringUtil.toJsonString(result));
+            log.info(logBuilder.toString());
+            return result;
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

@@ -12,7 +12,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ImportExcelRequest extends BaseRequest {
+public class ImportExcelRequest {
     private InputStream inputStream;
     private int sheetIndex;
     private String sheetName;

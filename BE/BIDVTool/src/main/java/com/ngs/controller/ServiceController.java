@@ -1,12 +1,10 @@
 package com.ngs.controller;
 
-import com.ngs.entity.Application;
 import com.ngs.entity.Services;
 import com.ngs.request.CreatServicesRequest;
 import com.ngs.request.UpdateServicesRequest;
 import com.ngs.response.CreatServiceResponse;
 import com.ngs.response.GetListServiceResponse;
-import com.ngs.response.UpdateApplicationResponse;
 import com.ngs.response.UpdateServiceResponse;
 import com.ngs.service.ServicesService;
 import com.ngs.util.StringUtil;
@@ -18,7 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -32,12 +29,9 @@ public class ServiceController {
     ServicesService service;
 
     @GetMapping
-    public ResponseEntity<GetListServiceResponse> getAll(HttpServletRequest httpRequest) {
+    public ResponseEntity<GetListServiceResponse> getAll() {
         GetListServiceResponse response = new GetListServiceResponse();
         try {
-            String requestId = httpRequest.getHeader("requestId");
-            String clientTime = httpRequest.getHeader("clientTime");
-//            log.info("[findAll] requestId = " + requestId + ", clientTime = " + clientTime);
             List<Services> listServices = service.getAll();
             response.setList(listServices);
             HttpHeaders responseHeader = new HttpHeaders();
@@ -49,8 +43,6 @@ public class ServiceController {
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        } finally {
-//            log.info("[findAll] response: " + StringUtil.toJsonString(response));
         }
     }
 
@@ -70,14 +62,9 @@ public class ServiceController {
     }
 
     @PostMapping
-    public ResponseEntity<CreatServiceResponse> insert(HttpServletRequest httpRequest, @RequestBody CreatServicesRequest request) {
+    public ResponseEntity<CreatServiceResponse> insert(@RequestBody CreatServicesRequest request) {
         log.info("start insert");
         try {
-
-            String requestId = httpRequest.getHeader("requestId");
-            String clientTime = httpRequest.getHeader("clientTime");
-            log.info("[getById] requestId = " + requestId + ", clientTime = " + clientTime);
-
             Services services = Services.builder()
                     .serviceName(request.getServiceName())
                     .status(request.getStatus())
@@ -99,13 +86,9 @@ public class ServiceController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UpdateServiceResponse> update(HttpServletRequest httpRequest, @RequestBody UpdateServicesRequest request, @PathVariable Integer id) {
+    public ResponseEntity<UpdateServiceResponse> update(@RequestBody UpdateServicesRequest request, @PathVariable Integer id) {
         UpdateServiceResponse response = UpdateServiceResponse.builder().build();
         try {
-            String requestId = httpRequest.getHeader("requestId");
-            String clientTime = httpRequest.getHeader("clientTime");
-            log.info("[update] requestId = " + requestId + ", clientTime = " + clientTime);
-            log.info("client!!!");
             Services services = service.getById(id);
             Services previousSer = SerializationUtils.clone(services);
             if (services == null) {
@@ -120,7 +103,6 @@ public class ServiceController {
             responseHeader.add("resultCode", "0");
             responseHeader.add("resultDesc", "success");
             responseHeader.add("responseTime", LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
-         //   log.info("[update] response: " + StringUtil.toJsonString(response));
             return ResponseEntity.ok().headers(responseHeader).body(response);
 
         } catch (Exception e) {

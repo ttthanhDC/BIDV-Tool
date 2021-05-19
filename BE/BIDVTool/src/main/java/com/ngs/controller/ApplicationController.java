@@ -30,12 +30,9 @@ public class ApplicationController {
     ApplicationService applicationService;
 
     @GetMapping
-    public ResponseEntity<GetListApplicationResponse> findAll(HttpServletRequest httpRequest) {
+    public ResponseEntity<GetListApplicationResponse> findAll() {
         GetListApplicationResponse response = new GetListApplicationResponse();
         try {
-            String requestId = httpRequest.getHeader("requestId");
-            String clientTime = httpRequest.getHeader("clientTime");
-            log.info("[findAll] requestId = " + requestId + ", clientTime = " + clientTime);
             List<Application> applicationList = applicationService.getAll();
             response.setApplications(applicationList);
             HttpHeaders responseHeader = new HttpHeaders();
@@ -43,17 +40,14 @@ public class ApplicationController {
             responseHeader.add("resultDesc", "success");
             responseHeader.add("responseTime", LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")));
             return ResponseEntity.ok().headers(responseHeader).body(response);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        } finally {
-            log.info("[findAll] response: " + StringUtil.toJsonString(response));
         }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Application> findById(@PathVariable Integer id) {
-//        String functionName = this.getClass().getEnclosingMethod().getName();
         try {
             Application application = applicationService.getById(id);
             if (application != null) {
@@ -67,13 +61,8 @@ public class ApplicationController {
     }
 
     @PostMapping
-    public ResponseEntity<CreateApplicationResponse> insert(HttpServletRequest httpRequest, @RequestBody CreateApplicationRequest request) {
+    public ResponseEntity<CreateApplicationResponse> insert(@RequestBody CreateApplicationRequest request) {
         try {
-            // TODO get request header params
-            String requestId = httpRequest.getHeader("requestId");
-            String clientTime = httpRequest.getHeader("clientTime");
-            log.info("requestId = " + requestId + ", clientTime = " + clientTime);
-
             // TODO validate request
             Application application = Application.builder()
                     .bidvAppCode(request.getBidvAppCode())
@@ -103,13 +92,9 @@ public class ApplicationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UpdateApplicationResponse> update(HttpServletRequest httpRequest, @RequestBody UpdateApplicationRequest request, @PathVariable Integer id) {
+    public ResponseEntity<UpdateApplicationResponse> update(@RequestBody UpdateApplicationRequest request, @PathVariable Integer id) {
         UpdateApplicationResponse response = UpdateApplicationResponse.builder().build();
         try {
-            // TODO get request header params
-            String requestId = httpRequest.getHeader("requestId");
-            String clientTime = httpRequest.getHeader("clientTime");
-            log.info("requestId = " + requestId + ", clientTime = " + clientTime);
 
             // TODO validate request
             Application application = applicationService.getById(id);
@@ -141,7 +126,7 @@ public class ApplicationController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(HttpServletRequest httpRequest, @PathVariable Integer id) {
+    public ResponseEntity<String> delete(@PathVariable Integer id) {
         try {
             Application application = applicationService.getById(id);
             if (application != null) {
