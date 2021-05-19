@@ -55,7 +55,7 @@ public class OperationServiceImpl implements OperationService {
                 .status(createOperationRequest.getStatus())
                 .ssdLegacy(createOperationRequest.getSsdLegacy())
                 .ssdSOA(createOperationRequest.getSsdSOA())
-                .isWorkshop(createOperationRequest.isWorkshop())
+                .workshop(createOperationRequest.isWorkshop())
                 .build();
         operationRepository.save(operation);
         return operation;

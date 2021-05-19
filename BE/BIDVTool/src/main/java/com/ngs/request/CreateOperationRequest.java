@@ -15,5 +15,5 @@ public class CreateOperationRequest {
     private String status;
     private String ssdSOA;
     private String ssdLegacy;
-    private boolean isWorkshop;
+    private boolean workshop;
 }
