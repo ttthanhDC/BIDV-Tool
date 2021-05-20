@@ -30,7 +30,7 @@ public class OperationController {
             GetListOperationResponse response = new GetListOperationResponse();
             response.setOperations(listOperation);
 
-            return ResponseEntity.ok().body(response);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
@@ -42,7 +42,7 @@ public class OperationController {
         try {
             Operation operation = operationService.findById(id);
             if (operation != null) {
-                return ResponseEntity.ok().body(operation);
+                return ResponseEntity.ok(operation);
             }
             return ResponseEntity.badRequest().body(null);
         } catch (Exception e) {
@@ -55,7 +55,7 @@ public class OperationController {
     public ResponseEntity<Operation> create(@RequestBody CreateOperationRequest createOperationRequest) {
         try {
             Operation operation = operationService.save(createOperationRequest);
-            return ResponseEntity.ok().body(operation);
+            return ResponseEntity.ok(operation);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
@@ -63,10 +63,10 @@ public class OperationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UpdateOperationResponse> update(UpdateOperationRequest updateRequest, @PathVariable Integer id) {
+    public ResponseEntity<UpdateOperationResponse> update(@RequestBody UpdateOperationRequest updateRequest, @PathVariable Integer id) {
         try {
             UpdateOperationResponse updateResponse = operationService.update(updateRequest, id);
-            return ResponseEntity.ok().body(updateResponse);
+            return ResponseEntity.ok(updateResponse);
         } catch (DefinedException e) {
             e.printStackTrace();
             HttpHeaders headers = new HttpHeaders();
@@ -82,7 +82,7 @@ public class OperationController {
     public ResponseEntity<Object> delete(@PathVariable Integer id) {
         try {
             operationService.delete(id);
-            return ResponseEntity.ok().body("success");
+            return ResponseEntity.ok("success");
         } catch (DefinedException e) {
             e.printStackTrace();
             HttpHeaders headers = new HttpHeaders();

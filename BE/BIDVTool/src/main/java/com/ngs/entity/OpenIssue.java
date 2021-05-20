@@ -37,6 +37,7 @@ public class OpenIssue {
 
     @Column(name = "owner")
     private String owner;
+
     @Column(name = "open_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date openDate;

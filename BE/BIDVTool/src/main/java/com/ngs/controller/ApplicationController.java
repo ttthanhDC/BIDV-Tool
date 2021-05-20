@@ -51,7 +51,7 @@ public class ApplicationController {
             Application application = applicationService.getById(id);
             if (application != null) {
                 log.info(String.format("[%s] response: %s", "findById", StringUtil.toJsonString(application)));
-                return ResponseEntity.ok().body(application);
+                return ResponseEntity.ok(application);
             }
             return ResponseEntity.badRequest().body(null);
         } catch (Exception e) {

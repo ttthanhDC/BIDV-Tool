@@ -7,6 +7,11 @@ import java.util.Date;
 
 @Slf4j
 public class DateUtil {
+
+    public static Date fromString(String dateStr) {
+        return fromString(dateStr, "dd/MM/yyyy HH:mm:ss");
+    }
+
     public static Date fromString(String dateStr, String pattern) {
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);

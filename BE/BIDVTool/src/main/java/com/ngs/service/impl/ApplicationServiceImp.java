@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ApplicationImp implements ApplicationService {
+public class ApplicationServiceImp implements ApplicationService {
     @Autowired
     ApplicationRepository applicationRepository;
 

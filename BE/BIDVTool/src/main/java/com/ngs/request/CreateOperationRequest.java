@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateOperationRequest {
-    private int serviceId;
-    private int applicationId;
-    private String operationName;
-    private boolean interactWithCore;
-    private String status;
-    private String ssdSOA;
-    private String ssdLegacy;
-    private boolean workshop;
+    protected int serviceId;
+    protected int applicationId;
+    protected String operationName;
+    protected boolean interactWithCore;
+    protected String status;
+    protected String ssdSOA;
+    protected String ssdLegacy;
+    protected boolean workshop;
 }
