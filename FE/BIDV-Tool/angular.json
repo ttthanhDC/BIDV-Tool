@@ -37,7 +37,7 @@
               "src/assets/css/admin.css"
             ],
             "scripts": [
-              "src/assets/js/datatables/jquery.dataTables.min.js"
+              "src/assets/js/jquery.dataTables.min.js"
             ]
           },
           "configurations": {

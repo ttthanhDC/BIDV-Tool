@@ -2,6 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ResponseUser } from 'src/app/entity/ResponseUser';
 import { User } from 'src/app/entity/User';
 
 @Injectable({
@@ -19,6 +20,10 @@ export class UserService {
       .append('requestId', this.requestId)
       .append('clientTime', this.clientTime),
   };
+
+  getListUser(): Observable<ResponseUser> {
+    return this.http.get<ResponseUser>(`${this.userApi}`, this.options);
+  }
 
   addUser(user: User) {
     return this.http.post(`${this.userApi}`, user, this.options);
