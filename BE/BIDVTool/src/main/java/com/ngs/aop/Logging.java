@@ -44,6 +44,7 @@ public class Logging {
                     }
                 }
             }
+            logBuilder.append(String.format("[%s] ",joinPoint.getSignature()));
             logBuilder.append(httpRequest.getRequestURL() + " request: \n");
             logBuilder.append(StringUtil.toJsonString(paramMap) + "\n");
             logBuilder.append(" response: \n");

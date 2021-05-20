@@ -3,6 +3,9 @@ package com.ngs.util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ngs.entity.Application;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class StringUtil {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -21,5 +24,15 @@ public class StringUtil {
             e.printStackTrace();
             return "";
         }
+    }
+
+    public static String fromDate(Date date, String pattern) {
+        try {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            return simpleDateFormat.format(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }

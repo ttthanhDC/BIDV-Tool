@@ -9,10 +9,13 @@ import com.ngs.repository.OperationRepository;
 import com.ngs.repository.TaskRepository;
 import com.ngs.repository.UserRepository;
 import com.ngs.request.CreateTaskRequest;
-import com.ngs.response.CreatTaskResponse;
+import com.ngs.request.UpdateTaskRequest;
+import com.ngs.response.UpdateTaskResponse;
 import com.ngs.service.TaskService;
 import com.ngs.util.DateUtil;
 import org.apache.commons.collections4.IterableUtils;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,18 +38,21 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public Task getById(Integer id) throws Exception {
+        Optional<Task> optional = taskRepository.findById(id);
+        if (optional.isPresent()) {
+            return optional.get();
+        }
+        throw new DefinedException(ErrorCode.NOT_FOUND, "not found operation by id = " + id);
+    }
+
+    @Override
     public Task save(CreateTaskRequest request) throws Exception {
-        Optional<User> optionalUser = userRepository.findById(request.getUserId());
-        Optional<Operation> optionalOperation = operationRepository.findById(request.getOperationId());
-        if (!optionalUser.isPresent()) {
-            throw new DefinedException(ErrorCode.NOT_FOUND, "not found user id " + request.getUserId());
-        }
-        if (!optionalOperation.isPresent()) {
-            throw new DefinedException(ErrorCode.NOT_FOUND, "not found operation id " + request.getOperationId());
-        }
+        Pair<User, Operation> userOperationPair = validate(request.getUserId(), request.getOperationId());
+
         Task task = Task.builder()
-                .assignee(optionalUser.get())
-                .operation(optionalOperation.get())
+                .assignee(userOperationPair.getLeft())
+                .operation(userOperationPair.getRight())
                 .description(request.getDescription())
                 .mappingSheet(request.getMappingSheet())
                 .status(request.getStatus())
@@ -57,17 +63,34 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.save(task);
         return task;
     }
+
     @Override
-    public Task getById(Integer id) throws Exception{
-        Optional<Task> optional = taskRepository.findById(id);
-        if (optional.isPresent()) {
-            return optional.get();
+    public UpdateTaskResponse update(UpdateTaskRequest request, Integer id) throws Exception {
+        Optional<Task> taskOptional = taskRepository.findById(id);
+        if (!taskOptional.isPresent()){
+            throw new DefinedException(ErrorCode.NOT_FOUND, "fail to update task by id = "+id);
+        }else {
+            Pair<User, Operation> userOperationPair = validate(request.getUserId(), request.getOperationId());
+            Task task = taskOptional.get();
+
+            return null;
         }
-        throw new DefinedException(ErrorCode.NOT_FOUND, "not found operation by id = " + id);
     }
 
     @Override
     public void delete(Task task) {
         taskRepository.delete(task);
+    }
+
+    private Pair<User, Operation> validate(Integer userId, Integer operationId) throws Exception {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        Optional<Operation> optionalOperation = operationRepository.findById(operationId);
+        if (!optionalUser.isPresent()) {
+            throw new DefinedException(ErrorCode.NOT_FOUND, "not found user id " + userId);
+        }
+        if (!optionalOperation.isPresent()) {
+            throw new DefinedException(ErrorCode.NOT_FOUND, "not found operation id " + operationId);
+        }
+        return new ImmutablePair<>(optionalUser.get(), optionalOperation.get());
     }
 }

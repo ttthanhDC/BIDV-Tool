@@ -1,15 +1,18 @@
-package com.ngs.request;
+package com.ngs.response.bean;
 
+import com.ngs.entity.Operation;
+import com.ngs.entity.User;
+import lombok.Builder;
 import lombok.Data;
 
-import java.util.Date;
-
 @Data
-public class CreateIssueRequest {
+@Builder
+public class Issue {
+    private int id;
     private String description;
-    private int reporterId;
+    private User reporter;
     private String resolution;
-    private int operationId;
+    private Operation operation;
     private String owner;
     private String openDate;
     private String dueDate;

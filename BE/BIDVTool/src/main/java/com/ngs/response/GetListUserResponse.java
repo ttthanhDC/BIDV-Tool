@@ -1,6 +1,6 @@
 package com.ngs.response;
 
-import com.ngs.response.bean.Issue;
+import com.ngs.entity.User;
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,7 +8,6 @@ import java.util.List;
 
 @Data
 @Builder
-public class GetListIssueResponse {
-    private List<Issue> issues;
-
+public class GetListUserResponse {
+    List<User> users;
 }

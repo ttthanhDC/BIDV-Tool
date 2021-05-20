@@ -56,6 +56,11 @@ public class OperationController {
         try {
             Operation operation = operationService.save(createOperationRequest);
             return ResponseEntity.ok(operation);
+        } catch (DefinedException e) {
+            e.printStackTrace();
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("resultCode", e.getCode());
+            return ResponseEntity.badRequest().headers(headers).body(null);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
