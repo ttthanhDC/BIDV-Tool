@@ -1,9 +1,15 @@
 package com.ngs.service;
 
 import com.ngs.entity.Task;
+import com.ngs.request.CreateTaskRequest;
+
+import java.util.List;
 
 public interface TaskService {
-    void save(Task task);
+    Task save(CreateTaskRequest request) throws Exception;
 
-    void delete(Integer id);
+    void delete(Task task);
+    List<Task> getAll() throws Exception;
+    Task getById(Integer id) throws Exception;
+
 }

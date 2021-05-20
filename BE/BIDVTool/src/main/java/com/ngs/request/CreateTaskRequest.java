@@ -6,16 +6,16 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+
 @Data
 public class CreateTaskRequest {
-
-    private String description;
-    private Integer userId;
-    private Integer operationId;
-    private String mappingSheet;
-    private Date openDate;
-    private Date dueDate;
-    private Date closeDate;
-    private String status;
+    protected String description;
+    protected Integer operationId;
+    protected Integer userId;
+    protected String mappingSheet;
+    protected String openDate;
+    protected String dueDate;
+    protected String closeDate;
+    protected String status;
 
 }
