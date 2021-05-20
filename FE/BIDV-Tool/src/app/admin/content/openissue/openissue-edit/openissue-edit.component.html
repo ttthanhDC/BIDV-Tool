@@ -1,0 +1,71 @@
+<div class="container">
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="bidvAppCode">Description</label>
+            <input type="text" class="form-control" name="applicationId" [(ngModel)]="issue.description">
+        </div>
+        <div class="form-group">
+            <label for="p_category">Reporter</label>
+            <select class="form-control" name="serviceName" [(ngModel)]="issue.reporterId">
+                <option disabled selected>Select Reporter</option>
+                <option *ngFor="let u of user" value="{{u.id}}">{{u.userName}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="bidvAppCode">Resolution</label>
+            <input type="text" class="form-control" name="operationName" [(ngModel)]="issue.resolution">
+        </div>
+        <div class="form-group">
+            <label for="p_category">Operation</label>
+            <select class="form-control" name="operation" [(ngModel)]="issue.operationId">
+                <option disabled selected>Select Operation</option>
+                <option *ngFor="let o of opr" value="{{o.id}}">{{o.operationName}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="bidvAppCode">Owner</label>
+            <input type="text" class="form-control" name="owner" [(ngModel)]="issue.owner">
+        </div>
+        <div class="form-group">
+            <label for="bidvAppCode">Status</label>
+            <input type="text" class="form-control" name="status" [(ngModel)]="issue.status">
+        </div>
+        <div class="form-group">
+            <label for="bidvAppCode">Comment</label>
+            <input type="text" class="form-control" name="comment" [(ngModel)]="issue.comment">
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <label for="bidvAppCode">Open Date</label>
+                <input type="date" class="form-control"  value="{{openDate}}" [(ngModel)]="issue.openDate"
+                    name="openDate" (change)="onChangeOpenDate($event)">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <label for="bidvAppCode">Due Date</label>
+                <input type="date" class="form-control" value="{{dueDate}}" [(ngModel)]="issue.dueDate" name="ssdLegacy"
+                    (change)="onChangeOpenDate($event)">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <label for="bidvAppCode">Close Date</label>
+                <input type="date" class="form-control" value="{{closeDate}}" [(ngModel)]="issue.closeDate" 
+                    name="ssdLegacy" (change)="onChangeOpenDate($event)">
+            </div>
+        </div> <br>
+
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">
+                Submit
+            </button>
+            <button class="btn btn-primary" type="reset" style="margin-left: 20px;">
+                <i class="fa fa-sm"></i>
+                Reset
+            </button>
+        </div>
+    </form><br>
+</div>
