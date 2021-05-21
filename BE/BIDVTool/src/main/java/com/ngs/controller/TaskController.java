@@ -3,9 +3,12 @@ package com.ngs.controller;
 import com.ngs.entity.Task;
 import com.ngs.exception.DefinedException;
 import com.ngs.request.CreateTaskRequest;
+import com.ngs.request.UpdateTaskRequest;
 import com.ngs.response.GetListTaskResponse;
+import com.ngs.response.UpdateTaskResponse;
 import com.ngs.service.TaskService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.regexp.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -83,5 +86,13 @@ public class TaskController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-
+     @PutMapping("/{id}")
+    public ResponseEntity<UpdateTaskResponse> update(@RequestBody UpdateTaskRequest request,@PathVariable Integer id){
+        try {
+            return ResponseEntity.ok().body(taskService.update(request,id));
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+     }
 }
