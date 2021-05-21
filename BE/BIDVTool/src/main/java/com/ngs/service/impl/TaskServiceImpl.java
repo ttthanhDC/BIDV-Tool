@@ -14,6 +14,7 @@ import com.ngs.response.UpdateTaskResponse;
 import com.ngs.service.TaskService;
 import com.ngs.util.DateUtil;
 import org.apache.commons.collections4.IterableUtils;
+import org.apache.commons.lang3.SerializationUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,10 +72,24 @@ public class TaskServiceImpl implements TaskService {
             throw new DefinedException(ErrorCode.NOT_FOUND, "fail to update task by id = "+id);
         }else {
             Pair<User, Operation> userOperationPair = validate(request.getUserId(), request.getOperationId());
-            Task task = taskOptional.get();
 
-            return null;
+            Task task = taskOptional.get();
+            Task previousTask = SerializationUtils.clone(task);
+            task.setAssignee(userOperationPair.getLeft());
+            task.setOperation(userOperationPair.getRight());
+            task.setCloseDate(DateUtil.fromString(request.getCloseDate()));
+            task.setDescription(request.getDescription());
+            task.setOpenDate(DateUtil.fromString(request.getOpenDate()));
+            task.setDueDate(DateUtil.fromString(request.getDueDate()));
+            task.setMappingSheet(request.getMappingSheet());
+            task.setStatus(request.getStatus());
+            UpdateTaskResponse response = UpdateTaskResponse.builder()
+                    .previousTask(previousTask)
+                    .updateTask(task)
+                    .build();
+            return response;
         }
+
     }
 
     @Override

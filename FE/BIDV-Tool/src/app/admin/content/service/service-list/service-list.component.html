@@ -1,12 +1,12 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Application</h1>
+    <h1 class="h3 mb-2 text-gray-800">Service</h1>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">List Applications</h6>
+            <h6 class="m-0 font-weight-bold text-primary">List Services</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -14,34 +14,27 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Application Code</th>
-                            <th>Bidv Application Code</th>
-                            <th>Application Name</th>
-                            <th>Application Abbreviation</th>
-                            <th>In Scope</th>
+                            <th>Service Name</th>
+                            <th>Status</th>
                             <th colspan="2">Action <div style="float: right; margin-right: 35px;"><a
-                                        routerLink="/admin/application-add"><i class="far fa-plus-square"
+                                        routerLink="/admin/service-add"><i class="far fa-plus-square"
                                             style="font-size: 30px;"></i></a></div>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let a of app | slice: (page-1) * pageSize : page * pageSize; index as i">
+                        <tr *ngFor="let a of srv | slice: (page-1) * pageSize : page * pageSize; index as i">
                             <td>{{i + 1}}</td>
-                            <td><a><i (click)='delete(a.id)'>{{a.bidvAppCode}}</i></a></td>
-                            <td>{{a.integrationAppCode}}</td>
-                            <td>{{a.applicationName}}</td>
-                            <td>{{a.abbreviation}}</td>
-                            <td>{{a.inScope}}</td>
-                            <td><a routerLink='/admin/application-edit/{{a.id}}'><i class="fas fa-edit"
+                            <td>{{a.serviceName}}</td>
+                            <td>{{a.status}}</td>
+                            <td><a routerLink='/admin/service-edit/{{a.id}}'><i class="fas fa-edit"
                                         style="font-size: 20px;"></i></a></td>
                             <td><a><i (click)='delete(a.id)' data-toggle="modal" data-target="#exampleModal"
                                         class="fas fa-minus-circle" style="font-size: 20px;"></i></a></td>
                         </tr>
-                        
                     </tbody>
                 </table>
-                <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="app.length"></ngb-pagination>
+                <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="srv.length"></ngb-pagination>
             </div>
         </div>
     </div>
@@ -54,7 +47,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Delete Application</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Delete Service</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { $ } from 'protractor';
 import { Application } from 'src/app/entity/Application';
 import { ResponseApp } from 'src/app/entity/ResponseApp';
 import { ApplicationService } from 'src/app/services/application/application.service';
@@ -31,6 +32,8 @@ export class ApplicationListComponent implements OnInit {
   }
   delete(id: number) {
     this.appId = id;
+    console.log(this.appId);
+    
     
   }
   checkDelete() { 
@@ -43,5 +46,9 @@ export class ApplicationListComponent implements OnInit {
 
   close() {
     this.isShowModal = false;
+  }
+  
+  test(){
+  
   }
 }

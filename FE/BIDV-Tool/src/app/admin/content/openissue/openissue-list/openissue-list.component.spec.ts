@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OpenissueComponent } from './openissue.component';
+import { OpenissueListComponent } from './openissue-list.component';
 
-describe('OpenissueComponent', () => {
-  let component: OpenissueComponent;
-  let fixture: ComponentFixture<OpenissueComponent>;
+describe('OpenissueListComponent', () => {
+  let component: OpenissueListComponent;
+  let fixture: ComponentFixture<OpenissueListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OpenissueComponent ]
+      declarations: [ OpenissueListComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OpenissueComponent);
+    fixture = TestBed.createComponent(OpenissueListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

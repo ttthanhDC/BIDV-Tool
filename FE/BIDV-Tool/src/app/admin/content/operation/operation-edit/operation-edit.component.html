@@ -1,0 +1,49 @@
+<div class="container">
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="p_category">Service Name</label>
+            <select class="form-control" name="serviceName" [(ngModel)]="opr.serviceId">
+                <option disabled selected>Select Service</option>
+                <option *ngFor="let s of service" value="{{s.id}}">{{s.serviceName}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="bidvAppCode">Application ID</label>
+            <input type="text" class="form-control" name="applicationId" [(ngModel)]="opr.applicationId">
+        </div>
+        <div class="form-group">
+            <label for="bidvAppCode">Operation Name</label>
+            <input type="text" class="form-control" name="operationName" [(ngModel)]="opr.operationName">
+        </div>
+        <div class="form-group">
+            <label for="bidvAppCode">Status</label>
+            <input type="text" class="form-control" name="status" [(ngModel)]="opr.status">
+        </div>
+        <div class="form-group">
+            <label for="bidvAppCode">SSD SOA</label>
+            <input type="text" class="form-control" name="ssdSOA" [(ngModel)]="opr.ssdSOA">
+        </div>
+        <div class="form-group">
+            <label for="bidvAppCode">SSD Legacy</label>
+            <input type="text" class="form-control" name="ssdLegacy" [(ngModel)]="opr.ssdLegacy">
+        </div>
+        <div class="form-group">
+            <label><input type="checkbox" name="interactWithCore" [(ngModel)]="opr.interactWithCore"
+                    (change)='changeEvent($event)'> Interaction With Core </label>
+        </div>
+        <div class="form-group">
+            <label><input type="checkbox" name="isWorkshop" [(ngModel)]="opr.workshop"
+                    (change)='checkWs($event)'> isWorkshop</label>
+        </div>
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">
+                Submit
+            </button>
+            <button class="btn btn-primary" type="reset" style="margin-left: 20px;">
+                <i class="fa fa-sm"></i>
+                Reset
+            </button>
+        </div>
+    </form>
+</div>
