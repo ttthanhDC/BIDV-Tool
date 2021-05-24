@@ -1,5 +1,7 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { DashboardResponse } from 'src/app/entity/DashBoardResponse';
+import { DashboardService } from 'src/app/services/dashboard/dashboard.service';
 import { UploadfileService } from 'src/app/services/uploadfile/uploadfile.service';
 
 @Component({
@@ -15,26 +17,14 @@ export class DashboardComponent implements OnInit {
   dataSource: any;
   selectedSlice = 'none';
   chart: any;
-  // response : ExcelResponse = new ExcelResponse();
+  totalApp: DashboardResponse[];
   constructor(private uploadFileService: UploadfileService,
+    private dashBoardService: DashboardService,
     private zone: NgZone) {
-    const chartData = [{
-      "label": "Apache",
-      "value": "2"
-    }, {
-      "label": "Microsoft",
-      "value": "3"
-    }, {
-      "label": "Zeus",
-      "value": "4"
-    }, {
-      "label": "Other",
-      "value": "1"
-    }];
-    const dataSource = {
+    this.dataSource = {
       chart: {
-        caption: "Market Share of Web Servers",
-        plottooltext: "<b>$percentValue</b> of web servers run on $label servers",
+        caption: "Get Total Application",
+        plottooltext: "<b>$percentValue</b> in $label",
         showLegend: "1",
         showPercentValues: "1",
         legendPosition: "bottom",
@@ -43,10 +33,14 @@ export class DashboardComponent implements OnInit {
         showlegend: "0",
         theme: "fusion",
       },
-      // Chart Data - from step 2
-      data: chartData
-    };
-    this.dataSource = dataSource;
+      data: []
+    }
+    this.dashBoardService.getTotalApp().subscribe(res => {
+
+      this.totalApp = res;
+      this.dataSource.data = this.totalApp;
+    });
+
   }
 
   ngOnInit(): void {
@@ -65,30 +59,30 @@ export class DashboardComponent implements OnInit {
   changeFile(event: any) {
     this.file = event.target.files[0];
   }
-  initialized($event : any){
+  initialized($event: any) {
     this.chart = $event.chart; // saving chart instance
   }
 
   // Change listener for radio buttons
-  onRadioOptionChange(option : any){
+  onRadioOptionChange(option: any) {
     this.selectedSlice = option;
     // For each data element , see if it is selected, if none then slice in all elements
-    this.dataSource.data.forEach((d : any, index : any) => {
-      if(option == 'none'){
+    this.dataSource.data.forEach((d: any, index: any) => {
+      if (option == 'none') {
         this.chart.slicePlotItem(index, false);
-      } else if(option === d.label.toLowerCase()){
+      } else if (option === d.label.toLowerCase()) {
         this.chart.slicePlotItem(index, true);
       }
     });
   }
 
   // Get data item label
-  getLabel(index : any){
+  getLabel(index: any) {
     return this.dataSource.data[index].label;
   }
 
   // FusionCharts Component dataPlot click listener
-  dataplotClick($event : any){
+  dataplotClick($event: any) {
     let dataIndex = $event.dataObj.dataIndex;
     let isSliced = $event.dataObj.isSliced;
     this.zone.run(() => {

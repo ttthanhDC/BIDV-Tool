@@ -92,44 +92,15 @@
             </div>
         </div>
     </div>
-    <form action="" method="POST" [formGroup]="formf" (ngSubmit)="submitForm()">
+    <!-- <form action="" method="POST" [formGroup]="formf" (ngSubmit)="submitForm()">
         <input type="file" class="form-data" multiple (change)="changeFile($event)" formControlName="file"
             name="file" />
         <button type="submit" style="width: 120px;" class="btn btn-primary" [disabled]="!formf.valid">Tải File
             Excel</button>
-    </form><br>
+    </form><br> -->
     <!-- Chart Component -->
-    <fusioncharts type='pie2d' width='600' height='400' [dataSource]='dataSource'
+    <fusioncharts type='pie2d' width='100%' height='400' [dataSource]='dataSource'
         (dataplotClick)='dataplotClick($event)' (initialized)='initialized($event)'>
     </fusioncharts>
-    <div style="display: flex; justify-content: center; bottom: 2px;">
-        <div class="change-type">
-            <div id="radio1">
-                <input name="slice-selecter" id="None" type="radio" [checked]="selectedSlice == 'none'"
-                    (change)="onRadioOptionChange('none')" />
-                <label for="None">None</label>
-            </div>
-            <div id="radio2">
-                <input name="slice-selecter" id="Apache" type="radio" [checked]="selectedSlice == 'apache'"
-                    (change)="onRadioOptionChange('apache')" />
-                <label for="Apache">Apache</label>
-            </div>
-            <div id="radio3">
-                <input name="slice-selecter" id="Microsoft" type="radio" [checked]="selectedSlice == 'microsoft'"
-                    (change)="onRadioOptionChange('microsoft')" />
-                <label for="Microsoft">Microsoft</label>
-            </div>
-            <div id="radio4">
-                <input name="slice-selecter" id="Zeus" type="radio" [checked]="selectedSlice == 'zeus'"
-                    (change)="onRadioOptionChange('zeus')" />
-                <label for="Zeus">Zeus</label>
-            </div>
-            <div id="radio5">
-                <input name="slice-selecter" id="Other" type="radio" [checked]="selectedSlice == 'other'"
-                    (change)="onRadioOptionChange('other')" />
-                <label for="Other">Other</label>
-            </div>
-        </div>
-    </div>
 
 </div>
