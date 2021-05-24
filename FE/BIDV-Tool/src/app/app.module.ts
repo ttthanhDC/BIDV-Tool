@@ -30,6 +30,18 @@ import { OpenissueEditComponent } from './admin/content/openissue/openissue-edit
 import { TaskListComponent } from './admin/content/task/task-list/task-list.component';
 import { TaskAddComponent } from './admin/content/task/task-add/task-add.component';
 import { TaskEditComponent } from './admin/content/task/task-edit/task-edit.component';
+// Import angular-fusioncharts
+import { FusionChartsModule } from 'angular-fusioncharts';
+
+// Import FusionCharts library and chart modules
+import * as FusionCharts from 'fusioncharts';
+import * as Charts from 'fusioncharts/fusioncharts.charts';
+import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
+
+import * as TimeSeries from 'fusioncharts/fusioncharts.timeseries'; // Import timeseries
+// Pass the fusioncharts library and chart modules
+FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
+
 
 @NgModule({
   declarations: [
@@ -64,8 +76,8 @@ import { TaskEditComponent } from './admin/content/task/task-edit/task-edit.comp
     ReactiveFormsModule, 
     FormsModule, 
     ReactiveFormsModule,
-    NgbModule
-    
+    NgbModule,
+    FusionChartsModule
   ],
   providers: [
     DatePipe
