@@ -44,6 +44,14 @@ public class DashBoardRepositoryImpl implements DashBoardRepository {
     }
 
     @Override
+    public  List<Map<Object, Object>> getTotalServiceByStatus(){
+        List<Map<Object,Object>> resultList = new ArrayList<>();
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("getTotalServicesByStatus");
+        Map<String,Object> callResponse = jdbcCall.execute();
+        resultList = buildResult(resultList,callResponse,"status");
+        return  resultList;
+    }
+    @Override
     public List<Map<Object, Object>> getTotalOperationByStatus(Integer serviceId, Integer appId) {
         List<Map<Object, Object>> resultList = new ArrayList<>();
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("getTotalOperationByStatus");

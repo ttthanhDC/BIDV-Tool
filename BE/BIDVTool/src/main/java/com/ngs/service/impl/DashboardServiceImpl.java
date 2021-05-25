@@ -25,14 +25,20 @@ public class DashboardServiceImpl implements DashboardService {
     public List<Map<Object, Object>> getTotalOperationByStatus(Integer serviceId, Integer appId) {
         return dashBoardRepository.getTotalOperationByStatus(serviceId, appId);
     }
+
     @Override
-    public List<Map<Object, Object>> getTotalAppByService(){
+    public List<Map<Object, Object>> getTotalAppByService() {
         return dashBoardRepository.getTotalAppByService();
     }
 
     @Override
     public List<Map<Object, Object>> getTotalServiceByApp() {
         return dashBoardRepository.getTotalServiceByApp();
+    }
+
+    @Override
+    public List<Map<Object, Object>> getTotalServiceByStatus() {
+        return dashBoardRepository.getTotalServiceByStatus();
     }
 }
 
