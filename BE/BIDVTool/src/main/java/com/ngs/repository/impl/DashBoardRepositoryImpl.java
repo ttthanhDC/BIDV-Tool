@@ -27,6 +27,14 @@ public class DashBoardRepositoryImpl implements DashBoardRepository {
         resultList = buildResult(resultList, callResponse);
         return resultList;
     }
+    @Override
+    public  List<Map<Object,Object>> getTotalAppByService(){
+        List<Map<Object,Object>> resultList = new ArrayList<>();
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("getTotalAppsByServices");
+        Map<String,Object> callResponse  = jdbcCall.execute();
+        resultList = buildResult(resultList,callResponse);
+        return resultList;
+    }
 
     @Override
     public List<Map<Object, Object>> getTotalOperationByStatus(Integer serviceId, Integer appId) {

@@ -27,6 +27,16 @@ public class DashboardController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+    @GetMapping(value = "/app",params = "query=service")
+    public ResponseEntity<List<Map<Object, Object>>> getTotalAppByService() {
+        try {
+            List<Map<Object, Object>> totalAppBySer = dashboardService.getTotalAppByService();
+            return ResponseEntity.ok(totalAppBySer);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
 
     @PostMapping(value = "/operation", params = "query=status")
     public ResponseEntity<List<Map<Object, Object>>> getTotalOperationByStatus(@RequestParam Integer serviceId, @RequestParam Integer appId) {
