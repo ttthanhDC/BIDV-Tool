@@ -5,6 +5,6 @@ import java.util.Map;
 
 public interface DashboardService {
 
-    List<Map<String, Double>> successServices();
+    List<Map<Object, Object>> getTotalApp();
 
 }
