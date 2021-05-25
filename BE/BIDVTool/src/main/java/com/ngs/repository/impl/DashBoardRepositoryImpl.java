@@ -22,7 +22,7 @@ public class DashBoardRepositoryImpl implements DashBoardRepository {
         List<Map<Object, Object>> resultList = new ArrayList<>();
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("getTotalApp");
         Map<String, Object> callResponse = jdbcCall.execute();
-        resultList = buildResult(resultList, callResponse);
+        resultList = buildResult(resultList, callResponse, "IsInScope");
         return resultList;
     }
 
