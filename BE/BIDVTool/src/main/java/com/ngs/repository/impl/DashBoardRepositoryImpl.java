@@ -13,29 +13,42 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
+@Transactional
 public class DashBoardRepositoryImpl implements DashBoardRepository {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
 
     @Override
-    @Transactional
     public List<Map<Object, Object>> getTotalApp() {
         List<Map<Object, Object>> resultList = new ArrayList<>();
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("getTotalApp");
-        resultList = buildResult(resultList, jdbcCall);
+        Map<String, Object> callResponse = jdbcCall.execute();
+        resultList = buildResult(resultList, callResponse);
         return resultList;
     }
 
-    private List<Map<Object, Object>> buildResult(List<Map<Object, Object>> resultList, SimpleJdbcCall jdbcCall) {
-        Map<String, Object> callResponse = jdbcCall.execute();
+    @Override
+    public List<Map<Object, Object>> getTotalOperationByStatus(Integer serviceId, Integer appId) {
+        List<Map<Object, Object>> resultList = new ArrayList<>();
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("getTotalOperationByStatus");
+        Map<String, Object> inputParams = new HashMap<>();
+        inputParams.put("p_serviceId", serviceId);
+        inputParams.put("p_appId", appId);
+        Map<String, Object> callResponse = jdbcCall.execute(inputParams);
+        resultList = buildResult(resultList, callResponse);
+        return resultList;
+    }
+
+    private List<Map<Object, Object>> buildResult(List<Map<Object, Object>> resultList, Map<String, Object> callResponse) {
         ArrayList<Map> resultSet = (ArrayList<Map>) callResponse.get("#result-set-1");
-        Map data = resultSet.get(0);
-        data.keySet().forEach(key -> {
-            Map result = new HashMap();
-            result.put("label", key);
-            result.put("value", data.get(key));
-            resultList.add(result);
+        resultSet.forEach(data -> {
+            data.keySet().forEach(key -> {
+                Map result = new HashMap();
+                result.put("label", key);
+                result.put("value", data.get(key));
+                resultList.add(result);
+            });
         });
         return resultList;
     }

@@ -7,4 +7,6 @@ public interface DashboardService {
 
     List<Map<Object, Object>> getTotalApp();
 
+    List<Map<Object, Object>> getTotalOperationByStatus(Integer serviceId, Integer appId);
+
 }
