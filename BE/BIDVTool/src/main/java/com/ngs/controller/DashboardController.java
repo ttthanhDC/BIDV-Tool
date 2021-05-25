@@ -29,7 +29,7 @@ public class DashboardController {
     }
 
     @PostMapping(value = "/operation", params = "query=status")
-    public ResponseEntity<List<Map<Object, Object>>> getTotalOperationByStatus(@RequestParam Integer serviceId, @RequestParam Integer appId) {
+    public ResponseEntity<List<Map<Object, Object>>> getTotalOperationByStatus(@RequestParam(required = false) Integer serviceId, @RequestParam(required = false) Integer appId) {
         try {
             List<Map<Object, Object>> totalApp = dashboardService.getTotalOperationByStatus(serviceId, appId);
             return ResponseEntity.ok(totalApp);
