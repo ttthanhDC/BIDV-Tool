@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.jws.Oneway;
 import java.util.*;
 
 @Repository
@@ -33,7 +34,14 @@ public class DashBoardRepositoryImpl implements DashBoardRepository {
         resultList = buildResult(resultList, callResponse, "service_name");
         return resultList;
     }
-
+    @Override
+    public  List<Map<Object, Object>> getTotalServiceByApp(){
+        List<Map<Object,Object>> resultList = new ArrayList<>();
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("getTotalServicesByApps");
+        Map<String,Object> callResponse = jdbcCall.execute();
+        resultList = buildResult(resultList,callResponse,"application_name");
+        return  resultList;
+    }
     @Override
     public List<Map<Object, Object>> getTotalOperationByStatus(Integer serviceId, Integer appId) {
         List<Map<Object, Object>> resultList = new ArrayList<>();
