@@ -8,6 +8,7 @@ public interface DashBoardRepository {
 
     List<Map<Object, Object>> getTotalOperationByStatus(Integer serviceId, Integer appId);
     List<Map<Object,Object>> getTotalAppByService();
+    List<Map<Object, Object>> getTotalServiceByApp();
 }
 
 
