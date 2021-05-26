@@ -1,1 +1,62 @@
-<p>task-edit works!</p>
+<div class="container">
+    <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label for="bidvAppCode">Description</label>
+            <input type="text" class="form-control" name="applicationId" [(ngModel)]="task.description">
+        </div>
+        <div class="form-group">
+            <label for="p_category">Assignee</label>
+            <select class="form-control" name="serviceName" [(ngModel)]="task.assigneeId">
+                <option disabled selected>Select User</option>
+                <option *ngFor="let u of user" value="{{u.id}}">{{u.userName}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="p_category">Operation</label>
+            <select class="form-control" name="operation" [(ngModel)]="task.operationId">
+                <option disabled selected>Select Operation</option>
+                <option *ngFor="let o of opr" value="{{o.id}}">{{o.operationName}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="bidvAppCode">Mapping Sheet</label>
+            <input type="text" class="form-control" name="mapping" [(ngModel)]="task.mappingSheet">
+        </div>
+        <div class="form-group">
+            <label for="bidvAppCode">Status</label>
+            <input type="text" class="form-control" name="status" [(ngModel)]="task.status">
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <label for="bidvAppCode">Open Date</label>
+                <input type="date" class="form-control" value="{{openDate}}" [(ngModel)]="task.openDate"
+                    name="ssdLegacy" (change)="onChangeOpenDate($event)" min="2000-01-01" max="2060-12-31">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <label for="bidvAppCode">Due Date</label>
+                <input type="date" class="form-control" value="{{dueDate}}" [(ngModel)]="task.dueDate" name="ssdLegacy"
+                    (change)="onChangeOpenDate($event)" min="2000-01-01" max="2060-12-31">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <label for="bidvAppCode">Close Date</label>
+                <input type="date" class="form-control" value="{{closeDate}}" [(ngModel)]="task.closeDate"
+                    name="ssdLegacy" (change)="onChangeOpenDate($event)" min="2000-01-01" max="2060-12-31">
+            </div>
+        </div><br>
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">
+                Submit
+            </button>
+            <button class="btn btn-primary" type="reset" style="margin-left: 20px;">
+                <i class="fa fa-sm"></i>
+                Reset
+            </button>
+        </div>
+    </form>
+</div>

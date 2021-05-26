@@ -16,7 +16,7 @@ export class ApplicationListComponent implements OnInit {
   isShowModal: boolean = true;
   page = 1;
   pageSize = 5;
-  
+
   constructor(private applicationService: ApplicationService, private router: Router) { }
 
   ngOnInit(): void {
@@ -33,10 +33,10 @@ export class ApplicationListComponent implements OnInit {
   delete(id: number) {
     this.appId = id;
     console.log(this.appId);
-    
-    
+
+
   }
-  checkDelete() { 
+  checkDelete() {
     this.applicationService.deleteApplication(this.appId)
       .subscribe(
         data => {
@@ -47,8 +47,8 @@ export class ApplicationListComponent implements OnInit {
   close() {
     this.isShowModal = false;
   }
-  
-  test(){
-  
+
+  test() {
+
   }
 }

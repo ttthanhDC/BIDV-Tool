@@ -25,7 +25,7 @@
                     <tbody>
                         <tr *ngFor="let a of srv | slice: (page-1) * pageSize : page * pageSize; index as i">
                             <td>{{i + 1}}</td>
-                            <td>{{a.serviceName}}</td>
+                            <td><a routerLink='/admin/getOprByService/serviceId/{{a.id}}'>{{a.serviceName}}</a></td>
                             <td>{{a.status}}</td>
                             <td><a routerLink='/admin/service-edit/{{a.id}}'><i class="fas fa-edit"
                                         style="font-size: 20px;"></i></a></td>

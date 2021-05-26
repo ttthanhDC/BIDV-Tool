@@ -28,7 +28,7 @@
                     <tbody>
                         <tr *ngFor="let a of app | slice: (page-1) * pageSize : page * pageSize; index as i">
                             <td>{{i + 1}}</td>
-                            <td><a><i (click)='delete(a.id)'>{{a.bidvAppCode}}</i></a></td>
+                            <td><a routerLink='/admin/getServiceByApp/appId/{{a.id}}'>{{a.bidvAppCode}}</a></td>
                             <td>{{a.integrationAppCode}}</td>
                             <td>{{a.applicationName}}</td>
                             <td>{{a.abbreviation}}</td>
@@ -38,7 +38,7 @@
                             <td><a><i (click)='delete(a.id)' data-toggle="modal" data-target="#exampleModal"
                                         class="fas fa-minus-circle" style="font-size: 20px;"></i></a></td>
                         </tr>
-                        
+
                     </tbody>
                 </table>
                 <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="app.length"></ngb-pagination>
