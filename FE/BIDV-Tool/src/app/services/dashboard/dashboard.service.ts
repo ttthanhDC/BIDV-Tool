@@ -14,6 +14,8 @@ export class DashboardService {
   private oprByStatus = "http://172.16.3.141:8080/dashboard/operation?query=status";
   private serviceByApp = "http://172.16.3.141:8080//dashboard/service?query=app";
   private serviceByStatus = "http://172.16.3.141:8080/dashboard/service?query=status";
+  private oprByService = "http://localhost:8080/dashboard/operation?query=service";
+  private taskByOperation = "http://localhost:8080/dashboard/task?query=operation"
 
   constructor(private http: HttpClient) { }
 
@@ -32,5 +34,11 @@ export class DashboardService {
   }
   getServiceByStatus(): Observable<DashboardResponse[]> {
     return this.http.get<DashboardResponse[]>(`${this.serviceByStatus}`);
+  }
+  getOperationByService(): Observable<DashboardResponse[]> {
+    return this.http.get<DashboardResponse[]>(`${this.oprByService}`);
+  }
+  getTaskByOperation(): Observable<DashboardResponse[]> {
+    return this.http.get<DashboardResponse[]>(`${this.taskByOperation}`);
   }
 }

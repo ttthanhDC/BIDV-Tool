@@ -18,8 +18,10 @@ export class DashboardComponent implements OnInit {
   dataSource: any;
   dataGetAppByService: any;
   dataOperation: any;
+  dataOprByService: any;
   dataGetServiceByApp: any;
   dataGetServiceByStatus: any;
+  dataTask: any;
   selectedSlice = 'none';
   chart: any;
   totalApp: DashboardResponse[];
@@ -83,6 +85,24 @@ export class DashboardComponent implements OnInit {
       this.dataOperation.data = this.totalApp;
     });
 
+    // chart data get Operation by service
+    this.dataOprByService = {
+      chart: {
+        caption: "Get Operation By Service",
+        xAxisName: "Total Operation",
+        yAxisName: "Service",
+        theme: "fusion"
+      },
+      // Chart Data - from step 2
+      data: []
+    };
+    this.dashBoardService.getOperationByService().subscribe(res => {
+      this.totalApp = res;
+      console.log(res);
+      
+      this.dataOprByService.data = this.totalApp;
+    });
+
 
     // chart data get Service by App
     this.dataGetServiceByApp = {
@@ -118,6 +138,22 @@ export class DashboardComponent implements OnInit {
     this.dashBoardService.getServiceByStatus().subscribe(res => {
       this.totalApp = res;
       this.dataGetServiceByStatus.data = this.totalApp;
+    });
+
+    // chart data get total Task by Operation
+    this.dataTask = {
+      chart: {
+        caption: "Get Task By Operation",
+        xAxisName: "Application-Service-Operation",
+        yAxisName: "Total Task",
+        theme: "fusion"
+      },
+      // Chart Data - from step 2
+      data: []
+    };
+    this.dashBoardService.getTaskByOperation().subscribe(res => {
+      this.totalApp = res;
+      this.dataTask.data = this.totalApp;
     });
 
   }
