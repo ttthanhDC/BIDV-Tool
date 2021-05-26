@@ -12,6 +12,7 @@ export class ServiceListComponent implements OnInit {
 
   srv: Service[];
   srvId: number;
+  serviceId: number;
   isShowModal: boolean = true;
   page = 1;
   pageSize = 5;
@@ -31,7 +32,6 @@ export class ServiceListComponent implements OnInit {
   }
   delete(id: number) {
     this.srvId = id;
-    
   }
   checkDelete() { 
     this.serviceService.deleteService(this.srvId)
@@ -39,6 +39,9 @@ export class ServiceListComponent implements OnInit {
         data => {
           this.getAllService();
         })
+  }
+  getServiceId(id: number){
+    this.serviceId = id;
   }
 
 }

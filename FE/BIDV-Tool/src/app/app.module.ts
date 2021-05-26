@@ -38,7 +38,9 @@ import * as FusionCharts from 'fusioncharts';
 import * as Charts from 'fusioncharts/fusioncharts.charts';
 import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
 
-import * as TimeSeries from 'fusioncharts/fusioncharts.timeseries'; // Import timeseries
+import * as TimeSeries from 'fusioncharts/fusioncharts.timeseries';
+import { GetOprByServiceComponent } from './admin/content/getElementById/get-opr-by-service/get-opr-by-service.component';
+import { GetServiceByAppComponent } from './admin/content/getElementById/get-service-by-app/get-service-by-app.component'; // Import timeseries
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
 
@@ -67,6 +69,8 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
     TaskListComponent,
     TaskAddComponent,
     TaskEditComponent,
+    GetOprByServiceComponent,
+    GetServiceByAppComponent,
   ],
   imports: [
     BrowserModule, 

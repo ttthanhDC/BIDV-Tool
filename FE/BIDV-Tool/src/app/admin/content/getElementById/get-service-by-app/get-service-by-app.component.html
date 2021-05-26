@@ -1,0 +1,36 @@
+<div class="container-fluid">
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">List Service By Application</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Application Name</th>
+                            <th>Service ID</th>
+                            <th>Service Name</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let a of srvByApp | slice: (page-1) * pageSize : page * pageSize; index as i">
+                            <td>{{i + 1}}</td>
+                            <td>{{a.applicationName}}</td>
+                            <td>{{a.serviceId}}</td>
+                            <td>{{a.serviceName}}</td>
+                            <td>{{a.status}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="srvByApp.length"></ngb-pagination>
+            </div>
+        </div>
+    </div>
+    <a><i  (click)="returnPage()"><button type="submit" class="btn btn-primary">Back</button></i></a><br>
+
+</div>
