@@ -133,7 +133,6 @@ public class ServiceController {
             Service services = servicesService.getById(id);
             if (services != null) {
                 servicesService.delete(services);
-                return ResponseEntity.ok().body("ok");
             }
             return ResponseEntity.ok().body(null);
         } catch (Exception e) {

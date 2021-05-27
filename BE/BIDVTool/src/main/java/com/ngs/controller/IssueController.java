@@ -120,10 +120,10 @@ public class IssueController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable Integer id) {
+    public ResponseEntity<String> delete(@PathVariable Integer id) {
         try {
             issueService.delete(id);
-            return ResponseEntity.ok("success");
+            return ResponseEntity.ok().body(null);
         } catch (DefinedException e) {
             e.printStackTrace();
             HttpHeaders headers = new HttpHeaders();

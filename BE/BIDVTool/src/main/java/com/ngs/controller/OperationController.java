@@ -84,10 +84,10 @@ public class OperationController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable Integer id) {
+    public ResponseEntity<String> delete(@PathVariable Integer id) {
         try {
             operationService.delete(id);
-            return ResponseEntity.ok("success");
+            return ResponseEntity.ok().body(null);
         } catch (DefinedException e) {
             e.printStackTrace();
             HttpHeaders headers = new HttpHeaders();
