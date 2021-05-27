@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Operation } from 'src/app/entity/Operation';
 import { Task } from 'src/app/entity/Task';
@@ -22,17 +23,30 @@ export class TaskEditComponent implements OnInit {
   openDate: string;
   dueDate: string;
   closeDate: string;
+  form: FormGroup;
+  submitted = false;
   constructor(private taskService: TaskService,
     private userService: UserService,
     private operationService: OperationService,
     private router: Router,
     private route: ActivatedRoute,
-    private datePipe: DatePipe) { }
+    private datePipe: DatePipe,
+    private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.getTaskById();
     this.getAllUser();
     this.getAllOperation();
+    this.form = this.formBuilder.group({
+      desc: ['', Validators.required],
+      assign: ['', Validators.required],
+      operation: ['', Validators.required],
+      status: ['', Validators.required],
+      mapping: ['', Validators.required],
+      open: ['', Validators.required],
+      due: ['', Validators.required],
+      close: ['', Validators.required]
+    })
   }
   onSubmit() {
     this.taskService.editTask(this.task).subscribe(data => {

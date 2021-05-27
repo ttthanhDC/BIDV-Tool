@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { error } from 'console';
 import { $ } from 'protractor';
 import { Application } from 'src/app/entity/Application';
 import { ResponseApp } from 'src/app/entity/ResponseApp';
@@ -16,6 +17,8 @@ export class ApplicationListComponent implements OnInit {
   isShowModal: boolean = true;
   page = 1;
   pageSize = 5;
+  keyword: string;
+  display: string;
 
   constructor(private applicationService: ApplicationService, private router: Router) { }
 
@@ -32,23 +35,25 @@ export class ApplicationListComponent implements OnInit {
   }
   delete(id: number) {
     this.appId = id;
-    console.log(this.appId);
-
-
   }
   checkDelete() {
     this.applicationService.deleteApplication(this.appId)
       .subscribe(
         data => {
           this.getAllApp();
-        })
+        },
+        error => {
+          if(error.status == 500){
+            this.openModal();
+          }
+        }
+        )
   }
 
-  close() {
-    this.isShowModal = false;
+  openModal() {
+    this.display = "block";
   }
-
-  test() {
-
+  onCloseHandled() {
+    this.display = "none";
   }
 }

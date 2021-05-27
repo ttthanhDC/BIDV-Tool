@@ -15,7 +15,8 @@ export class OpenissueListComponent implements OnInit {
   isShowModal: boolean = true;
   page = 1;
   pageSize = 5;
-  
+  keyword: string;
+  display: string;
   constructor(private openissueService: OpenissueService, private router: Router) { }
 
   ngOnInit(): void {
@@ -28,8 +29,6 @@ export class OpenissueListComponent implements OnInit {
         data => {          
           this.issue = data.issues;
           this.issue.forEach(element => {
-            console.log(element.openDate);
-            
           });
         })
   }
@@ -42,7 +41,18 @@ export class OpenissueListComponent implements OnInit {
       .subscribe(
         data => {
           this.getAllOpenIssue();
-        })
+        },
+        error => {
+          if (error.status == 500) {
+            this.openModal();
+          }
+        }
+        )
   }
-
+  openModal() {
+    this.display = "block";
+  }
+  onCloseHandled() {
+    this.display = "none";
+  }
 }

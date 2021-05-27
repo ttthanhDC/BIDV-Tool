@@ -12,7 +12,7 @@ export class GetServiceByAppComponent implements OnInit {
   srvByApp: ResServiceByApp[];
   page = 1;
   pageSize = 5;
-  
+  keyword: string;
 
   constructor( private serviceService: ServiceService, private router: Router, private route: ActivatedRoute) { }
 

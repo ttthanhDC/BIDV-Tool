@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { OpenIssue } from 'src/app/entity/OpenIssue';
 import { Operation } from 'src/app/entity/Operation';
@@ -21,22 +21,31 @@ export class OpenissueAddComponent implements OnInit {
   openDate: Date;
   dueDate: Date;
   closeDate: Date;
-  form = new FormGroup({
-    name: new FormControl('', Validators.required),
-  });
+  form: FormGroup;
+  submitted = false;
   constructor(private openissueService: OpenissueService,
     private userService: UserService,
     private operationService: OperationService,
-    private router: Router) { }
+    private router: Router,
+    private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.getAllUser();
     this.getAllOperation();
+    this.form = this.formBuilder.group({
+      desc: ['', Validators.required],
+      reporter: ['', Validators.required],
+      resolution: ['', Validators.required],
+      operation: ['', Validators.required],
+      owner: ['', [Validators.required, Validators.maxLength(5)]],
+      status: ['', Validators.required],
+      open: ['', Validators.required],
+      due: ['', Validators.required],
+      close: ['', Validators.required]
+    })
   }
 
   onSubmit() {
-    console.log(this.issue);
-    
     this.openissueService.addOpenIssue(this.issue)
       .subscribe(
         data => {

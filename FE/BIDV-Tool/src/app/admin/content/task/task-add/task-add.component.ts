@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Operation } from 'src/app/entity/Operation';
 import { Task } from 'src/app/entity/Task';
@@ -21,17 +21,27 @@ export class TaskAddComponent implements OnInit {
   openDate: Date;
   dueDate: Date;
   closeDate: Date;
-  form = new FormGroup({
-    name: new FormControl('', Validators.required),
-  });
+  form: FormGroup;
+  submitted = false;
   constructor(private taslService: TaskService,
     private userService: UserService,
     private operationService: OperationService,
-    private router: Router) { }
+    private router: Router,
+    private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.getAllUser();
     this.getAllOperation();
+    this.form = this.formBuilder.group({
+      desc: ['', Validators.required],
+      assign: ['', Validators.required],
+      operation: ['', Validators.required],
+      status: ['', Validators.required],
+      mapping: ['', Validators.required],
+      open: ['', Validators.required],
+      due: ['', Validators.required],
+      close: ['', Validators.required]
+    })
   }
 
   onSubmit() {

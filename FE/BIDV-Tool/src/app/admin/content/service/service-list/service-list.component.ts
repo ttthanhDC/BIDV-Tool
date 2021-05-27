@@ -16,7 +16,8 @@ export class ServiceListComponent implements OnInit {
   isShowModal: boolean = true;
   page = 1;
   pageSize = 5;
-  
+  keyword: string;
+  display: string;
   constructor(private serviceService: ServiceService, private router: Router) { }
 
   ngOnInit(): void {
@@ -26,22 +27,34 @@ export class ServiceListComponent implements OnInit {
   getAllService() {
     this.serviceService.getListService()
       .subscribe(
-        data => {          
+        data => {
           this.srv = data.services;
         })
   }
   delete(id: number) {
     this.srvId = id;
   }
-  checkDelete() { 
+  checkDelete() {
     this.serviceService.deleteService(this.srvId)
       .subscribe(
         data => {
           this.getAllService();
-        })
+        },
+        error => {
+          if (error.status == 500) {
+            this.openModal();
+          }
+        }
+      )
   }
-  getServiceId(id: number){
+  getServiceId(id: number) {
     this.serviceId = id;
+  }
+  openModal() {
+    this.display = "block";
+  }
+  onCloseHandled() {
+    this.display = "none";
   }
 
 }

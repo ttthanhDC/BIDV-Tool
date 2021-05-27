@@ -15,7 +15,8 @@ export class OperationListComponent implements OnInit {
   isShowModal: boolean = true;
   page = 1;
   pageSize = 5;
-  
+  keyword: string;
+  display: string;
   constructor(private oprationService: OperationService, private router: Router) { }
 
   ngOnInit(): void {
@@ -25,20 +26,31 @@ export class OperationListComponent implements OnInit {
   getAllOperation() {
     this.oprationService.getListOperation()
       .subscribe(
-        data => {          
+        data => {
           this.opr = data.operations;
         })
   }
   delete(id: number) {
     this.oprId = id;
-    
+
   }
-  checkDelete() { 
+  checkDelete() {
     this.oprationService.deleteOperation(this.oprId)
       .subscribe(
         data => {
           this.getAllOperation();
+        },
+        error => {
+          if (error.status == 500) {
+            this.openModal();
+          }
         })
+  }
+  openModal() {
+    this.display = "block";
+  }
+  onCloseHandled() {
+    this.display = "none";
   }
 
 }

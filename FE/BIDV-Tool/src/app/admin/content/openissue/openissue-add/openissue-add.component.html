@@ -1,36 +1,61 @@
 <div class="container">
-    <form (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
         <div class="form-group">
             <label for="bidvAppCode">Description</label>
-            <input type="text" class="form-control" name="applicationId" [(ngModel)]="issue.description">
+            <input type="text" class="form-control" name="desc" [(ngModel)]="issue.description" #desc="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && desc.invalid }" required>
+            <div *ngIf="f.submitted && desc.invalid" class="invalid-feedback">
+                <div *ngIf="desc.errors.required">Description is required</div>
+            </div>
         </div>
         <div class="form-group">
             <label for="p_category">Reporter</label>
-            <select class="form-control" name="serviceName" [(ngModel)]="issue.reporterId">
+            <select class="form-control" name="reporter" [(ngModel)]="issue.reporterId" #reporter="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && reporter.invalid }" required>
                 <option disabled selected>Select Reporter</option>
                 <option *ngFor="let u of user" value="{{u.id}}">{{u.userName}}
                 </option>
             </select>
+            <div *ngIf="f.submitted && reporter.invalid" class="invalid-feedback">
+                <div *ngIf="reporter.errors.required">Reporter is required</div>
+            </div>
         </div>
         <div class="form-group">
             <label for="bidvAppCode">Resolution</label>
-            <input type="text" class="form-control" name="operationName" [(ngModel)]="issue.resolution">
+            <input type="text" class="form-control" name="resolution" [(ngModel)]="issue.resolution"
+                #resolution="ngModel" [ngClass]="{ 'is-invalid': f.submitted && resolution.invalid }" required>
+            <div *ngIf="f.submitted && resolution.invalid" class="invalid-feedback">
+                <div *ngIf="resolution.errors.required">Resolution is required</div>
+            </div>
         </div>
         <div class="form-group">
             <label for="p_category">Operation</label>
-            <select class="form-control" name="operation" [(ngModel)]="issue.operationId">
+            <select class="form-control" name="operation" [(ngModel)]="issue.operationId" #operation="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && operation.invalid }" required>
                 <option disabled selected>Select Operation</option>
                 <option *ngFor="let o of opr" value="{{o.id}}">{{o.operationName}}
                 </option>
             </select>
+            <div *ngIf="f.submitted && operation.invalid" class="invalid-feedback">
+                <div *ngIf="operation.errors.required">Service is required</div>
+            </div>
         </div>
         <div class="form-group">
             <label for="bidvAppCode">Owner</label>
-            <input type="text" class="form-control" name="owner" [(ngModel)]="issue.owner">
+            <input type="text" class="form-control" name="owner" [(ngModel)]="issue.owner" #owner="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && owner.invalid }" required>
+            <div *ngIf="f.submitted && owner.invalid" class="invalid-feedback">
+                <div *ngIf="owner.errors.maxlength">Owner up to 5 characters</div>
+                <div *ngIf="owner.errors.required">Owner is required</div>
+            </div>
         </div>
         <div class="form-group">
             <label for="bidvAppCode">Status</label>
-            <input type="text" class="form-control" name="status" [(ngModel)]="issue.status">
+            <input type="text" class="form-control" name="status" [(ngModel)]="issue.status" #status="ngModel"
+                [ngClass]="{ 'is-invalid': f.submitted && status.invalid }" required>
+            <div *ngIf="f.submitted && status.invalid" class="invalid-feedback">
+                <div *ngIf="status.errors.required">Status is required</div>
+            </div>
         </div>
         <div class="form-group">
             <label for="bidvAppCode">Comment</label>
@@ -39,22 +64,34 @@
         <div class="row">
             <div class="col-md-5">
                 <label for="bidvAppCode">Open Date</label>
-                <input type="date" class="form-control" value="{{openDate}}" [(ngModel)]="issue.openDate"
-                    name="ssdLegacy" (change)="onChangeOpenDate($event)" min="2000-01-01" max="2060-12-31">
+                <input type="date" class="form-control" value="{{openDate}}" [(ngModel)]="issue.openDate" name="open"
+                    (change)="onChangeOpenDate($event)" min="2000-01-01" max="2060-12-31" #open="ngModel"
+                    [ngClass]="{ 'is-invalid': f.submitted && open.invalid }" required>
+                <div *ngIf="f.submitted && open.invalid" class="invalid-feedback">
+                    <div *ngIf="open.errors.required">Open Date is required</div>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-5">
                 <label for="bidvAppCode">Due Date</label>
-                <input type="date" class="form-control" value="{{dueDate}}" [(ngModel)]="issue.dueDate" name="ssdLegacy"
-                    (change)="onChangeOpenDate($event)" min="2000-01-01" max="2060-12-31">
+                <input type="date" class="form-control" value="{{dueDate}}" [(ngModel)]="issue.dueDate" name="due"
+                    (change)="onChangeOpenDate($event)" min="2000-01-01" max="2060-12-31" #due="ngModel"
+                    [ngClass]="{ 'is-invalid': f.submitted && due.invalid }" required>
+                <div *ngIf="f.submitted && due.invalid" class="invalid-feedback">
+                    <div *ngIf="due.errors.required">Due Date is required</div>
+                </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-5">
                 <label for="bidvAppCode">Close Date</label>
-                <input type="date" class="form-control" value="{{closeDate}}" [(ngModel)]="issue.closeDate"
-                    name="ssdLegacy" (change)="onChangeOpenDate($event)" min="2000-01-01" max="2060-12-31">
+                <input type="date" class="form-control" value="{{closeDate}}" [(ngModel)]="issue.closeDate" name="close"
+                    (change)="onChangeOpenDate($event)" min="2000-01-01" max="2060-12-31" #close="ngModel"
+                    [ngClass]="{ 'is-invalid': f.submitted && close.invalid }" required>
+                <div *ngIf="f.submitted && close.invalid" class="invalid-feedback">
+                    <div *ngIf="close.errors.required">Close Date is required</div>
+                </div>
             </div>
         </div><br>
         <div class="input-group-append">

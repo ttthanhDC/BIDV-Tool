@@ -1,21 +1,29 @@
 <div class="container">
-    <form (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label for="appCode">Service Name</label>
-            <input type="text" class="form-control" name="name"  [(ngModel)]="srv.serviceName">
-          </div>
-        <div class="form-group">
-          <label for="bidvAppCode">Status</label>
-          <input type="text" class="form-control" name="status" [(ngModel)]="srv.status">
-        </div>
-        <div class="input-group-append">
-        <button class="btn btn-primary" type="submit" >
-            Submit
+  <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+    <div class="form-group">
+      <label for="appCode">Service Name</label>
+      <input type="text" class="form-control" name="name" [(ngModel)]="srv.serviceName" #name="ngModel"
+        [ngClass]="{ 'is-invalid': f.submitted && name.invalid }" required>
+      <div *ngIf="f.submitted && name.invalid" class="invalid-feedback">
+        <div *ngIf="name.errors.required">Name is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="bidvAppCode">Status</label>
+      <input type="text" class="form-control" name="status" [(ngModel)]="srv.status" #status="ngModel"
+        [ngClass]="{ 'is-invalid': f.submitted && status.invalid }" required>
+      <div *ngIf="f.submitted && status.invalid" class="invalid-feedback">
+        <div *ngIf="status.errors.required">Status is required</div>
+      </div><br>
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="submit">
+          Submit
         </button>
         <button class="btn btn-primary" type="reset" style="margin-left: 20px;">
-            <i class="fa fa-sm"></i>
-            Reset
+          <i class="fa fa-sm"></i>
+          Reset
         </button>
+      </div>
     </div>
-      </form>
+  </form>
 </div>
