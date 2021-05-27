@@ -82,13 +82,14 @@ public class TaskController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable Integer id) {
+    public ResponseEntity<String> delete(@PathVariable Integer id) {
         try {
             Task task = taskService.getById(id);
             if (task != null) {
                 taskService.delete(task);
+                return ResponseEntity.ok().body(null);
             }
-            return ResponseEntity.badRequest().body("not found operation");
+            return ResponseEntity.badRequest().body(null);
 
         } catch (DefinedException e) {
             e.printStackTrace();
