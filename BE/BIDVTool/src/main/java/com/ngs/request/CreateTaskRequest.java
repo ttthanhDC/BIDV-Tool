@@ -11,7 +11,7 @@ import java.util.Date;
 public class CreateTaskRequest {
     protected String description;
     protected Integer operationId;
-    protected Integer userId;
+    protected Integer assigneeId;
     protected String mappingSheet;
     protected String openDate;
     protected String dueDate;

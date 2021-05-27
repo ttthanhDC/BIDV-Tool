@@ -49,7 +49,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task save(CreateTaskRequest request) throws Exception {
-        Pair<User, Operation> userOperationPair = validate(request.getUserId(), request.getOperationId());
+        Pair<User, Operation> userOperationPair = validate(request.getAssigneeId(), request.getOperationId());
 
         Task task = Task.builder()
                 .assignee(userOperationPair.getLeft())
@@ -57,9 +57,9 @@ public class TaskServiceImpl implements TaskService {
                 .description(request.getDescription())
                 .mappingSheet(request.getMappingSheet())
                 .status(request.getStatus())
-                .openDate(DateUtil.fromString(request.getOpenDate()))
-                .closeDate(DateUtil.fromString(request.getCloseDate()))
-                .dueDate(DateUtil.fromString(request.getDueDate()))
+                .openDate(DateUtil.fromString(request.getOpenDate(), "yyyy-MM-dd"))
+                .closeDate(DateUtil.fromString(request.getCloseDate(), "yyyy-MM-dd"))
+                .dueDate(DateUtil.fromString(request.getDueDate(), "yyyy-MM-dd"))
                 .build();
         taskRepository.save(task);
         return task;
@@ -71,18 +71,19 @@ public class TaskServiceImpl implements TaskService {
         if (!taskOptional.isPresent()){
             throw new DefinedException(ErrorCode.NOT_FOUND, "fail to update task by id = "+id);
         }else {
-            Pair<User, Operation> userOperationPair = validate(request.getUserId(), request.getOperationId());
+            Pair<User, Operation> userOperationPair = validate(request.getAssigneeId(), request.getOperationId());
 
             Task task = taskOptional.get();
             Task previousTask = SerializationUtils.clone(task);
             task.setAssignee(userOperationPair.getLeft());
             task.setOperation(userOperationPair.getRight());
-            task.setCloseDate(DateUtil.fromString(request.getCloseDate()));
+            task.setCloseDate(DateUtil.fromString(request.getCloseDate(), "yyyy-MM-dd"));
             task.setDescription(request.getDescription());
-            task.setOpenDate(DateUtil.fromString(request.getOpenDate()));
-            task.setDueDate(DateUtil.fromString(request.getDueDate()));
+            task.setOpenDate(DateUtil.fromString(request.getOpenDate(),"yyyy-MM-dd"));
+            task.setDueDate(DateUtil.fromString(request.getDueDate(), "yyyy-MM-dd"));
             task.setMappingSheet(request.getMappingSheet());
             task.setStatus(request.getStatus());
+            taskRepository.save(task);
             UpdateTaskResponse response = UpdateTaskResponse.builder()
                     .previousTask(previousTask)
                     .updateTask(task)

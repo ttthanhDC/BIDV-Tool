@@ -1,6 +1,6 @@
 package com.ngs.response;
 
-import com.ngs.entity.Task;
+import com.ngs.response.bean.Task;
 import lombok.Data;
 
 import java.util.List;

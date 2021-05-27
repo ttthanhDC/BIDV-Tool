@@ -32,19 +32,7 @@ public class IssueController {
             List<OpenIssue> openIssues = issueService.getAll();
             List<Issue> issues = new ArrayList<>();
             openIssues.forEach(i -> {
-                Issue issue = Issue.builder()
-                        .id(i.getId())
-                        .closeDate(StringUtil.fromDate(i.getCloseDate(), "yyyy-MM-dd"))
-                        .openDate(StringUtil.fromDate(i.getOpenDate(), "yyyy-MM-dd"))
-                        .dueDate(StringUtil.fromDate(i.getDueDate(), "yyyy-MM-dd"))
-                        .comment(i.getComment())
-                        .description(i.getDescription())
-                        .operation(i.getOperation())
-                        .reporter(i.getReporter())
-                        .owner(i.getOwner())
-                        .resolution(i.getResolution())
-                        .status(i.getStatus())
-                        .build();
+                Issue issue = buildIssueResponse(i);
                 issues.add(issue);
             });
 
@@ -62,19 +50,7 @@ public class IssueController {
     public ResponseEntity<Issue> getById(@PathVariable Integer id) {
         try {
             OpenIssue openIssue = issueService.getById(id);
-            Issue issue = Issue.builder()
-                    .id(openIssue.getId())
-                    .closeDate(StringUtil.fromDate(openIssue.getCloseDate(), "yyyy-MM-dd"))
-                    .openDate(StringUtil.fromDate(openIssue.getOpenDate(), "yyyy-MM-dd"))
-                    .dueDate(StringUtil.fromDate(openIssue.getDueDate(), "yyyy-MM-dd"))
-                    .comment(openIssue.getComment())
-                    .description(openIssue.getDescription())
-                    .operation(openIssue.getOperation())
-                    .reporter(openIssue.getReporter())
-                    .owner(openIssue.getOwner())
-                    .resolution(openIssue.getResolution())
-                    .status(openIssue.getStatus())
-                    .build();
+            Issue issue = buildIssueResponse(openIssue);
             return ResponseEntity.ok(issue);
         } catch (DefinedException e) {
             e.printStackTrace();
@@ -85,6 +61,22 @@ public class IssueController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
+    }
+
+    private Issue buildIssueResponse(OpenIssue openIssue) {
+        return Issue.builder()
+                .id(openIssue.getId())
+                .closeDate(StringUtil.fromDate(openIssue.getCloseDate(), "yyyy-MM-dd"))
+                .openDate(StringUtil.fromDate(openIssue.getOpenDate(), "yyyy-MM-dd"))
+                .dueDate(StringUtil.fromDate(openIssue.getDueDate(), "yyyy-MM-dd"))
+                .comment(openIssue.getComment())
+                .description(openIssue.getDescription())
+                .operation(openIssue.getOperation())
+                .reporter(openIssue.getReporter())
+                .owner(openIssue.getOwner())
+                .resolution(openIssue.getResolution())
+                .status(openIssue.getStatus())
+                .build();
     }
 
     @PostMapping
