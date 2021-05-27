@@ -87,7 +87,6 @@ public class TaskController {
             Task task = taskService.getById(id);
             if (task != null) {
                 taskService.delete(task);
-                return ResponseEntity.ok().body("success");
             }
             return ResponseEntity.badRequest().body("not found operation");
 
