@@ -10,6 +10,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import { AdminComponent } from './admin/admin/admin.component';
 import { DashboardComponent } from './admin/content/dashboard/dashboard.component';
@@ -81,7 +82,8 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
     FormsModule, 
     ReactiveFormsModule,
     NgbModule,
-    FusionChartsModule
+    FusionChartsModule,
+    Ng2SearchPipeModule
   ],
   providers: [
     DatePipe

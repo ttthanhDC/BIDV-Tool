@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Application } from 'src/app/entity/Application';
 import { ApplicationService } from 'src/app/services/application/application.service';
@@ -11,12 +11,17 @@ import { ApplicationService } from 'src/app/services/application/application.ser
 })
 export class ApplicationAddComponent implements OnInit {
   app : Application = new Application();
-  form = new FormGroup({
-    name: new FormControl('',Validators.required),
-  });
-  constructor(private applicationService : ApplicationService, private router : Router) { }
+  form: FormGroup;
+  submitted = false;
+  constructor(private applicationService : ApplicationService, private router : Router, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      txtAppCode: ['', Validators.required],
+      txtBidvAppCode: ['', Validators.required],
+      txtAppName: ['', Validators.required],
+      txtAppAbb: ['', Validators.required]
+    })
   }
   
   onSubmit(){

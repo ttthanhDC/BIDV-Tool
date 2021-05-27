@@ -14,8 +14,8 @@ export class DashboardService {
   private oprByStatus = "http://172.16.3.141:8080/dashboard/operation?query=status";
   private serviceByApp = "http://172.16.3.141:8080//dashboard/service?query=app";
   private serviceByStatus = "http://172.16.3.141:8080/dashboard/service?query=status";
-  private oprByService = "http://localhost:8080/dashboard/operation?query=service";
-  private taskByOperation = "http://localhost:8080/dashboard/task?query=operation"
+  private oprByService = "http://172.16.3.141:8080/dashboard/operation?query=service";
+  private taskByOperation = "http://172.16.3.141:8080/dashboard/task?query=operation"
 
   constructor(private http: HttpClient) { }
 

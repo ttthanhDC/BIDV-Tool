@@ -1,32 +1,49 @@
 <div class="container">
-    <form (ngSubmit)="onSubmit()">
-        <div class="form-group">
-            <label for="appCode">Application Code</label>
-            <input type="text" class="form-control" name="txtAppCode"  [(ngModel)]="app.bidvAppCode">
-          </div>
-        <div class="form-group">
-          <label for="bidvAppCode">Bidv Application Code</label>
-          <input type="text" class="form-control" name="txtBidvAppCode" [(ngModel)]="app.integrationAppCode">
-        </div>
-        <div class="form-group">
-          <label for="bidvAppCode">Application Name</label>
-          <input type="text" class="form-control" name="txtAppName" [(ngModel)]="app.applicationName">
-        </div>
-        <div class="form-group">
-          <label for="bidvAppCode">Application Abbreviation</label>
-          <input type="text" class="form-control" name="txtAppAbb" [(ngModel)]="app.abbreviation">
-        </div>
-        <div class="checkbox">
-            <label><input type="checkbox" name="chkIsScope" [(ngModel)]="app.inScope" (change) = 'changeEvent($event)'>  Scope</label>
-          </div>
-        <div class="input-group-append">
-        <button class="btn btn-primary" type="submit" >
-            Submit
-        </button>
-        <button class="btn btn-primary" type="reset" style="margin-left: 20px;">
-            <i class="fa fa-sm"></i>
-            Reset
-        </button>
+  <form (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+    <div class="form-group">
+      <label for="appCode">Application Code</label>
+      <input type="text" class="form-control" name="txtAppCode" [(ngModel)]="app.bidvAppCode" #txtAppCode="ngModel"
+        [ngClass]="{ 'is-invalid': f.submitted && txtAppCode.invalid }" required>
+      <div *ngIf="f.submitted && txtAppCode.invalid" class="invalid-feedback">
+        <div *ngIf="txtAppCode.errors.required">Application Code is required</div>
+      </div>
     </div>
-      </form>
+    <div class="form-group">
+      <label for="bidvAppCode">Bidv Application Code</label>
+      <input type="text" class="form-control" name="txtBidvAppCode" [(ngModel)]="app.integrationAppCode"
+        #txtBidvAppCode="ngModel" [ngClass]="{ 'is-invalid': f.submitted && txtBidvAppCode.invalid }" required>
+      <div *ngIf="f.submitted && txtBidvAppCode.invalid" class="invalid-feedback">
+        <div *ngIf="txtBidvAppCode.errors.required">BIDV Application Code is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="bidvAppCode">Application Name</label>
+      <input type="text" class="form-control" name="txtAppName" [(ngModel)]="app.applicationName" #txtAppName="ngModel"
+        [ngClass]="{ 'is-invalid': f.submitted && txtAppName.invalid }" required>
+      <div *ngIf="f.submitted && txtAppName.invalid" class="invalid-feedback">
+        <div *ngIf="txtAppName.errors.required">Application name is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="bidvAppCode">Application Abbreviation</label>
+      <input type="text" class="form-control" name="txtAppAbb" [(ngModel)]="app.abbreviation" #txtAppAbb="ngModel"
+        [ngClass]="{ 'is-invalid': f.submitted && txtAppAbb.invalid }" required>
+      <div *ngIf="f.submitted && txtAppAbb.invalid" class="invalid-feedback">
+        <div *ngIf="txtAppAbb.errors.required">BIDV Application Code is required</div>
+      </div>
+    </div>
+    <div class="checkbox">
+      <label><input type="checkbox" name="chkIsScope" [(ngModel)]="app.inScope" (change)='changeEvent($event)'>
+        Scope</label>
+    </div>
+    <div class="input-group-append">
+      <button class="btn btn-primary" type="submit">
+        Submit
+      </button>
+      <button class="btn btn-primary" type="reset" style="margin-left: 20px;">
+        <i class="fa fa-sm"></i>
+        Reset
+      </button>
+    </div>
+  </form>
 </div>

@@ -13,8 +13,8 @@ import { Service } from 'src/app/entity/Service';
 export class ServiceService {
 
   private srvUrl = "http://172.16.3.141:8080/service";
-  private oprUrl = "http://localhost:8080/dashboard/operation?service=";
-  private appUrl = "http://localhost:8080/dashboard/service?app=";
+  private oprUrl = "http://172.16.3.141:8080/dashboard/operation?service=";
+  private appUrl = "http://172.16.3.141:8080/dashboard/service?app=";
   constructor(private http: HttpClient, private datePipe: DatePipe) { }
 
   requestId = '' + Math.floor(Date.now() / 1000) || '';

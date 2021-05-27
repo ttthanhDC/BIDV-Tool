@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Operation } from 'src/app/entity/Operation';
 import { Service } from 'src/app/entity/Service';
@@ -15,15 +15,23 @@ export class OperationAddComponent implements OnInit {
 
   opr : Operation = new Operation();
   service : Service[];
-  form = new FormGroup({
-    name: new FormControl('',Validators.required),
-  });
+  form: FormGroup;
+  submitted = false;
   constructor(private operationService : OperationService, 
               private serviceService : ServiceService,
-              private router : Router) { }
+              private router : Router,
+              private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
     this.getAllService();
+    this.form = this.formBuilder.group({
+      serviceName: ['', Validators.required],
+      applicationId: ['', Validators.required],
+      operationName: ['', Validators.required],
+      status: ['', Validators.required],
+      ssdSOA: ['', Validators.required],
+      ssdLegacy: ['', Validators.required]
+    })
   }
   
   onSubmit(){
