@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Application } from 'src/app/entity/Application';
 import { ApplicationService } from 'src/app/services/application/application.service';
@@ -10,10 +11,18 @@ import { ApplicationService } from 'src/app/services/application/application.ser
 })
 export class ApplicationEditComponent implements OnInit {
   app : Application = new Application();
-  constructor(private applicationService : ApplicationService, private router : Router, private route: ActivatedRoute) { }
+  form: FormGroup;
+  submitted = false;
+  constructor(private applicationService : ApplicationService, private router : Router, private route: ActivatedRoute, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
    this.getAppById();
+   this.form = this.formBuilder.group({
+    txtAppCode: ['', Validators.required],
+    txtBidvAppCode: ['', Validators.required],
+    txtAppName: ['', Validators.required],
+    txtAppAbb: ['', Validators.required]
+  })
   }
   onSubmit (){
     this.applicationService.editApplication(this.app).subscribe(data => {

@@ -15,7 +15,8 @@ export class TaskListComponent implements OnInit {
   isShowModal: boolean = true;
   page = 1;
   pageSize = 5;
-  
+  keyword: string;
+  display: string;
   constructor(private taskService: TaskService, private router: Router) { }
 
   ngOnInit(): void {
@@ -25,20 +26,31 @@ export class TaskListComponent implements OnInit {
   getAllTask() {
     this.taskService.getListTask()
       .subscribe(
-        data => {          
+        data => {
           this.task = data.listTask;
         })
   }
   delete(id: number) {
     this.taskId = id;
-    
+
   }
-  checkDelete() { 
+  checkDelete() {
     this.taskService.deleteTask(this.taskId)
       .subscribe(
         data => {
           this.getAllTask();
+        },
+        error => {
+          if (error.status == 500) {
+            this.openModal();
+          }
         })
+  }
+  openModal() {
+    this.display = "block";
+  }
+  onCloseHandled() {
+    this.display = "none";
   }
 
 }

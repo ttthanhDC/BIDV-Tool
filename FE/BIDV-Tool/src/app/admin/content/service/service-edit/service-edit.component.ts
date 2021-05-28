@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Service } from 'src/app/entity/Service';
 import { ServiceService } from 'src/app/services/service/service.service';
@@ -11,9 +12,15 @@ import { ServiceService } from 'src/app/services/service/service.service';
 export class ServiceEditComponent implements OnInit {
 
   srv : Service = new Service();
-  constructor(private serviceService : ServiceService, private router : Router, private route: ActivatedRoute) { }
+  form: FormGroup;
+  submitted = false;
+  constructor(private serviceService : ServiceService, private router : Router, private route: ActivatedRoute, private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      name: ['', Validators.required],
+      status: ['', Validators.required]
+    })
    this.getServiceById();
   }
   onSubmit (){
@@ -28,6 +35,9 @@ export class ServiceEditComponent implements OnInit {
         this.srv = data;
       })
     })
+  }
+  get f() {
+    return this.form.controls;
   }
 
 }

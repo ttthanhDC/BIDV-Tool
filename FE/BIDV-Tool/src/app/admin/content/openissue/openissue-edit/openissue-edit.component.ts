@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OpenIssue } from 'src/app/entity/OpenIssue';
 import { Operation } from 'src/app/entity/Operation';
@@ -21,17 +22,31 @@ export class OpenissueEditComponent implements OnInit {
   openDate: string;
   dueDate: string;
   closeDate: string;
+  form: FormGroup;
+  submitted = false;
   constructor(private openissueService: OpenissueService,
     private userService: UserService,
     private operationService: OperationService,
               private router : Router, 
               private route: ActivatedRoute,
-              private datePipe: DatePipe) { }
+              private datePipe: DatePipe,
+              private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
    this.getOpenIssueById();
    this.getAllUser();
    this.getAllOperation();
+   this.form = this.formBuilder.group({
+    desc: ['', Validators.required],
+    reporter: ['', Validators.required],
+    resolution: ['', Validators.required],
+    operation: ['', Validators.required],
+    owner: ['', [Validators.required, Validators.maxLength(5)]],
+    status: ['', Validators.required],
+    open: ['', Validators.required],
+    due: ['', Validators.required],
+    close: ['', Validators.required]
+  })
   }
   onSubmit (){
     this.openissueService.editOpenIssue(this.issue).subscribe(data => {

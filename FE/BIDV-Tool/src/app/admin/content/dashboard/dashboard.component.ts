@@ -98,8 +98,6 @@ export class DashboardComponent implements OnInit {
     };
     this.dashBoardService.getOperationByService().subscribe(res => {
       this.totalApp = res;
-      console.log(res);
-      
       this.dataOprByService.data = this.totalApp;
     });
 
