@@ -16,6 +16,11 @@
                             <input type="text" class="form-control" placeholder="Search Here" [(ngModel)]="keyword">
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div style="float: right; margin-right: 5px;"><a
+                            routerLink="/admin/task-add"><i class="far fa-plus-square"
+                                style="font-size: 35px;"></i></a></div>
+                    </div>
                 </div>
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
@@ -29,10 +34,7 @@
                             <th>Due Date</th>
                             <th>Close Date</th>
                             <th>Status</th>
-                            <th colspan="2">Action <div style="float: right; margin-right: 5px;"><a
-                                        routerLink="/admin/task-add"><i class="far fa-plus-square"
-                                            style="font-size: 30px;"></i></a></div>
-                            </th>
+                            <th colspan="2">Action</th>
                         </tr>
                     </thead>
                     <tbody>

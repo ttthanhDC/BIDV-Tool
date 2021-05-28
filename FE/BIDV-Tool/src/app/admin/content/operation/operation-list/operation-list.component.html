@@ -16,31 +16,33 @@
                             <input type="text" class="form-control" placeholder="Search Here" [(ngModel)]="keyword">
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div style="float: right; margin-right: 5px;"><a
+                            routerLink="/admin/operation-add"><i class="far fa-plus-square"
+                                style="font-size: 35px;"></i></a></div>
+                    </div>
                 </div>
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Operation Name</th>
                             <th>Service Name</th>
                             <th>Application ID</th>
-                            <th>Operation Name</th>
                             <th>Interaction With Core</th>
                             <th>Status</th>
                             <th>SSD SOA</th>
                             <th>SSD Legacy</th>
                             <th>isWorkshop</th>
-                            <th colspan="2">Action <div style="float: right; margin-right: 35px;"><a
-                                        routerLink="/admin/operation-add"><i class="far fa-plus-square"
-                                            style="font-size: 30px;"></i></a></div>
-                            </th>
+                            <th colspan="2">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr *ngFor="let a of opr | filter:keyword; index as i">
                             <td>{{i + 1}}</td>
+                            <td><a routerLink='/admin/getTaskDoing/operationId/{{a.id}}'>{{a.operationName}}</a></td>
                             <td>{{a.service.serviceName}}</td>
                             <td>{{a.applicationId}}</td>
-                            <td>{{a.operationName}}</td>
                             <td>{{a.interactWithCore}}</td>
                             <td>{{a.status}}</td>
                             <td>{{a.ssdSOA}}</td>

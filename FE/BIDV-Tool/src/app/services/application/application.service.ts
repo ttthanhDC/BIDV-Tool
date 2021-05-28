@@ -10,6 +10,7 @@ import { ResponseApp } from 'src/app/entity/ResponseApp';
 })
 export class ApplicationService {
 
+  // private appAdd = "http://192.168.1.136:4200/BIDVTool-Service/application";
   private appAdd = "http://172.16.3.141:8080/application";
   constructor(private http: HttpClient, private datePipe: DatePipe) { }
 

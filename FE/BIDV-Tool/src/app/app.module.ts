@@ -9,8 +9,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
 import { AdminComponent } from './admin/admin/admin.component';
 import { DashboardComponent } from './admin/content/dashboard/dashboard.component';
@@ -41,7 +42,8 @@ import * as FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion';
 
 import * as TimeSeries from 'fusioncharts/fusioncharts.timeseries';
 import { GetOprByServiceComponent } from './admin/content/getElementById/get-opr-by-service/get-opr-by-service.component';
-import { GetServiceByAppComponent } from './admin/content/getElementById/get-service-by-app/get-service-by-app.component'; // Import timeseries
+import { GetServiceByAppComponent } from './admin/content/getElementById/get-service-by-app/get-service-by-app.component';
+import { GetTaskDoingByOprComponent } from './admin/content/getElementById/get-task-doing-by-opr/get-task-doing-by-opr.component'; // Import timeseries
 // Pass the fusioncharts library and chart modules
 FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
 
@@ -72,21 +74,26 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
     TaskEditComponent,
     GetOprByServiceComponent,
     GetServiceByAppComponent,
+    GetTaskDoingByOprComponent,
   ],
   imports: [
-    BrowserModule, 
-    AppRoutingModule, 
-    FormsModule, 
-    HttpClientModule, 
-    ReactiveFormsModule, 
-    FormsModule, 
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
     ReactiveFormsModule,
     NgbModule,
     FusionChartsModule,
     Ng2SearchPipeModule
   ],
   providers: [
-    DatePipe
+    DatePipe,
+    {
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -7,6 +7,7 @@ import { ApplicationListComponent } from './admin/content/application/applicatio
 import { DashboardComponent } from './admin/content/dashboard/dashboard.component';
 import { GetOprByServiceComponent } from './admin/content/getElementById/get-opr-by-service/get-opr-by-service.component';
 import { GetServiceByAppComponent } from './admin/content/getElementById/get-service-by-app/get-service-by-app.component';
+import { GetTaskDoingByOprComponent } from './admin/content/getElementById/get-task-doing-by-opr/get-task-doing-by-opr.component';
 import { OpenissueAddComponent } from './admin/content/openissue/openissue-add/openissue-add.component';
 import { OpenissueEditComponent } from './admin/content/openissue/openissue-edit/openissue-edit.component';
 import { OpenissueListComponent } from './admin/content/openissue/openissue-list/openissue-list.component';
@@ -23,6 +24,7 @@ import { UserAddComponent } from './admin/content/user/user-add/user-add/user-ad
 import { UserListComponent } from './admin/content/user/user-list/user-list/user-list.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'admin/dashboard', pathMatch: 'full' },
   { path: 'admin', redirectTo: 'admin/dashboard', pathMatch: 'full' },
   { path: 'admin/dashboard', component: DashboardComponent },
   { path: 'admin/application-list', component: ApplicationListComponent },
@@ -43,11 +45,13 @@ const routes: Routes = [
   { path: 'admin/user-list', component: UserListComponent },
   { path: 'admin/user-add', component: UserAddComponent },
   { path: 'admin/getOprByService/serviceId/:id', component: GetOprByServiceComponent },
-  { path: 'admin/getServiceByApp/appId/:id', component: GetServiceByAppComponent }
+  { path: 'admin/getServiceByApp/appId/:id', component: GetServiceByAppComponent },
+  { path: 'admin/getTaskDoing/operationId/:id', component: GetTaskDoingByOprComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: false })],
+  
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

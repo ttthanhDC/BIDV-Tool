@@ -10,7 +10,8 @@ import { User } from 'src/app/entity/User';
 })
 export class UserService {
 
-  private userApi = "http://172.16.3.141:8080/user";
+  // private userApi = "http://192.168.1.136:4200/BIDVTool-Service/user";
+  private userApi = "http://172/16.3.141:4200/user";
   constructor(private http: HttpClient, private datePipe: DatePipe) { }
 
   requestId = '' + Math.floor(Date.now() / 1000) || '';

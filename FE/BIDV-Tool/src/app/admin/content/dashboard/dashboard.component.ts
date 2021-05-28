@@ -1,6 +1,7 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AppByService } from 'src/app/entity/AppByService';
+import { Chart } from 'src/app/entity/Chart';
 import { DashboardResponse } from 'src/app/entity/DashBoardResponse';
 import { DashboardService } from 'src/app/services/dashboard/dashboard.service';
 import { UploadfileService } from 'src/app/services/uploadfile/uploadfile.service';
@@ -24,6 +25,7 @@ export class DashboardComponent implements OnInit {
   dataTask: any;
   selectedSlice = 'none';
   chart: any;
+  chartResponse: Chart = new Chart();
   totalApp: DashboardResponse[];
   appByService: AppByService[]
   constructor(private uploadFileService: UploadfileService,
@@ -53,16 +55,27 @@ export class DashboardComponent implements OnInit {
     this.dataGetAppByService = {
       chart: {
         caption: "Get Application By Service",
-        xAxisName: "Service",
-        yAxisName: "Total Application",
+        xaxisname: "Service",
+        yaxisname: "Total Application",
+        showvalues: "1",
+        labeldisplay: "WRAP",
+        linethickness: "3",
+        numVisiblePlot: "12",
+        scrollheight: "10",
+        flatScrollBars: "1",
+        scrollShowButtons: "0",
+        scrollColor: "#cccccc",
         theme: "fusion"
       },
       // Chart Data - from step 2
-      data: []
+      categories: [],
+      dataset: []
+      
     };
-    this.dashBoardService.getAppByService().subscribe(res => {
-      this.totalApp = res;
-      this.dataGetAppByService.data = this.totalApp;
+    this.dashBoardService.getAppByServiceDemo().subscribe(res => {
+      this.chartResponse = res;
+      this.dataGetAppByService.categories = this.chartResponse.categories;
+      this.dataGetAppByService.dataset = this.chartResponse.dataset;
     });
 
     // Pie Operation By Status

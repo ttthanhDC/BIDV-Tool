@@ -4,13 +4,18 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Operation } from 'src/app/entity/Operation';
 import { ResponseOperation } from 'src/app/entity/ResponseOperation';
+import { TaskDoing } from 'src/app/entity/TaskDoing';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OperationService {
 
+  // private oprUrl = "http://192.168.1.136:4200/BIDVTool-Service/operation";
+  // private getTaskByOpr = "http://192.168.1.136:4200/BIDVTool-Service/operation";
+  private getTaskByOpr = "http://172.16.3.141:8080/operation";
   private oprUrl = "http://172.16.3.141:8080/operation";
+  private taskUrl = "http://172.16.3.141:8080/dashboard/task?operationId=";
   constructor(private http: HttpClient, private datePipe: DatePipe) { }
 
   requestId = '' + Math.floor(Date.now() / 1000) || '';
@@ -39,5 +44,9 @@ export class OperationService {
 
   deleteOperation( id : any) : Observable<Operation> {
     return this.http.delete<Operation>(`${this.oprUrl}/${id}`, this.options)
+  }
+
+  getTaskByOprId(id : any): Observable<TaskDoing[]>{
+    return this.http.get<TaskDoing[]>(`${this.taskUrl}${id}`);
   }
 }
