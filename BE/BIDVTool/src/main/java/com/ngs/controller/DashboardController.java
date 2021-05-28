@@ -5,6 +5,7 @@ import com.ngs.entity.Service;
 import com.ngs.response.bean.DoingTask;
 import com.ngs.response.bean.OperationResponse;
 import com.ngs.response.bean.ServiceByApp;
+import com.ngs.response.bean.TotalAppByService;
 import com.ngs.service.DashboardService;
 import com.ngs.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,10 +36,11 @@ public class DashboardController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-    @GetMapping(value = "/app",params = "query=service")
-    public ResponseEntity<List<Map<Object, Object>>> getTotalAppByService() {
+
+    @GetMapping(value = "/app", params = "query=service")
+    public ResponseEntity<TotalAppByService> getTotalAppByService() {
         try {
-            List<Map<Object, Object>> totalAppBySer = dashboardService.getTotalAppByService();
+            TotalAppByService totalAppBySer = dashboardService.getTotalAppByService();
             return ResponseEntity.ok(totalAppBySer);
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,7 +70,7 @@ public class DashboardController {
         }
     }
 
-    @GetMapping(value = "/service",params = "query=app")
+    @GetMapping(value = "/service", params = "query=app")
     public ResponseEntity<List<Map<Object, Object>>> getTotalServiceByApp() {
         try {
             List<Map<Object, Object>> totalServiceByApp = dashboardService.getTotalServiceByApp();
@@ -78,7 +80,8 @@ public class DashboardController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-    @GetMapping(value = "/service",params = "query=status")
+
+    @GetMapping(value = "/service", params = "query=status")
     public ResponseEntity<List<Map<Object, Object>>> getTotalServiceByStatus() {
         try {
             List<Map<Object, Object>> totalServiceByStatus = dashboardService.getTotalServiceByStatus();
@@ -118,7 +121,8 @@ public class DashboardController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-    @GetMapping(value = "/task",params = "query=operation")
+
+    @GetMapping(value = "/task", params = "query=operation")
     public ResponseEntity<List<Map<Object, Object>>> getTotalSTaskByOperation() {
         try {
             List<Map<Object, Object>> totalTaskByOperation = dashboardService.getTotalTaskByService();
@@ -128,10 +132,11 @@ public class DashboardController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
-    @GetMapping(value = "/task")
-    public ResponseEntity<List<DoingTask>> getTasksDoingByOperationId(HttpServletRequest request,@RequestParam Integer operationId) {
-        try {
 
+    @GetMapping(value = "/task", params = "operationId")
+    public ResponseEntity<List<DoingTask>> getTasksDoingByOperationId(HttpServletRequest request) {
+        try {
+            int operationId = Integer.parseInt(request.getParameter("operationId"));
             List<DoingTask> listTask = dashboardService.getTasksDoingByOperationId(operationId);
             if (listTask != null) {
                 return ResponseEntity.ok().body(listTask);

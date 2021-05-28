@@ -1,11 +1,10 @@
 package com.ngs.service.impl;
 
-import com.ngs.entity.Operation;
 import com.ngs.repository.DashBoardRepository;
 import com.ngs.response.bean.DoingTask;
 import com.ngs.response.bean.OperationResponse;
 import com.ngs.response.bean.ServiceByApp;
-import com.ngs.response.bean.TotalAppResponse;
+import com.ngs.response.bean.TotalAppByService;
 import com.ngs.service.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +35,7 @@ public class DashboardServiceImpl implements DashboardService {
     }
 
     @Override
-    public List<Map<Object, Object>> getTotalAppByService() {
+    public TotalAppByService getTotalAppByService() {
         return dashBoardRepository.getTotalAppByService();
     }
 

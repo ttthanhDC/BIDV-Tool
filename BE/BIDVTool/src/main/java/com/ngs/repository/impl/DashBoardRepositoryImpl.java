@@ -1,11 +1,7 @@
 package com.ngs.repository.impl;
 
-import com.ngs.entity.Operation;
 import com.ngs.repository.DashBoardRepository;
-import com.ngs.response.bean.DoingTask;
-import com.ngs.response.bean.OperationResponse;
-import com.ngs.response.bean.ServiceByApp;
-import org.apache.juli.logging.Log;
+import com.ngs.response.bean.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
@@ -31,12 +27,38 @@ public class DashBoardRepositoryImpl implements DashBoardRepository {
     }
 
     @Override
-    public List<Map<Object, Object>> getTotalAppByService() {
-        List<Map<Object, Object>> resultList = new ArrayList<>();
+    public TotalAppByService getTotalAppByService() {
+        TotalAppByService totalAppByService = new TotalAppByService();
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("getTotalAppsByServices");
         Map<String, Object> callResponse = jdbcCall.execute();
-        resultList = buildResult(resultList, callResponse, "service_name");
-        return resultList;
+
+        ArrayList<Map> resultSet = (ArrayList<Map>) callResponse.get("#result-set-1");
+        List<Data> dataset = new ArrayList<>();
+        List<Category> categories = new ArrayList<>();
+        List<Label> labels = new ArrayList<>();
+        List<Value> values = new ArrayList<>();
+        Category category = new Category();
+        Data data = new Data();
+        category.setCategory(labels);
+        data.setData(values);
+        categories.add(category);
+        dataset.add(data);
+
+        totalAppByService.setDataset(dataset);
+        totalAppByService.setCategories(categories);
+        resultSet.forEach(map -> {
+            map.keySet().forEach(key -> {
+                String result = map.get(key).toString();
+                if ("service_name".equals(key.toString())) {
+                    Label label = new Label(result);
+                    labels.add(label);
+                } else {
+                    Value value = new Value(result);
+                    values.add(value);
+                }
+            });
+        });
+        return totalAppByService;
     }
 
     @Override
