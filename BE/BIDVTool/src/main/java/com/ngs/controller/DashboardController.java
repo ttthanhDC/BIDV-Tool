@@ -2,11 +2,13 @@ package com.ngs.controller;
 
 import com.ngs.entity.Operation;
 import com.ngs.entity.Service;
+import com.ngs.response.bean.DoingTask;
 import com.ngs.response.bean.OperationResponse;
 import com.ngs.response.bean.ServiceByApp;
 import com.ngs.service.DashboardService;
 import com.ngs.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -121,6 +123,20 @@ public class DashboardController {
         try {
             List<Map<Object, Object>> totalTaskByOperation = dashboardService.getTotalTaskByService();
             return ResponseEntity.ok(totalTaskByOperation);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+    @GetMapping(value = "/task")
+    public ResponseEntity<List<DoingTask>> getTasksDoingByOperationId(HttpServletRequest request,@RequestParam Integer operationId) {
+        try {
+
+            List<DoingTask> listTask = dashboardService.getTasksDoingByOperationId(operationId);
+            if (listTask != null) {
+                return ResponseEntity.ok().body(listTask);
+            }
+            return ResponseEntity.badRequest().body(null);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

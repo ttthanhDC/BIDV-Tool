@@ -2,6 +2,7 @@ package com.ngs.service.impl;
 
 import com.ngs.entity.Operation;
 import com.ngs.repository.DashBoardRepository;
+import com.ngs.response.bean.DoingTask;
 import com.ngs.response.bean.OperationResponse;
 import com.ngs.response.bean.ServiceByApp;
 import com.ngs.response.bean.TotalAppResponse;
@@ -62,6 +63,10 @@ public class DashboardServiceImpl implements DashboardService {
     @Override
     public List<Map<Object, Object>> getTotalTaskByService() {
         return dashBoardRepository.getTotalTaskByOperation();
+    }
+    @Override
+    public List<DoingTask> getTasksDoingByOperationId(Integer operationId){
+        return dashBoardRepository.getTasksDoingByOperationId(operationId);
     }
 }
 

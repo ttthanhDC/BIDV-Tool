@@ -2,8 +2,10 @@ package com.ngs.repository.impl;
 
 import com.ngs.entity.Operation;
 import com.ngs.repository.DashBoardRepository;
+import com.ngs.response.bean.DoingTask;
 import com.ngs.response.bean.OperationResponse;
 import com.ngs.response.bean.ServiceByApp;
+import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
@@ -47,12 +49,12 @@ public class DashBoardRepositoryImpl implements DashBoardRepository {
     }
 
     @Override
-    public  List<Map<Object, Object>> getTotalServiceByStatus(){
-        List<Map<Object,Object>> resultList = new ArrayList<>();
+    public List<Map<Object, Object>> getTotalServiceByStatus() {
+        List<Map<Object, Object>> resultList = new ArrayList<>();
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("getTotalServicesByStatus");
-        Map<String,Object> callResponse = jdbcCall.execute();
-        resultList = buildResult(resultList,callResponse,"status");
-        return  resultList;
+        Map<String, Object> callResponse = jdbcCall.execute();
+        resultList = buildResult(resultList, callResponse, "status");
+        return resultList;
     }
 
     @Override
@@ -130,6 +132,34 @@ public class DashBoardRepositoryImpl implements DashBoardRepository {
         return resultList;
     }
 
+    @Override
+    public List<DoingTask> getTasksDoingByOperationId(Integer operationId) {
+        List<DoingTask> resultList = new ArrayList<>();
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("getTasksDoingByOperationId");
+        Map<String, Object> inputParams = new HashMap<>();
+        inputParams.put("p_operationId", operationId);
+        Map<String, Object> callResponse = jdbcCall.execute(inputParams);
+        System.out.println(callResponse);
+        ArrayList<Map> resultSet = (ArrayList<Map>) callResponse.get("#result-set-1");
+        resultSet.forEach(data -> {
+            DoingTask doingTask = new DoingTask();
+            data.keySet().forEach(key -> {
+
+                doingTask.setTaskId((Integer) data.get("task_id"));
+                doingTask.setTaskDescription((String) data.get("task_description"));
+                doingTask.setOperationId((Integer) data.get("operation_id"));
+                doingTask.setOperationName((String) data.get("operation_name"));
+                doingTask.setServiceName((String) data.get("service_name"));
+                doingTask.setApplicationName((String) data.get("application_name"));
+
+
+            });
+            resultList.add(doingTask);
+        });
+        return resultList;
+
+    }
+
     private List<Map<Object, Object>> buildResult(List<Map<Object, Object>> resultList, Map<String, Object> callResponse) {
         ArrayList<Map> resultSet = (ArrayList<Map>) callResponse.get("#result-set-1");
         resultSet.forEach(data -> {
@@ -159,6 +189,7 @@ public class DashBoardRepositoryImpl implements DashBoardRepository {
         });
         return resultList;
     }
+
     private List<Map<Object, Object>> buildResult2(List<Map<Object, Object>> resultList, Map<String, Object> callResponse, String labelCol) {
         Objects.requireNonNull(labelCol, "labelCol must be not null");
         ArrayList<Map> resultSet = (ArrayList<Map>) callResponse.get("#result-set-1");
@@ -167,7 +198,7 @@ public class DashBoardRepositoryImpl implements DashBoardRepository {
             data.keySet().forEach(key -> {
                 if (labelCol.equals(key.toString())) {
                     result.put("label", data.get(key));
-                } else if("totalOperations".equals((key.toString()))) {
+                } else if ("totalOperations".equals((key.toString()))) {
                     result.put("value", data.get(key));
                 }
             });

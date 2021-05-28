@@ -1,6 +1,7 @@
 package com.ngs.repository;
 
 import com.ngs.entity.Operation;
+import com.ngs.response.bean.DoingTask;
 import com.ngs.response.bean.OperationResponse;
 import com.ngs.response.bean.ServiceByApp;
 
@@ -20,6 +21,7 @@ public interface DashBoardRepository {
     List<ServiceByApp> getServiceByAppId(Integer appid);
 
     List<Map<Object, Object>> getTotalTaskByOperation();
+    List<DoingTask> getTasksDoingByOperationId(Integer operationId);
 }
 
 
