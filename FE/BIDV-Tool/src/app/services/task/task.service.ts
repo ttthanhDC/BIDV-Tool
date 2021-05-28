@@ -10,6 +10,7 @@ import { Task } from 'src/app/entity/Task';
 })
 export class TaskService {
 
+  // private taskUrl = "http://192.168.1.136:4200/BIDVTool-Service/task";
   private taskUrl = "http://172.16.3.141:8080/task";
   constructor(private http: HttpClient, private datePipe: DatePipe) { }
 

@@ -6,7 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UploadfileService {
-  private excelUrl = "http://172.16.3.141:8080/upload";
+  private excelUrl = "http://192.168.1.136:4200/BIDVTool-Service/upload";
+  // private excelUrl = "http://172.16.3.141:8080/upload";
   constructor(private http : HttpClient) { }
   // uploadFileExcel(file : File) : Observable<ExcelResponse>{
   //   const formData: FormData = new FormData();
