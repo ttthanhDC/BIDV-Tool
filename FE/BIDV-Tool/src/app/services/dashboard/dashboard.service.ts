@@ -38,17 +38,17 @@ export class DashboardService {
   getOperationByStatus(): Observable<DashboardResponse[]> {
     return this.http.get<DashboardResponse[]>(`${this.oprByStatus}`);
   }
-  getServiceByApp(): Observable<DashboardResponse[]> {
-    return this.http.get<DashboardResponse[]>(`${this.serviceByApp}`);
+  getServiceByApp(): Observable<Chart> {
+    return this.http.get<Chart>(`${this.serviceByApp}`);
   }
   getServiceByStatus(): Observable<DashboardResponse[]> {
     return this.http.get<DashboardResponse[]>(`${this.serviceByStatus}`);
   }
-  getOperationByService(): Observable<DashboardResponse[]> {
-    return this.http.get<DashboardResponse[]>(`${this.oprByService}`);
+  getOperationByService(): Observable<Chart> {
+    return this.http.get<Chart>(`${this.oprByService}`);
   }
-  getTaskByOperation(): Observable<DashboardResponse[]> {
-    return this.http.get<DashboardResponse[]>(`${this.taskByOperation}`);
+  getTaskByOperation(): Observable<Chart> {
+    return this.http.get<Chart>(`${this.taskByOperation}`);
   }
 
   getAppByServiceDemo(): Observable<Chart> {

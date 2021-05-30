@@ -104,14 +104,24 @@ export class DashboardComponent implements OnInit {
         caption: "Get Operation By Service",
         xAxisName: "Total Operation",
         yAxisName: "Service",
+        showvalues: "1",
+        labeldisplay: "WRAP",
+        linethickness: "3",
+        numVisiblePlot: "12",
+        scrollheight: "10",
+        flatScrollBars: "1",
+        scrollShowButtons: "0",
+        scrollColor: "#cccccc",
         theme: "fusion"
       },
       // Chart Data - from step 2
-      data: []
+      categories: [],
+      dataset: []
     };
     this.dashBoardService.getOperationByService().subscribe(res => {
-      this.totalApp = res;
-      this.dataOprByService.data = this.totalApp;
+      this.chartResponse = res;
+      this.dataOprByService.categories = this.chartResponse.categories;
+      this.dataOprByService.dataset = this.chartResponse.dataset;
     });
 
 
@@ -121,14 +131,24 @@ export class DashboardComponent implements OnInit {
         caption: "Get Service By Application",
         xAxisName: "Application",
         yAxisName: "Total Service",
+        showvalues: "1",
+        labeldisplay: "WRAP",
+        linethickness: "3",
+        numVisiblePlot: "12",
+        scrollheight: "10",
+        flatScrollBars: "1",
+        scrollShowButtons: "0",
+        scrollColor: "#cccccc",
         theme: "fusion"
       },
       // Chart Data - from step 2
-      data: []
+      categories: [],
+      dataset: []
     };
     this.dashBoardService.getServiceByApp().subscribe(res => {
-      this.totalApp = res;
-      this.dataGetServiceByApp.data = this.totalApp;
+      this.chartResponse = res;
+      this.dataGetServiceByApp.categories = this.chartResponse.categories;
+      this.dataGetServiceByApp.dataset = this.chartResponse.dataset;
     });
 
     // Pie Service By Status
@@ -157,14 +177,24 @@ export class DashboardComponent implements OnInit {
         caption: "Get Task By Operation",
         xAxisName: "Application-Service-Operation",
         yAxisName: "Total Task",
+        showvalues: "1",
+        labeldisplay: "WRAP",
+        linethickness: "3",
+        numVisiblePlot: "12",
+        scrollheight: "10",
+        flatScrollBars: "1",
+        scrollShowButtons: "0",
+        scrollColor: "#cccccc",
         theme: "fusion"
       },
       // Chart Data - from step 2
-      data: []
+      categories: [],
+      dataset: []
     };
     this.dashBoardService.getTaskByOperation().subscribe(res => {
-      this.totalApp = res;
-      this.dataTask.data = this.totalApp;
+      this.chartResponse = res;
+      this.dataTask.categories = this.chartResponse.categories;
+      this.dataTask.dataset = this.chartResponse.dataset;
     });
 
   }
