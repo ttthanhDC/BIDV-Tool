@@ -2,10 +2,7 @@ package com.ngs.controller;
 
 import com.ngs.entity.Operation;
 import com.ngs.entity.Service;
-import com.ngs.response.bean.DoingTask;
-import com.ngs.response.bean.OperationResponse;
-import com.ngs.response.bean.ServiceByApp;
-import com.ngs.response.bean.TotalAppByService;
+import com.ngs.response.bean.*;
 import com.ngs.service.DashboardService;
 import com.ngs.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,10 +57,10 @@ public class DashboardController {
     }
 
     @GetMapping(value = "/operation", params = "query=service")
-    public ResponseEntity<List<Map<Object, Object>>> getTotalOperationByService() {
+    public ResponseEntity<TotalOperationByService> getTotalOperationByService() {
         try {
-            List<Map<Object, Object>> totalApp = dashboardService.getTotalOperationByService();
-            return ResponseEntity.ok(totalApp);
+            TotalOperationByService totalOperationByService = dashboardService.getTotalOprByService();
+            return ResponseEntity.ok(totalOperationByService);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
@@ -71,9 +68,9 @@ public class DashboardController {
     }
 
     @GetMapping(value = "/service", params = "query=app")
-    public ResponseEntity<List<Map<Object, Object>>> getTotalServiceByApp() {
+    public ResponseEntity<TotalGetServiceByApp> getTotalServiceByApp() {
         try {
-            List<Map<Object, Object>> totalServiceByApp = dashboardService.getTotalServiceByApp();
+            TotalGetServiceByApp totalServiceByApp = dashboardService.getTotalServiceByApp();
             return ResponseEntity.ok(totalServiceByApp);
         } catch (Exception e) {
             e.printStackTrace();
@@ -123,9 +120,9 @@ public class DashboardController {
     }
 
     @GetMapping(value = "/task", params = "query=operation")
-    public ResponseEntity<List<Map<Object, Object>>> getTotalSTaskByOperation() {
+    public ResponseEntity<TotalTaskByOperation> getTotalSTaskByOperation() {
         try {
-            List<Map<Object, Object>> totalTaskByOperation = dashboardService.getTotalTaskByService();
+            TotalTaskByOperation totalTaskByOperation = dashboardService.getTotalTaskByService();
             return ResponseEntity.ok(totalTaskByOperation);
         } catch (Exception e) {
             e.printStackTrace();
