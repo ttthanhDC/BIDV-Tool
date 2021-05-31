@@ -62,12 +62,73 @@ public class DashBoardRepositoryImpl implements DashBoardRepository {
     }
 
     @Override
-    public List<Map<Object, Object>> getTotalServiceByApp() {
-        List<Map<Object, Object>> resultList = new ArrayList<>();
+    public TotalOperationByService getTotalOprByService() {
+        TotalOperationByService totalOperationByService = new TotalOperationByService();
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("getTotalOperationsbyServices");
+        Map<String, Object> callResponse = jdbcCall.execute();
+
+        ArrayList<Map> resultSet = (ArrayList<Map>) callResponse.get("#result-set-1");
+        List<Data> dataset = new ArrayList<>();
+        List<Category> categories = new ArrayList<>();
+        List<Label> labels = new ArrayList<>();
+        List<Value> values = new ArrayList<>();
+        Category category = new Category();
+        Data data = new Data();
+        category.setCategory(labels);
+        data.setData(values);
+        categories.add(category);
+        dataset.add(data);
+
+        totalOperationByService.setDataset(dataset);
+        totalOperationByService.setCategories(categories);
+        resultSet.forEach(map -> {
+            map.keySet().forEach(key -> {
+                String result = map.get(key).toString();
+                if ("service_name".equals(key.toString())) {
+                    Label label = new Label(result);
+                    labels.add(label);
+                } else if("totalOperations".equals((key.toString()))) {
+                    Value value = new Value(result);
+                    values.add(value);
+                }
+            });
+        });
+        return totalOperationByService;
+    }
+
+    @Override
+    public TotalGetServiceByApp getTotalServiceByApp() {
+        TotalGetServiceByApp totalgetServiceByApp = new TotalGetServiceByApp();
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("getTotalServicesByApps");
         Map<String, Object> callResponse = jdbcCall.execute();
-        resultList = buildResult(resultList, callResponse, "application_name");
-        return resultList;
+
+        ArrayList<Map> resultSet = (ArrayList<Map>) callResponse.get("#result-set-1");
+        List<Data> dataset = new ArrayList<>();
+        List<Category> categories = new ArrayList<>();
+        List<Label> labels = new ArrayList<>();
+        List<Value> values = new ArrayList<>();
+        Category category = new Category();
+        Data data = new Data();
+        category.setCategory(labels);
+        data.setData(values);
+        categories.add(category);
+        dataset.add(data);
+
+        totalgetServiceByApp.setDataset(dataset);
+        totalgetServiceByApp.setCategories(categories);
+        resultSet.forEach(map -> {
+            map.keySet().forEach(key -> {
+                String result = map.get(key).toString();
+                if ("application_name".equals(key.toString())) {
+                    Label label = new Label(result);
+                    labels.add(label);
+                } else if("totalServices".equals((key.toString()))) {
+                    Value value = new Value(result);
+                    values.add(value);
+                }
+            });
+        });
+        return totalgetServiceByApp;
     }
 
     @Override
@@ -125,12 +186,38 @@ public class DashBoardRepositoryImpl implements DashBoardRepository {
     }
 
     @Override
-    public List<Map<Object, Object>> getTotalTaskByOperation() {
-        List<Map<Object, Object>> resultList = new ArrayList<>();
+    public TotalTaskByOperation getTotalTaskByOperation() {
+        TotalTaskByOperation totalTaskByOperation = new TotalTaskByOperation();
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("getTotalTaskByOperations");
         Map<String, Object> callResponse = jdbcCall.execute();
-        resultList = buildResult(resultList, callResponse, "operation_name");
-        return resultList;
+
+        ArrayList<Map> resultSet = (ArrayList<Map>) callResponse.get("#result-set-1");
+        List<Data> dataset = new ArrayList<>();
+        List<Category> categories = new ArrayList<>();
+        List<Label> labels = new ArrayList<>();
+        List<Value> values = new ArrayList<>();
+        Category category = new Category();
+        Data data = new Data();
+        category.setCategory(labels);
+        data.setData(values);
+        categories.add(category);
+        dataset.add(data);
+
+        totalTaskByOperation.setDataset(dataset);
+        totalTaskByOperation.setCategories(categories);
+        resultSet.forEach(map -> {
+            map.keySet().forEach(key -> {
+                String result = map.get(key).toString();
+                if ("operation_name".equals(key.toString())) {
+                    Label label = new Label(result);
+                    labels.add(label);
+                } else if("totalTasks".equals((key.toString()))) {
+                    Value value = new Value(result);
+                    values.add(value);
+                }
+            });
+        });
+        return totalTaskByOperation;
     }
 
     @Override
