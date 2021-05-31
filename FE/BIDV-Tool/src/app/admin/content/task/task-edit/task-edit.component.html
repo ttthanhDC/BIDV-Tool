@@ -63,7 +63,7 @@
             <div class="col-md-5">
                 <label for="bidvAppCode">Due Date</label>
                 <input type="date" class="form-control" value="{{dueDate}}" [(ngModel)]="task.dueDate" name="due"
-                    (change)="onChangeOpenDate($event)" min="2000-01-01" max="2060-12-31" #due="ngModel"
+                    (change)="onChangeDueDate($event)" min="2000-01-01" max="2060-12-31" #due="ngModel"
                     [ngClass]="{ 'is-invalid': f.submitted && due.invalid }" required>
                 <div *ngIf="f.submitted && due.invalid" class="invalid-feedback">
                     <div *ngIf="due.errors.required">Due Date is required</div>
@@ -74,7 +74,7 @@
             <div class="col-md-5">
                 <label for="bidvAppCode">Close Date</label>
                 <input type="date" class="form-control" value="{{closeDate}}" [(ngModel)]="task.closeDate" name="close"
-                    (change)="onChangeOpenDate($event)" min="2000-01-01" max="2060-12-31" #close="ngModel"
+                    (change)="onChangeCloseDate($event)" min="2000-01-01" max="2060-12-31" #close="ngModel"
                     [ngClass]="{ 'is-invalid': f.submitted && close.invalid }" required>
                 <div *ngIf="f.submitted && close.invalid" class="invalid-feedback">
                     <div *ngIf="close.errors.required">Close Date is required</div>
