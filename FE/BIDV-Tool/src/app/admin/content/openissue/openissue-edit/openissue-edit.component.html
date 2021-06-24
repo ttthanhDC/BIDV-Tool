@@ -10,10 +10,10 @@
         </div>
         <div class="form-group">
             <label for="p_category">Reporter</label>
-            <select class="form-control" name="reporter" [(ngModel)]="issue.reporterId" #reporter="ngModel"
+            <select class="form-control" name="reporter" [(ngModel)]="issue.reporterId" #reporter="ngModel" 
                 [ngClass]="{ 'is-invalid': f.submitted && reporter.invalid }" required>
                 <option disabled selected>Select Reporter</option>
-                <option *ngFor="let u of user" value="{{u.id}}">{{u.userName}}
+                <option *ngFor="let u of user" value="{{u.id}}" selected>{{u.userName}}
                 </option>
             </select>
             <div *ngIf="f.submitted && reporter.invalid" class="invalid-feedback">
@@ -29,6 +29,37 @@
             </div>
         </div>
         <div class="form-group">
+            <label for="p_category">Application</label>
+            <select class="form-control" name="application" ([ngModel])="applicationId"
+              required (change)="getServiceByEventApplication($event)">
+                <option disabled selected>Select Application</option>
+                <option *ngFor="let a of app" value="{{a.id}}" [ngValue]="a">{{a.integrationAppCode}}-{{a.applicationName}}
+                </option>
+            </select>    
+            <!-- <div *ngIf="f.submitted && appId.invalid" class="invalid-feedback">
+                <div *ngIf="appId.errors.required">Application is required</div>
+            </div> -->
+        </div>
+         <div class="form-group">
+            <label for="p_category">Service</label>
+            <select class="form-control" name="service"  ([ngModel])="serviceId" (change)="getOperationByAppIdAndServiceIdEvent($event)">
+                <option disabled selected>Select Services</option>
+                <option *ngFor="let s of service" value="{{s.serviceId}}" selected="{{s.serviceName}}">{{s.serviceName}}</option>
+            </select>
+            <!-- <div *ngIf="f.submitted && service.invalid" class="invalid-feedback">
+                <div *ngIf="service.errors.required">Service is required</div>
+            </div> -->
+        </div>
+        <div class="form-group">
+            <label for="p_category">Operation</label>
+            <select class="form-control" name="operation" [(ngModel)]="issue.operationId"> #operationId="ngModel"
+                <option disabled selected>Select Operation</option>
+                <option *ngFor="let o of opreration" value="{{o.operationId}}" selected>{{o.operationName}}
+                </option>
+            </select>    
+         
+        </div> 
+        <!-- <div class="form-group">
             <label for="p_category">Operation</label>
             <select class="form-control" name="operation" [(ngModel)]="issue.operationId" #operation="ngModel"
                 [ngClass]="{ 'is-invalid': f.submitted && operation.invalid }" required>
@@ -39,8 +70,8 @@
             <div *ngIf="f.submitted && operation.invalid" class="invalid-feedback">
                 <div *ngIf="operation.errors.required">Service is required</div>
             </div>
-        </div>
-        <div class="form-group">
+        </div> -->
+        <!-- <div class="form-group">
             <label for="bidvAppCode">Owner</label>
             <input type="text" class="form-control" name="owner" [(ngModel)]="issue.owner" #owner="ngModel"
                 [ngClass]="{ 'is-invalid': f.submitted && owner.invalid }" required>
@@ -48,7 +79,25 @@
                 <div *ngIf="owner.errors.maxlength">Owner up to 5 characters</div>
                 <div *ngIf="owner.errors.required">Owner is required</div>
             </div>
-        </div>
+        </div> -->
+        <div class="form-group" >
+            <label >Owner</label>
+            <select class="form-control" name="owner" [(ngModel)]="issue.owner">
+              <option>NGS</option>
+              <option>FIS</option>
+              <option>BIDV</option>
+            </select>
+            
+          </div>
+          <div class="form-group" >
+            <label >Support</label>
+            <select class="form-control"  name="support" [(ngModel)]="issue.support">
+            <option selected></option>
+              <option>NGS</option>
+              <option>FIS</option>
+              <option>BIDV</option>
+            </select>
+          </div>
         <div class="form-group">
             <label for="bidvAppCode">Status</label>
             <input type="text" class="form-control" name="status" [(ngModel)]="issue.status" #status="ngModel"

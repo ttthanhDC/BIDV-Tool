@@ -19,7 +19,6 @@
                         <tr>
                             <th>No</th>
                             <th>Application Name</th>
-                            <th>Service ID</th>
                             <th>Service Name</th>
                             <th>Status</th>
                         </tr>
@@ -28,8 +27,8 @@
                         <tr *ngFor="let a of srvByApp | filter:keyword; index as i">
                             <td>{{i + 1}}</td>
                             <td>{{a.applicationName}}</td>
-                            <td>{{a.serviceId}}</td>
-                            <td><a routerLink='/admin/getOprByService/serviceId/{{a.serviceId}}'>{{a.serviceName}}</a></td>
+                            <!-- <td><a [routerLink]="['/admin/getOprByService',a.applicationId,a.serviceId]">{{a.serviceName}}</a></td> -->
+                            <td><a [routerLink]="['/admin/getOprByService']" [queryParams]="{serviceId:a.serviceId , applicationId:a.applicationId}"  >{{a.serviceName}}</a></td>
                             <td>{{a.status}}</td>
                         </tr>
                     </tbody>

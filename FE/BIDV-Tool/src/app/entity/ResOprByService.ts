@@ -1,5 +1,6 @@
 export class ResOprByService {
-    operationId: number;
+    operationId:number;
+    serviceId: number;
     applicationId: number;
     operationName: string;
     serviceName: string;

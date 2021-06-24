@@ -1,26 +1,72 @@
 <div class="container-fluid">
 
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Issue</h1>
+
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">List Issues</h6>
+            <h4 class="m-0 font-weight-bold text-primary">List Issues</h4>
         </div>
+        <div class="row">
+          
+            <div class="col-md-5">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search Here" [(ngModel)]="keyword">
+                </div>
+              
+            </div>
+            <div class="col-md-5">
+
+            </div>
+            <div class="col-md-2">
+                <div style="float: right; margin-right: 5px;"><a
+                    routerLink="/admin/openissue-add"><i class="far fa-plus-square"
+                        style="font-size: 35px;"></i></a></div>
+            </div>
+        </div>
+    
         <div class="card-body">
             <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search Here" [(ngModel)]="keyword">
-                    </div>
+                <div class="col-md-3">
+                    <h5 for="p_category">Application</h5>
+                    <select class="form-control bg-primary text-white" name="application" [(ngModel)]="applicationId"
+                    required (change)="getServiceByEventApplication($event)">
+                    <option class="text-white" disabled>Application</option>
+                    <option *ngFor="let a of app" value="{{a.id}}">{{a.integrationAppCode}}-{{a.applicationName}}
+                    </option>
+                </select> 
+                 
                 </div>
-                <div class="col-md-6">
-                    <div style="float: right; margin-right: 5px;"><a
-                        routerLink="/admin/openissue-add"><i class="far fa-plus-square"
-                            style="font-size: 35px;"></i></a></div>
+                <div class="col-md-3">
+                    <h5 for="p_category">Service</h5>
+                    <select class="form-control bg-success text-white" name="service" [(ngModel)]="serviceId" (change)="getOperationByAppIdAndServiceIdEvent($event)"
+                    required  placeholder="Service">
+                    <option disabled>Service</option>
+                    <option *ngFor="let s of service" value="{{s.serviceId}}">{{s.serviceName}}</option> 
+                </select> 
                 </div>
-            </div>
+                <div class="col-md-3">
+                    <h5 for="p_category">Operation</h5>
+                    <select class="form-control bg-info text-white" name="operation" [(ngModel)]="issue.operationId"
+                    required  placeholder="Operation">
+                    <option disabled>Operation</option>
+                    <option *ngFor="let o of opreration" value="{{o.operationId}}">{{o.operationName}}
+                    </option> 
+                </select> 
+                </div>
+                <div class="col-md-3">
+                    <h5 for="p_category">Status</h5>
+                    <select class="form-control bg-warning text-white" name="status" [(ngModel)]="issue.status"
+                    required  placeholder="Status">
+                    <option disabled selected>Status</option>
+                    <option >Not started yet</option> 
+                    <option >Complete </option> 
+                    <option>Inprogress </option> 
+                    <option>Pending</option> 
+                </select> 
+                </div>
+            </div>     
+           <br>
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
@@ -31,6 +77,7 @@
                             <th>Relution</th>
                             <th>Operation</th>
                             <th>Owner</th>
+                            <th>Support</th>
                             <th>Open Date</th>
                             <th>Due Date</th>
                             <th>Close Date</th>
@@ -40,13 +87,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let a of issue | filter:keyword; index as i">
+                        <tr *ngFor="let a of issues | filter:keyword; index as i">
                             <td>{{i + 1}}</td>
                             <td>{{a.description}}</td>
                             <td>{{a.reporter.userName}}</td>
                             <td>{{a.resolution}}</td>
                             <td>{{a.operation.operationName}}</td>
                             <td>{{a.owner}}</td>
+                            <td>{{a.support}}</td>
                             <td>{{a.openDate}}</td>
                             <td>{{a.dueDate}}</td>
                             <td>{{a.closeDate}}</td>

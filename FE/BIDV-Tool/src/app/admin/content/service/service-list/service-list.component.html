@@ -1,12 +1,8 @@
 <div class="container-fluid">
-
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Service</h1>
-
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">List Services</h6>
+            <h4 class="m-0 font-weight-bold text-primary">List Services</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -22,7 +18,7 @@
                                 style="font-size: 35px;"></i></a></div>
                     </div>
                 </div>
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered table-fixed" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -34,7 +30,9 @@
                     <tbody>
                         <tr *ngFor="let a of srv | filter:keyword; index as i">
                             <td>{{i + 1}}</td>
-                            <td><a routerLink='/admin/getOprByService/serviceId/{{a.id}}'>{{a.serviceName}}</a></td>
+                            <td><a>{{a.serviceName}}</a></td>
+                            <!-- <td><a routerLink='admin/getOprByService/serviceId/{{a.id}}'>{{a.serviceName}}</a></td> -->
+                            <!-- <td><a routerLink='admin/getOprByService/{{a.applicationId}}/{{a.serviceId}}'>{{a.serviceName}}</a></td> -->
                             <td>{{a.status}}</td>
                             <td><a routerLink='/admin/service-edit/{{a.id}}'><i class="fas fa-edit"
                                         style="font-size: 20px;"></i></a></td>

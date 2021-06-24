@@ -10,8 +10,8 @@ import { ResponseOpenIssue } from 'src/app/entity/ResponseOppenIssue';
 })
 export class OpenissueService {
 
-  private issueUrl = "http://192.168.1.136:4200/BIDVTool-Service/issue";
-  // private issueUrl = "http://172.16.3.141:8080/issue";
+ private issueUrl = "http://192.168.1.136:4200/BIDVTool-Service/issue";
+ //  private issueUrl = "http://172.16.3.141:8080/issue";
   constructor(private http: HttpClient, private datePipe: DatePipe) { }
 
   requestId = '' + Math.floor(Date.now() / 1000) || '';

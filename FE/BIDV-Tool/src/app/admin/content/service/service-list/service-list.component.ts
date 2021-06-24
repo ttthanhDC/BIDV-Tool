@@ -25,9 +25,11 @@ export class ServiceListComponent implements OnInit {
   }
 
   getAllService() {
+    console.log("Nhay vao day")
     this.serviceService.getListService()
       .subscribe(
         data => {
+          console.log("data.services " + data.services);
           this.srv = data.services;
         })
   }

@@ -18,7 +18,7 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Operation Id</th>
+                            
                             <th>Application ID</th>
                             <th>Operation Name</th>
                             <th>Service Name</th>
@@ -30,7 +30,7 @@
                     <tbody>
                         <tr *ngFor="let a of oprByService | filter:keyword; index as i">
                             <td>{{i + 1}}</td>
-                            <td>{{a.operationId}}</td>
+                         
                             <td>{{a.applicationId}}</td>
                             <td><a routerLink='/admin/getTaskDoing/operationId/{{a.operationId}}'>{{a.operationName}}</a></td>
                             <td>{{a.serviceName}}</td>

@@ -1,0 +1,33 @@
+.table table-bordered .table-fixed {
+    width: 100%;
+  }
+  
+  /*This will work on every browser but Chrome Browser*/
+  .tablediv .table-fixed {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+  
+  }  
+  /*This will work on every browser*/
+  .table-fixed1 thead th {
+      position: sticky;
+      position: -webkit-sticky;
+      top: 0;
+  
+  }
+
+  tbody {
+      display:block;
+      height:600px;
+      overflow:auto;
+  }
+  thead, tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;/* even columns width , fix width of table too*/
+  }
+  thead {
+      width: calc( 100% - 1em )/* scrollbar is average 1em/16px width, remove it from thead width */
+  }
+  

@@ -29,33 +29,65 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="p_category">Operation</label>
-            <select class="form-control" name="operation" [(ngModel)]="issue.operationId" #operation="ngModel"
-                [ngClass]="{ 'is-invalid': f.submitted && operation.invalid }" required>
-                <option disabled selected>Select Operation</option>
-                <option *ngFor="let o of opr" value="{{o.id}}">{{o.operationName}}
+            <label for="p_category">Application</label>
+            <select class="form-control" name="application" ([ngModel])="applicationId"
+            required (change)="getServiceByEventApplication($event)">
+
+                <option disabled selected>Select Application</option>
+                <option *ngFor="let a of app" value="{{a.id}}">{{a.integrationAppCode}}-{{a.applicationName}}
                 </option>
+            </select>    
+            <!-- <div *ngIf="f.submitted && appId.invalid" class="invalid-feedback">
+                <div *ngIf="appId.errors.required">Application is required</div>
+            </div> -->
+        </div>
+         <div class="form-group">
+            <label for="p_category">Service</label>
+            <select class="form-control" name="service"  ([ngModel])="serviceId" (change)="getOperationByAppIdAndServiceIdEvent($event)">
+                <option disabled selected>Select Services</option>
+                <option *ngFor="let s of service" value="{{s.serviceId}}">{{s.serviceName}}</option>
             </select>
-            <div *ngIf="f.submitted && operation.invalid" class="invalid-feedback">
-                <div *ngIf="operation.errors.required">Service is required</div>
-            </div>
+            <!-- <div *ngIf="f.submitted && service.invalid" class="invalid-feedback">
+                <div *ngIf="service.errors.required">Service is required</div>
+            </div> -->
         </div>
         <div class="form-group">
-            <label for="bidvAppCode">Owner</label>
-            <input type="text" class="form-control" name="owner" [(ngModel)]="issue.owner" #owner="ngModel"
-                [ngClass]="{ 'is-invalid': f.submitted && owner.invalid }" required>
-            <div *ngIf="f.submitted && owner.invalid" class="invalid-feedback">
-                <div *ngIf="owner.errors.maxlength">Owner up to 5 characters</div>
-                <div *ngIf="owner.errors.required">Owner is required</div>
-            </div>
-        </div>
+            <label for="p_category">Operation</label>
+            <select class="form-control" name="operation" [(ngModel)]="issue.operationId">   
+                <option disabled selected>Select Operation</option>
+                <option *ngFor="let o of opreration" value="{{o.operationId}}">{{o.operationName}}
+                </option>
+            </select>    
+         
+        </div> 
+       
+        <div class="form-group" >
+            <label >Owner</label>
+            <select class="form-control" name="owner" [(ngModel)]="issue.owner">
+              <option>NGS</option>
+              <option>FIS</option>
+              <option>BIDV</option>
+            </select>
+            
+          </div>
+          <div class="form-group" >
+            <label >Support</label>
+            <select class="form-control"  name="support" [(ngModel)]="issue.support">
+            <option selected></option>
+              <option>NGS</option>
+              <option>FIS</option>
+              <option>BIDV</option>
+            </select>
+          </div>
         <div class="form-group">
             <label for="bidvAppCode">Status</label>
-            <input type="text" class="form-control" name="status" [(ngModel)]="issue.status" #status="ngModel"
-                [ngClass]="{ 'is-invalid': f.submitted && status.invalid }" required>
-            <div *ngIf="f.submitted && status.invalid" class="invalid-feedback">
-                <div *ngIf="status.errors.required">Status is required</div>
-            </div>
+            <select class="form-control " name="status" [(ngModel)]="issue.status"
+            required  placeholder="Status">
+            <option selected >Not started yet</option> 
+            <option>Complete </option> 
+            <option>In Progress </option> 
+            <option>Pending</option> 
+        </select> 
         </div>
         <div class="form-group">
             <label for="bidvAppCode">Comment</label>

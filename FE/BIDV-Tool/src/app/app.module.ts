@@ -13,6 +13,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 
+
 import { AdminComponent } from './admin/admin/admin.component';
 import { DashboardComponent } from './admin/content/dashboard/dashboard.component';
 import { UserAddComponent } from './admin/content/user/user-add/user-add/user-add.component';
@@ -32,6 +33,7 @@ import { OpenissueEditComponent } from './admin/content/openissue/openissue-edit
 import { TaskListComponent } from './admin/content/task/task-list/task-list.component';
 import { TaskAddComponent } from './admin/content/task/task-add/task-add.component';
 import { TaskEditComponent } from './admin/content/task/task-edit/task-edit.component';
+
 // Import angular-fusioncharts
 import { FusionChartsModule } from 'angular-fusioncharts';
 
@@ -75,6 +77,7 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
     GetOprByServiceComponent,
     GetServiceByAppComponent,
     GetTaskDoingByOprComponent,
+   
   ],
   imports: [
     BrowserModule,
@@ -86,7 +89,8 @@ FusionChartsModule.fcRoot(FusionCharts, Charts, FusionTheme);
     ReactiveFormsModule,
     NgbModule,
     FusionChartsModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+   
   ],
   providers: [
     DatePipe,

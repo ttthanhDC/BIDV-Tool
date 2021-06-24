@@ -44,7 +44,7 @@ const routes: Routes = [
   { path: 'admin/task-edit/:id', component: TaskEditComponent },
   { path: 'admin/user-list', component: UserListComponent },
   { path: 'admin/user-add', component: UserAddComponent },
-  { path: 'admin/getOprByService/serviceId/:id', component: GetOprByServiceComponent },
+  { path: 'admin/getOprByService', component: GetOprByServiceComponent },
   { path: 'admin/getServiceByApp/appId/:id', component: GetServiceByAppComponent },
   { path: 'admin/getTaskDoing/operationId/:id', component: GetTaskDoingByOprComponent }
 ];

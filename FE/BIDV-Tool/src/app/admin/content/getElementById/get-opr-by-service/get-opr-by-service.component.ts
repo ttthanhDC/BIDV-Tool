@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ResOprByService } from 'src/app/entity/ResOprByService';
 import { ServiceService } from 'src/app/services/service/service.service';
 import { Location } from '@angular/common';
+import { Console } from 'console';
 
 @Component({
   selector: 'app-get-opr-by-service',
@@ -21,10 +22,15 @@ export class GetOprByServiceComponent implements OnInit {
     this.getOperationByService();
   }
   getOperationByService() {
-    this.route.params.subscribe(data => {
-      this.serviceService.getOperationByServiceId(data.id).subscribe(data => {
+    this.route.queryParams.subscribe(data => {
+     let applicationId = data['applicationId'];
+     let serviceId = data['serviceId'];
+     console.log(applicationId+serviceId);
+      this.serviceService.getOperationByServiceId1(applicationId,serviceId).subscribe(data => {
         this.oprByService = data;
       })
+      console.log(this.oprByService)
+      
     })
   }
   returnPage() {
