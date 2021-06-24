@@ -14,6 +14,7 @@ public class Issue {
     private String resolution;
     private Operation operation;
     private String owner;
+    private String support;
     private String openDate;
     private String dueDate;
     private String closeDate;

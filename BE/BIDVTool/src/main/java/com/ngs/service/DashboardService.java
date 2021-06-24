@@ -1,5 +1,6 @@
 package com.ngs.service;
 
+import com.ngs.entity.OpenIssue;
 import com.ngs.entity.Operation;
 import com.ngs.response.bean.*;
 
@@ -16,9 +17,10 @@ public interface DashboardService {
     TotalOperationByService getTotalOprByService();
     TotalGetServiceByApp getTotalServiceByApp();
     List<Map<Object, Object>> getTotalServiceByStatus();
-    List<OperationResponse> getTotalOperationByService(Integer serviceId);
+    List<OperationResponse> getTotalOperationByService(Integer serviceId,Integer applicationId);
     List<ServiceByApp> getServiceByAppId(Integer appId);
 
     TotalTaskByOperation getTotalTaskByService();
     List<DoingTask> getTasksDoingByOperationId(Integer operationId);
+    List<OpenIssue> getOpenIssueByParams(Integer operationId,String status);
 }

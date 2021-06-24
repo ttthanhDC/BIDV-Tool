@@ -1,7 +1,10 @@
 package com.ngs.repository.impl;
 
+import com.ngs.entity.OpenIssue;
 import com.ngs.repository.DashBoardRepository;
 import com.ngs.response.bean.*;
+import com.ngs.service.OperationService;
+import com.ngs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
@@ -16,6 +19,10 @@ public class DashBoardRepositoryImpl implements DashBoardRepository {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+    @Autowired
+    UserService userService;
+    @Autowired
+    OperationService operationService;
 
     @Override
     public List<Map<Object, Object>> getTotalApp() {
@@ -141,16 +148,18 @@ public class DashBoardRepositoryImpl implements DashBoardRepository {
     }
 
     @Override
-    public List<OperationResponse> getTotalOperationByServiceId(Integer serviceId) {
+    public List<OperationResponse> getTotalOperationByServiceId(Integer serviceId,Integer appId) {
         List<OperationResponse> resultList = new ArrayList<>();
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("getOperationsByServiceId");
         Map<String, Object> inputParams = new HashMap<>();
         inputParams.put("p_servicesId", serviceId);
+        inputParams.put("p_appId", appId);
         Map<String, Object> execute = jdbcCall.execute(inputParams);
         ArrayList<Map> dataMap = (ArrayList<Map>) execute.get("#result-set-1");
         dataMap.forEach(map -> {
             OperationResponse operation = OperationResponse.builder()
-                    .operationId((Integer) map.get("operation_id"))
+                    .operationId((Integer)map.get("operation_id"))
+                    .serviceId((Integer) map.get("service_id"))
                     .applicationId((Integer) map.get("application_id"))
                     .operationName((String) map.get("operation_name"))
                     .ssdLegacy((String) map.get("ssd_legacy"))
@@ -160,7 +169,7 @@ public class DashBoardRepositoryImpl implements DashBoardRepository {
                     .build();
             resultList.add(operation);
         });
-//        resultList = jdbcCall.execute(inputParams);
+
         return resultList;
     }
 
@@ -174,6 +183,7 @@ public class DashBoardRepositoryImpl implements DashBoardRepository {
         ArrayList<Map> dataMap = (ArrayList<Map>) execute.get("#result-set-1");
         dataMap.forEach(map -> {
             ServiceByApp service = ServiceByApp.builder()
+                    .applicationId((Integer) map.get("application_id"))
                     .applicationName((String) map.get("application_name"))
                     .serviceId((Integer) map.get("service_id"))
                     .serviceName((String) map.get("service_name"))
@@ -268,6 +278,40 @@ public class DashBoardRepositoryImpl implements DashBoardRepository {
         return resultList;
 
     }
+    @Override
+   public List<OpenIssue> getOpenIssueByParams(Integer operationId,String status){
+       List<OpenIssue> resultList = new ArrayList<>();
+       SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("getIssueByParams");
+       Map<String, Object> inputParams = new HashMap<>();
+       inputParams.put("p_operationId", operationId);
+       inputParams.put("p_status", status);
+       Map<String, Object> callResponse = jdbcCall.execute(inputParams);
+       System.out.println(callResponse);
+       ArrayList<Map> resultSet = (ArrayList<Map>) callResponse.get("#result-set-1");
+       resultSet.forEach(data -> {
+           OpenIssue openIssue = new OpenIssue();
+           data.keySet().forEach(key -> {
+               openIssue.setDescription((String) data.get("description"));
+               openIssue.setReporter(userService.getById((Integer) data.get("reporter_id")));
+               openIssue.setResolution((String) data.get("resolution"));
+               try {
+                   openIssue.setOperation(operationService.findById((Integer) data.get("operation_id")));
+               } catch (Exception e) {
+                   e.printStackTrace();
+               }
+               openIssue.setOwner((String) data.get("owner"));
+               openIssue.setOpenDate((Date) data.get("open_date"));
+               openIssue.setDueDate((Date) data.get("due_date"));
+               openIssue.setCloseDate((Date) data.get("close_date"));
+               openIssue.setStatus((String) data.get("status"));
+               openIssue.setComment((String) data.get("comment"));
+               openIssue.setSupport((String)data.get("support"));
+           });
+           resultList.add(openIssue);
+       });
+       return resultList;
+
+   }
 
     private List<Map<Object, Object>> buildResult(List<Map<Object, Object>> resultList, Map<String, Object> callResponse) {
         ArrayList<Map> resultSet = (ArrayList<Map>) callResponse.get("#result-set-1");

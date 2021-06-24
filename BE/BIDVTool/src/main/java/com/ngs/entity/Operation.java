@@ -28,10 +28,11 @@ public class Operation implements Serializable {
     @Setter
     private Service service;
 
-    @Column(name = "application_id")
+    @ManyToOne
+    @JoinColumn(name = "application_id")
     @Getter
     @Setter
-    private Integer applicationId;
+    private Application application;
 
     @Column(name = "operation_name")
     @Getter

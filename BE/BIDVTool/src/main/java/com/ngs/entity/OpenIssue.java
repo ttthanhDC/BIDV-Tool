@@ -49,6 +49,10 @@ public class OpenIssue implements Serializable {
     @Setter
     private String owner;
 
+    @Column(name = "support")
+    @Getter
+    @Setter
+    private String support;
     @Column(name = "open_date")
     @Temporal(TemporalType.TIMESTAMP)
     @Getter

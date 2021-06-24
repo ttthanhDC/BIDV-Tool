@@ -1,5 +1,6 @@
 package com.ngs.repository;
 
+import com.ngs.entity.OpenIssue;
 import com.ngs.entity.Operation;
 import com.ngs.response.bean.*;
 
@@ -15,12 +16,13 @@ public interface DashBoardRepository {
     TotalOperationByService getTotalOprByService();
     TotalGetServiceByApp getTotalServiceByApp();
     List<Map<Object, Object>> getTotalServiceByStatus();
-    List<OperationResponse> getTotalOperationByServiceId(Integer serviceId);
+    List<OperationResponse> getTotalOperationByServiceId(Integer serviceId,Integer appId);
 
     List<ServiceByApp> getServiceByAppId(Integer appid);
 
     TotalTaskByOperation getTotalTaskByOperation();
     List<DoingTask> getTasksDoingByOperationId(Integer operationId);
+    List<OpenIssue> getOpenIssueByParams(Integer OperationId,String status);
 }
 
 

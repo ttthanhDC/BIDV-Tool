@@ -1,8 +1,10 @@
 package com.ngs.service.impl;
 
 import com.ngs.constant.ErrorCode;
+import com.ngs.entity.Application;
 import com.ngs.entity.Operation;
 import com.ngs.exception.DefinedException;
+import com.ngs.repository.ApplicationRepository;
 import com.ngs.repository.OperationRepository;
 import com.ngs.repository.ServiceRepository;
 import com.ngs.request.CreateOperationRequest;
@@ -25,10 +27,12 @@ public class OperationServiceImpl implements OperationService {
 
     @Autowired
     ServiceRepository serviceRepository;
+    @Autowired
+    ApplicationRepository applicationRepository;
 
     @Override
     public List<Operation> findAll() {
-        Iterable<Operation> operations = operationRepository.findAll();
+        Iterable<Operation> operations = operationRepository.getListOperation();
         return IterableUtils.toList(operations);
     }
 
@@ -44,12 +48,13 @@ public class OperationServiceImpl implements OperationService {
     @Override
     public Operation save(CreateOperationRequest request) throws Exception {
         Optional<com.ngs.entity.Service> service = serviceRepository.findById(request.getServiceId());
+        Optional<com.ngs.entity.Application> application = applicationRepository.findById(request.getApplicationId());
         if (!service.isPresent()) {
             throw new DefinedException(ErrorCode.NOT_FOUND, "not found service by id = " + request.getServiceId());
         }
 
         Operation operation = Operation.builder()
-                .applicationId(request.getApplicationId())
+                .application(application.get())
                 .service(service.get())
                 .interactWithCore(request.isInteractWithCore())
                 .operationName(request.getOperationName())
@@ -69,6 +74,7 @@ public class OperationServiceImpl implements OperationService {
             throw new DefinedException(ErrorCode.NOT_FOUND, "fail to update Operation by id = " + id);
         } else {
             Optional<com.ngs.entity.Service> service = serviceRepository.findById(request.getServiceId());
+            Optional<com.ngs.entity.Application> application = applicationRepository.findById(request.getApplicationId());
             if (!service.isPresent()) {
                 throw new DefinedException(ErrorCode.NOT_FOUND, "not found service by id = " + request.getServiceId());
             }
@@ -76,7 +82,7 @@ public class OperationServiceImpl implements OperationService {
             Operation previousOperation = SerializationUtils.clone(updateOperation);
             updateOperation.setOperationName(request.getOperationName());
             updateOperation.setService(service.get());
-            updateOperation.setApplicationId(request.getApplicationId());
+            updateOperation.setApplication(application.get());
             updateOperation.setSsdLegacy(request.getSsdLegacy());
             updateOperation.setSsdSOA(request.getSsdSOA());
             updateOperation.setInteractWithCore(request.isInteractWithCore());

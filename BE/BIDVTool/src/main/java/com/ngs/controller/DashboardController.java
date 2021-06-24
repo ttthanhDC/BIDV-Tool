@@ -1,5 +1,6 @@
 package com.ngs.controller;
 
+import com.ngs.entity.OpenIssue;
 import com.ngs.entity.Operation;
 import com.ngs.entity.Service;
 import com.ngs.response.bean.*;
@@ -89,11 +90,12 @@ public class DashboardController {
         }
     }
 
-    @GetMapping(value = "/operation", params = "service")
+    @GetMapping(value = "/operation", params = {"appId", "serviceId"})
     public ResponseEntity<List<OperationResponse>> getOperationByServiceId(HttpServletRequest request) {
         try {
-            int id = Integer.parseInt(request.getParameter("service"));
-            List<OperationResponse> listOperation = dashboardService.getTotalOperationByService(id);
+            int appId = Integer.parseInt(request.getParameter("appId"));
+            int serId = Integer.parseInt(request.getParameter("serviceId"));
+            List<OperationResponse> listOperation = dashboardService.getTotalOperationByService(serId, appId);
             if (listOperation != null) {
                 return ResponseEntity.ok().body(listOperation);
             }
@@ -137,6 +139,23 @@ public class DashboardController {
             List<DoingTask> listTask = dashboardService.getTasksDoingByOperationId(operationId);
             if (listTask != null) {
                 return ResponseEntity.ok().body(listTask);
+            }
+            return ResponseEntity.badRequest().body(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @GetMapping(value = "issue", params = {"operationId", "status"})
+    public ResponseEntity<List<OpenIssue>> getIssueByParams(HttpServletRequest request) {
+        try {
+            int operationId = Integer.parseInt(request.getParameter("operationId"));
+            String status = String.format(request.getParameter("status"));
+            List<OpenIssue> issueList = dashboardService.getOpenIssueByParams(operationId,status);
+            
+            if (issueList != null) {
+                return ResponseEntity.ok().body(issueList);
             }
             return ResponseEntity.badRequest().body(null);
         } catch (Exception e) {

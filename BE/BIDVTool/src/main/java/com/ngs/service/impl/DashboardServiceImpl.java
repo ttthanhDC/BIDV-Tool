@@ -1,5 +1,6 @@
 package com.ngs.service.impl;
 
+import com.ngs.entity.OpenIssue;
 import com.ngs.repository.DashBoardRepository;
 import com.ngs.response.bean.*;
 import com.ngs.service.DashboardService;
@@ -52,8 +53,8 @@ public class DashboardServiceImpl implements DashboardService {
     }
 
     @Override
-    public List<OperationResponse> getTotalOperationByService(Integer serviceId) {
-        return dashBoardRepository.getTotalOperationByServiceId(serviceId);
+    public List<OperationResponse> getTotalOperationByService(Integer serviceId,Integer appID) {
+        return dashBoardRepository.getTotalOperationByServiceId(serviceId,appID);
     }
 
     @Override
@@ -68,6 +69,11 @@ public class DashboardServiceImpl implements DashboardService {
     @Override
     public List<DoingTask> getTasksDoingByOperationId(Integer operationId){
         return dashBoardRepository.getTasksDoingByOperationId(operationId);
+    }
+
+    @Override
+    public List<OpenIssue> getOpenIssueByParams(Integer operationId, String status) {
+        return dashBoardRepository.getOpenIssueByParams(operationId,status);
     }
 }
 

@@ -74,6 +74,7 @@ public class IssueController {
                 .operation(openIssue.getOperation())
                 .reporter(openIssue.getReporter())
                 .owner(openIssue.getOwner())
+                .support(openIssue.getSupport())
                 .resolution(openIssue.getResolution())
                 .status(openIssue.getStatus())
                 .build();

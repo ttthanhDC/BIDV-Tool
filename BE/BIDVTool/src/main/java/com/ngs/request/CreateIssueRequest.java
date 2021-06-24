@@ -11,6 +11,7 @@ public class CreateIssueRequest {
     private String resolution;
     private int operationId;
     private String owner;
+    private String support;
     private String openDate;
     private String dueDate;
     private String closeDate;

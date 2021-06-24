@@ -64,6 +64,7 @@ public class IssueServiceImpl implements IssueService {
                 .reporter(userOperationPair.getLeft())
                 .resolution(request.getResolution())
                 .owner(request.getOwner())
+                .support(request.getSupport())
                 .build();
         issueRepository.save(openIssue);
         return openIssue;

@@ -7,6 +7,7 @@ import lombok.Data;
 @Builder
 public class OperationResponse {
     private Integer operationId;
+    private Integer serviceId;
     private Integer applicationId;
     private String operationName;
     private String serviceName;
