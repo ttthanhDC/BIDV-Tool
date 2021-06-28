@@ -4,7 +4,10 @@ import { Observable } from 'rxjs';
 import { AppByService } from 'src/app/entity/AppByService';
 import { Chart } from 'src/app/entity/Chart';
 import { DashboardResponse } from 'src/app/entity/DashBoardResponse';
+import { ResOperationByApp } from 'src/app/entity/ResOperationByApp';
 import { OpenIssue } from 'src/app/entity/OpenIssue';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +21,8 @@ export class DashboardService {
   private serviceByStatus = "http://192.168.1.136:4200/BIDVTool-Service/dashboard/service?query=status";
   private oprByService = "http://192.168.1.136:4200/BIDVTool-Service/dashboard/operation?query=service";
   private taskByOperation = "http://192.168.1.136:4200/BIDVTool-Service/dashboard/task?query=operation"
-  private issueByParams = "http://192.168.1.136:4200/BIDVTool-Service/dashboard/app";
+  private issueByParams = "http://192.168.1.136:4200/BIDVTool-Service/dashboard/issue";
+  private operationByapp = "http://192.168.1.136:4200/BIDVTool-Service/dashboard/operation";
 
   // private issueUrl = "http://172.16.3.141:8080/dashboard/app";
   // private appByService = "http://172.16.3.141:8080/dashboard/app?query=service";
@@ -60,7 +64,9 @@ export class DashboardService {
     let params = new HttpParams();
     params = params.append('operationId', operationId);
     params = params.append('status', status);
-  
     return this.http.get<OpenIssue[]>(`${this.issueByParams}`,{params:params})
+  }
+  getTotalOperationByApp(): Observable<ResOperationByApp[]>{
+  return this.http.get<ResOperationByApp[]>(`${this.operationByapp}`)
   }
 }

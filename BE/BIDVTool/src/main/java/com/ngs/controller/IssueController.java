@@ -75,6 +75,7 @@ public class IssueController {
                 .reporter(openIssue.getReporter())
                 .owner(openIssue.getOwner())
                 .support(openIssue.getSupport())
+                .jraNumber(openIssue.getJraNumber())
                 .resolution(openIssue.getResolution())
                 .status(openIssue.getStatus())
                 .build();

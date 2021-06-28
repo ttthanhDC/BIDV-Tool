@@ -6,6 +6,7 @@ import { OpenIssue } from 'src/app/entity/OpenIssue';
 import { ResOprByService } from 'src/app/entity/ResOprByService';
 import { ResServiceByApp } from 'src/app/entity/ResServiceByApp';
 import { ApplicationService } from 'src/app/services/application/application.service';
+import { DashboardService } from 'src/app/services/dashboard/dashboard.service';
 import { OpenissueService } from 'src/app/services/openissue/openissue.service';
 import { ServiceService } from 'src/app/services/service/service.service';
 
@@ -33,6 +34,7 @@ export class OpenissueListComponent implements OnInit {
     private openissueService: OpenissueService,
     private applicationService: ApplicationService,
     private serviceService : ServiceService,
+    private dashboardService : DashboardService,
      private router: Router
     ) { }
   
@@ -47,6 +49,7 @@ export class OpenissueListComponent implements OnInit {
       .subscribe(
         data => {          
           this.issues = data.issues;
+          console.log(this.issues[0].jraNumber)
         })
   }
   getAllApplication(){
@@ -85,7 +88,7 @@ export class OpenissueListComponent implements OnInit {
       }
     )
       }
-       getOperationByAppIdAndServiceIdEvent(event: any){
+   getOperationByAppIdAndServiceIdEvent(event: any){
         const serviceId = event.target.value;
         const appID = this.applicationId;
         console.log("getOperationByAppIdAndServiceId  - appId "+ appID);
@@ -96,6 +99,24 @@ export class OpenissueListComponent implements OnInit {
         else{
           this.opreration=[];
         }
+      }
+  getIssueByParams(operationId:any,status:any){
+        this.issues=[];
+        this.dashboardService.getIssueByParams(operationId,status).subscribe(
+          data=>{
+            this.issues = data;
+            console.log(data);
+          }
+        )
+      }
+      getIssueByParamsNoStatus(event:any){
+        const oprerationId = event.target.value;
+        this.getIssueByParams(oprerationId,null);
+      }
+      getIssueByParamsStatus(event:any){
+        const status = event.target.value;
+        const oprerationId = this.issue.operationId;
+        this.getIssueByParams(oprerationId,status);
       }
   delete(id: number) {
     this.issueId = id;

@@ -32,7 +32,7 @@ public class OperationServiceImpl implements OperationService {
 
     @Override
     public List<Operation> findAll() {
-        Iterable<Operation> operations = operationRepository.getListOperation();
+        Iterable<Operation> operations = operationRepository.findAll();
         return IterableUtils.toList(operations);
     }
 

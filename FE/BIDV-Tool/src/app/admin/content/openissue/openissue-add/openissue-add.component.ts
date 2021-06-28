@@ -16,6 +16,7 @@ import { ServiceService } from 'src/app/services/service/service.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { dropdownList } from 'src/app/entity/dropdownList';
 import { selectedItems } from 'src/app/entity/selectedItem';
+import { DashboardService } from 'src/app/services/dashboard/dashboard.service';
 
 @Component({
   selector: 'app-openissue-add',
@@ -25,6 +26,7 @@ import { selectedItems } from 'src/app/entity/selectedItem';
 export class OpenissueAddComponent implements OnInit {
 
   issue: OpenIssue = new OpenIssue();
+  issues:OpenIssue[];
   user: User[];
   app :Application[];
   opreration: ResOprByService[];
@@ -41,7 +43,6 @@ export class OpenissueAddComponent implements OnInit {
     private openissueService: OpenissueService,
     private userService: UserService,
     private serviceService : ServiceService,
-   // private operationService: OperationService,
     private applicationService: ApplicationService,
     private router: Router,
     private formBuilder: FormBuilder) { }
@@ -139,7 +140,7 @@ this.serviceService.getOperationByServiceId1(this.applicationId,serviceId).subsc
       this.opreration=[];
     }
   }
- 
+    
  
 
 }

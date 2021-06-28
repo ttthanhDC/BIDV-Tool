@@ -3,25 +3,28 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AppByService } from 'src/app/entity/AppByService';
 import { Chart } from 'src/app/entity/Chart';
 import { DashboardResponse } from 'src/app/entity/DashBoardResponse';
+import { ResOperationByApp } from 'src/app/entity/ResOperationByApp';
 import { DashboardService } from 'src/app/services/dashboard/dashboard.service';
 import { UploadfileService } from 'src/app/services/uploadfile/uploadfile.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css','./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
   file: File;
   formf = new FormGroup({
     file: new FormControl('', [Validators.required])
   });
+  resOperation: ResOperationByApp[];
   dataSource: any;
   dataGetAppByService: any;
   dataOperation: any;
   dataOprByService: any;
   dataGetServiceByApp: any;
   dataGetServiceByStatus: any;
+  keyword: string;
   dataTask: any;
   selectedSlice = 'none';
   chart: any;
@@ -31,6 +34,8 @@ export class DashboardComponent implements OnInit {
   constructor(private uploadFileService: UploadfileService,
     private dashBoardService: DashboardService,
     private zone: NgZone) {
+      //get Total Operation By Application
+   
     // Pie data
     this.dataSource = {
       chart: {
@@ -200,15 +205,18 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.dashBoardService.getTotalOperationByApp().subscribe(
+      data=>{
+        this.resOperation = data;
+        console.log(this.resOperation)
+      }
+    )
   }
   get f() { return this.formf.controls; }
   submitForm() {
-    // this.uploadFileService.uploadFileExcel(this.file).subscribe(data =>{
-    //   this.response = data;
-    //   console.log('success 11');
 
-    // })
   }
+
   changeFile(event: any) {
     this.file = event.target.files[0];
   }

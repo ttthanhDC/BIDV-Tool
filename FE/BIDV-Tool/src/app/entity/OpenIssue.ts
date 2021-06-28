@@ -18,5 +18,6 @@ export class OpenIssue {
     dueDate: string;
     closeDate: string;
     status: string;
-    comment: string
+    comment: string;
+    jraNumber:string;
 }

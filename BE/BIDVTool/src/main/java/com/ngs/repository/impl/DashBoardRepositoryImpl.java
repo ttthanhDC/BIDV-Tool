@@ -284,6 +284,10 @@ public class DashBoardRepositoryImpl implements DashBoardRepository {
        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("getIssueByParams");
        Map<String, Object> inputParams = new HashMap<>();
        inputParams.put("p_operationId", operationId);
+       if(status==""){
+           status =null;
+       }
+       status = status.isEmpty() ? status : null;
        inputParams.put("p_status", status);
        Map<String, Object> callResponse = jdbcCall.execute(inputParams);
        System.out.println(callResponse);
@@ -291,6 +295,7 @@ public class DashBoardRepositoryImpl implements DashBoardRepository {
        resultSet.forEach(data -> {
            OpenIssue openIssue = new OpenIssue();
            data.keySet().forEach(key -> {
+               openIssue.setId((Integer) data.get("issue_id"));
                openIssue.setDescription((String) data.get("description"));
                openIssue.setReporter(userService.getById((Integer) data.get("reporter_id")));
                openIssue.setResolution((String) data.get("resolution"));
@@ -305,6 +310,7 @@ public class DashBoardRepositoryImpl implements DashBoardRepository {
                openIssue.setCloseDate((Date) data.get("close_date"));
                openIssue.setStatus((String) data.get("status"));
                openIssue.setComment((String) data.get("comment"));
+               openIssue.setJraNumber((String) data.get("jra_number"));
                openIssue.setSupport((String)data.get("support"));
            });
            resultList.add(openIssue);

@@ -80,4 +80,9 @@ public class OpenIssue implements Serializable {
     @Getter
     @Setter
     private String comment;
+
+    @Column(name = "jra_number")
+    @Getter
+    @Setter
+    private String jraNumber;
 }

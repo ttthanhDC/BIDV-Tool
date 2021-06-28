@@ -20,4 +20,5 @@ public class Issue {
     private String closeDate;
     private String status;
     private String comment;
+    private String jraNumber;
 }

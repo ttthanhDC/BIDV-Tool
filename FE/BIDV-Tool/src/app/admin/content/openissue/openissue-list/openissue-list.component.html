@@ -47,7 +47,7 @@
                 </div>
                 <div class="col-md-3">
                     <h5 for="p_category">Operation</h5>
-                    <select class="form-control bg-info text-white" name="operation" [(ngModel)]="issue.operationId"
+                    <select class="form-control bg-info text-white" name="operation" [(ngModel)]="issue.operationId" (change)="getIssueByParamsNoStatus($event)"
                     required  placeholder="Operation">
                     <option disabled>Operation</option>
                     <option *ngFor="let o of opreration" value="{{o.operationId}}">{{o.operationName}}
@@ -56,13 +56,13 @@
                 </div>
                 <div class="col-md-3">
                     <h5 for="p_category">Status</h5>
-                    <select class="form-control bg-warning text-white" name="status" [(ngModel)]="issue.status"
+                    <select class="form-control bg-warning text-white" name="status" [(ngModel)]="issue.status" (change)="getIssueByParamsStatus($event)"
                     required  placeholder="Status">
                     <option disabled selected>Status</option>
-                    <option >Not started yet</option> 
-                    <option >Complete </option> 
-                    <option>Inprogress </option> 
-                    <option>Pending</option> 
+                    <option value="Not started yet">Not started yet</option> 
+                    <option value="Complete">Complete </option> 
+                    <option value="In Progress">In Progress </option> 
+                    <option value="Pending">Pending</option> 
                 </select> 
                 </div>
             </div>     
@@ -82,7 +82,9 @@
                             <th>Due Date</th>
                             <th>Close Date</th>
                             <th>Status</th>
+                            <th>jraNumber</th>
                             <th>Comment</th>
+
                             <th colspan="2">Action</th>
                         </tr>
                     </thead>
@@ -99,6 +101,8 @@
                             <td>{{a.dueDate}}</td>
                             <td>{{a.closeDate}}</td>
                             <td>{{a.status}}</td>
+                            <a href="{{a.jraNumber}}" target=“_blank”><td style="float: inherit; padding-top: 100%;">link</td></a>
+                            <!-- <td >{{a.jraNumber}}</td> -->
                             <td>{{a.comment}}</td>
                             <td><a routerLink='/admin/openissue-edit/{{a.id}}'><i class="fas fa-edit"
                                         style="font-size: 20px;"></i></a></td>

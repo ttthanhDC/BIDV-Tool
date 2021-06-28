@@ -60,13 +60,14 @@ public class IssueServiceImpl implements IssueService {
                 .dueDate(DateUtil.fromString(request.getDueDate(), "yyyy-MM-dd"))
                 .status(request.getStatus())
                 .comment(request.getComment())
+                .jraNumber(request.getJraNumber())
                 .description(request.getDescription())
                 .reporter(userOperationPair.getLeft())
                 .resolution(request.getResolution())
                 .owner(request.getOwner())
                 .support(request.getSupport())
                 .build();
-        issueRepository.save(openIssue);
+                issueRepository.save(openIssue);
         return openIssue;
     }
 
@@ -80,9 +81,9 @@ public class IssueServiceImpl implements IssueService {
 
             OpenIssue updateIssue = issue.get();
             OpenIssue previousIssue = SerializationUtils.clone(updateIssue);
-
             updateIssue.setComment(request.getComment());
             updateIssue.setDescription(request.getDescription());
+            updateIssue.setJraNumber(request.getJraNumber());
             updateIssue.setOpenDate(DateUtil.fromString(request.getOpenDate(), "yyyy-MM-dd"));
             updateIssue.setDueDate(DateUtil.fromString(request.getDueDate(), "yyyy-MM-dd"));
             updateIssue.setCloseDate(DateUtil.fromString(request.getCloseDate(), "yyyy-MM-dd"));

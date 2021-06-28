@@ -83,15 +83,20 @@
             <label for="bidvAppCode">Status</label>
             <select class="form-control " name="status" [(ngModel)]="issue.status"
             required  placeholder="Status">
-            <option selected >Not started yet</option> 
-            <option>Complete </option> 
-            <option>In Progress </option> 
-            <option>Pending</option> 
+            <option selected value="Not started yet">Not started yet</option> 
+            <option value="Complete">Complete</option> 
+            <option value="In Progress">In Progress </option> 
+            <option value="Pending">Pending</option> 
         </select> 
         </div>
         <div class="form-group">
+            <label for="bidvAppCode">Jra Number</label>
+            <input type="text" class="form-control" name="jraNumber" [(ngModel)]="issue.jraNumber">
+  
+        </div>
+        <div class="form-group">
             <label for="bidvAppCode">Comment</label>
-            <input type="text" class="form-control" name="comment" [(ngModel)]="issue.comment">
+            <textarea  class="form-control" name="comment" [(ngModel)]="issue.comment"></textarea>
         </div>
         <div class="row">
             <div class="col-md-5">
