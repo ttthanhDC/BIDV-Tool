@@ -75,5 +75,9 @@ public class DashboardServiceImpl implements DashboardService {
     public List<OpenIssue> getOpenIssueByParams(Integer operationId, String status) {
         return dashBoardRepository.getOpenIssueByParams(operationId,status);
     }
+    @Override
+    public  List<TotalOperationByApp> getTotalOperationByApp(){
+        return dashBoardRepository.getTotalOperationByApp();
+    }
 }
 

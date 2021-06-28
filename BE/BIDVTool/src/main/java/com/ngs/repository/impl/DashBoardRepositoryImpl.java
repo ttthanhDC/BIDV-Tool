@@ -279,7 +279,7 @@ public class DashBoardRepositoryImpl implements DashBoardRepository {
 
     }
     @Override
-   public List<OpenIssue> getOpenIssueByParams(Integer operationId,String status){
+    public List<OpenIssue> getOpenIssueByParams(Integer operationId,String status){
        List<OpenIssue> resultList = new ArrayList<>();
        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("getIssueByParams");
        Map<String, Object> inputParams = new HashMap<>();
@@ -318,6 +318,26 @@ public class DashBoardRepositoryImpl implements DashBoardRepository {
        return resultList;
 
    }
+    @Override
+    public List<TotalOperationByApp> getTotalOperationByApp(){
+        List<TotalOperationByApp> resultList = new ArrayList<>();
+        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate).withProcedureName("getTotalOperationByApp");
+        Map<String, Object> inputParams = new HashMap<>();
+        Map<String, Object> callResponse = jdbcCall.execute(inputParams);
+        System.out.println(callResponse);
+        ArrayList<Map> resultSet = (ArrayList<Map>) callResponse.get("#result-set-1");
+        resultSet.forEach(data -> {
+           TotalOperationByApp total= TotalOperationByApp.builder()
+
+                   .operationName((String) data.get("operation_name"))
+                   .ServiceMerge((String) data.get("serviceMerge"))
+                   .count((Long) data.get("count"))
+                   .build();
+           resultList.add(total);
+            });
+        return resultList;
+
+    }
 
     private List<Map<Object, Object>> buildResult(List<Map<Object, Object>> resultList, Map<String, Object> callResponse) {
         ArrayList<Map> resultSet = (ArrayList<Map>) callResponse.get("#result-set-1");

@@ -23,4 +23,5 @@ public interface DashboardService {
     TotalTaskByOperation getTotalTaskByService();
     List<DoingTask> getTasksDoingByOperationId(Integer operationId);
     List<OpenIssue> getOpenIssueByParams(Integer operationId,String status);
+    List<TotalOperationByApp> getTotalOperationByApp();
 }

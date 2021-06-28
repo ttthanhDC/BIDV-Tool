@@ -163,5 +163,18 @@ public class DashboardController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+      @GetMapping(value = "operation")
+      public ResponseEntity<List<TotalOperationByApp>> totalOperationByApps() {
+          try {
+              List<TotalOperationByApp> totalOperationByApps = dashboardService.getTotalOperationByApp();
 
+              if (totalOperationByApps != null) {
+                  return ResponseEntity.ok().body(totalOperationByApps);
+              }
+              return ResponseEntity.badRequest().body(null);
+          } catch (Exception e) {
+              e.printStackTrace();
+              return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+          }
+    }
 }

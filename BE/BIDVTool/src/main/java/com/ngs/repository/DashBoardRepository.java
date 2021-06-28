@@ -23,6 +23,7 @@ public interface DashBoardRepository {
     TotalTaskByOperation getTotalTaskByOperation();
     List<DoingTask> getTasksDoingByOperationId(Integer operationId);
     List<OpenIssue> getOpenIssueByParams(Integer OperationId,String status);
+    List<TotalOperationByApp> getTotalOperationByApp();
 }
 
 
